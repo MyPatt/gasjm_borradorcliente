@@ -1,0 +1,3 @@
+class Constants {
+  static const THE_MOVIE_DB_API_KEY = "3de7a85b1cc2d92067004138d0fd6c62";
+}

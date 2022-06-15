@@ -1,0 +1,107 @@
+import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_binding.dart';
+import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_page.dart';
+import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_binding.dart';
+import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_controller.dart';
+import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_page.dart';
+import 'package:gasjm/app/modules/identificacion/identificacion_binding.dart';
+import 'package:gasjm/app/modules/identificacion/identificacion_page.dart';
+import 'package:gasjm/app/modules/inicio/inicio_binding.dart';
+import 'package:gasjm/app/modules/inicio/inicio_page.dart';
+import 'package:gasjm/app/modules/login/login_binding.dart';
+import 'package:gasjm/app/modules/login/login_page.dart';
+import 'package:gasjm/app/modules/perfil/perfil_binding.dart';
+import 'package:gasjm/app/modules/perfil/perfil_page.dart';
+import 'package:gasjm/app/modules/registrar/registrar_binding.dart';
+import 'package:gasjm/app/modules/registrar/registrar_page.dart';
+import 'package:gasjm/app/modules/splash/splash_binding.dart';
+import 'package:gasjm/app/modules/splash/splash_page.dart';
+import 'package:gasjm/app/modules/ubicacion/ubicacion_binding.dart';
+import 'package:gasjm/app/modules/ubicacion/ubicacion_page.dart';
+import 'package:gasjm/app/routes/app_routes.dart';
+import 'package:get/get.dart';
+
+class AppPages {
+  static final pages = [
+    GetPage(
+      name: AppRoutes.splash,
+      page: () => const SplashPage(),
+      binding: SplashBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.ubicacion,
+      page: () => UbicacionPage(),
+      binding: UbicacionBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.identificacion,
+      page: () => IdentificacionPage(),
+      binding: IdentificacionBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.perfil,
+      page: () => PerfilPage(),
+      binding: PerfilBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.registrar,
+      page: () => RegistrarPage(),
+      binding: RegistrarBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.login,
+      page: () => const LoginPage(),
+      binding: LoginBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.inicio,
+      page: () => const InicioPage(),
+      binding: InicioBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.agenda,
+      page: () => const AgendaClientePage(),
+      binding: AgendaClienteBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.editaragenda,
+      page: () => const EditarAgendaPage(),
+      binding: EditarPedidoAgendadoBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    /* 
+    GetPage(
+      name: AppRoutes.SIGNUP,
+      page: () => SignUpPage(),
+      binding: SignUpBinding(),
+      transition: Transition.fade,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.HOME,
+      page: () => HomePage(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.DETAIL,
+      page: () => DetailPage(house: HouseModel()),
+      binding: DetailBinding(),
+      transition: Transition.fade,
+      transitionDuration: Duration(milliseconds: 500),
+    ),*/
+  ];
+}
