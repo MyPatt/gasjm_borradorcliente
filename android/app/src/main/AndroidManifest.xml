@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.gasjm">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.gasjm.dev">
   <!-- INTERNET -->
   <uses-permission android:name="android.permission.INTERNET"/>
   <!-- GPS -->
