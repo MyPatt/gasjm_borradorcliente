@@ -42,7 +42,7 @@ dependencies:
   pod: ^0.14.0
   provider: ^6.0.0
   rating_dialog: ^2.0.1
-  syncfusion_flutter_calendar: ^18.4.49 
+  syncfusion_flutter_calendar: ^18.4.49  
 
 dev_dependencies:
   flutter_lints: ^1.0.3
