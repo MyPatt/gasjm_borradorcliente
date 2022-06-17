@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/global_widgets/background.dart';
-import 'package:gasjm/app/global_widgets/header/clipper_global.dart';
-import 'package:gasjm/app/modules/identificacion/widgets/form_identificacion.dart';
+import 'package:flutter/material.dart'; import 'package:gasjm/app/modules/identificacion/widgets/form_identificacion.dart';
 
 class Content extends StatelessWidget {
   @override
@@ -10,7 +6,7 @@ class Content extends StatelessWidget {
     return Column(children: [
       Expanded(
         child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: FormIdentificacion()),
       ),
       /* Stack(

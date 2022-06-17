@@ -9,7 +9,7 @@ class SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15.0),
@@ -20,7 +20,7 @@ class SecondaryButton extends StatelessWidget {
         //onPressed: () {},
         onPressed: onPressed,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           child: Text(
             texto,
             style: Theme.of(context).textTheme.headline6?.copyWith(

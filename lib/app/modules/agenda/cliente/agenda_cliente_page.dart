@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/global_widgets/primary_button.dart';
-import 'package:gasjm/app/global_widgets/primarymedium_button.dart';
-import 'package:gasjm/app/global_widgets/secondary_button.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart'; 
 import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_controller.dart';
-import 'package:gasjm/app/modules/agenda/cliente/local_widgets/calendario_cliente.dart';
-import 'package:gasjm/app/modules/agenda/cliente/local_widgets/eventos_cliente.dart';
-import 'package:get/get.dart';
+ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AgendaClientePage extends StatelessWidget {

@@ -7,10 +7,14 @@ import 'package:gasjm/app/modules/ubicacion/blocs/gps/gps_bloc.dart';
 import 'package:gasjm/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   DependencyInjection.init();
   // runApp(MyApp());
+  //Comprobar proceso de instalacio de firebase
+  /* WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();*/
   //Para obtener estado del GPS
   runApp(MultiBlocProvider(
     providers: [
