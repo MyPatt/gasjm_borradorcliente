@@ -6,9 +6,9 @@ String requestTokenToJson(RequestToken data) => json.encode(data.toJson());
 
 class RequestToken {
     RequestToken({
-        this.success,
-        this.expiresAt,
-        this.requestToken,
+        required this.success,
+        required this.expiresAt,
+        required this.requestToken,
     });
 
     final bool success;

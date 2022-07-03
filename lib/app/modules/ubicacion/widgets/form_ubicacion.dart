@@ -8,6 +8,8 @@ import 'package:gasjm/app/modules/ubicacion/ubicacion_controller.dart';
 import 'package:get/get.dart';
 
 class FormUbicacion extends StatelessWidget {
+  const FormUbicacion({key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<UbicacionController>(
@@ -21,7 +23,7 @@ class FormUbicacion extends StatelessWidget {
               children: [
                 Container(
                     height: 96,
-                    child: Image(
+                    child: const Image(
                       image: AssetImage("assets/icons/gps.png"),
                     )),
                 SizedBox(
@@ -39,16 +41,16 @@ class FormUbicacion extends StatelessWidget {
                       color: Colors.black38, fontWeight: FontWeight.w400),
                 ),
                 SizedBox(
-                    height: Responsive.getScreenSize(context).height * .03),
+                    height: Responsive.getScreenSize(context).height * .05),
                 PrimaryButton(
                   texto: "Permitir",
-                  onPressed:
-                      // _.cargarIdentificacion
-                      () {
+                  onPressed: _.cargarIdentificacion
+                  /*     () {
                     final gpsBloc = BlocProvider.of<GpsBloc>(context);
                    gpsBloc.askGpsAccess();
                     
-                  },
+                  }*/
+                  ,
                 ),
               ],
             ),

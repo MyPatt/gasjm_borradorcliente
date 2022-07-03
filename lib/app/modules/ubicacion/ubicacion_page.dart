@@ -45,7 +45,7 @@ class UbicacionPage extends StatelessWidget {
 }
 
 class _EnableGpsMessage extends StatelessWidget {
-  const _EnableGpsMessage({Key key}) : super(key: key);
+  const _EnableGpsMessage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

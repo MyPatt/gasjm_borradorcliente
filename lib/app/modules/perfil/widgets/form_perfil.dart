@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/global_widgets/input_text.dart';
+import 'package:flutter/material.dart'; 
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/global_widgets/secondary_button.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -8,6 +7,8 @@ import 'package:gasjm/app/modules/perfil/perfil_controller.dart';
 import 'package:get/get.dart';
 
 class FormPerfil extends StatelessWidget {
+  const FormPerfil({key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PerfilController>(
@@ -21,7 +22,7 @@ class FormPerfil extends StatelessWidget {
               children: [
                 Container(
                     height: 96,
-                    child: Image(
+                    child: const Image(
                       image: AssetImage("assets/icons/perfil.png"),
                     )),
                 SizedBox(
@@ -41,7 +42,7 @@ class FormPerfil extends StatelessWidget {
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .03),
                 SecondaryButton(
-                  texto: "Repartidor",
+                  texto: "Repartidor", onPressed: () {  },
                 ),
               ],
             ),

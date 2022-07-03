@@ -1,9 +1,7 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart'; 
 import 'package:gasjm/app/core/utils/constants.dart';
 import 'package:gasjm/app/data/models/request_token.dart';
-import 'package:get/get.dart';
-import 'package:meta/meta.dart' show required;
+import 'package:get/get.dart'; 
 
 class AuthenticationAPI {
   final Dio _dio = Get.find<Dio>();
@@ -19,9 +17,9 @@ class AuthenticationAPI {
   }
 
   Future<RequestToken> validarConLogin({
-    @required String usuario,
-    @required String contrasena,
-    @required String requestToken,
+    required String usuario,
+    required String contrasena,
+    required String requestToken,
   }) async {
     final response = await _dio
         .post('/authentication/token/validate_with_login', queryParameters: {

@@ -8,6 +8,8 @@ import 'package:gasjm/app/modules/identificacion/identificacion_controller.dart'
 import 'package:get/get.dart';
 
 class FormIdentificacion extends StatelessWidget {
+  const FormIdentificacion({key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<IdentificacionController>(
@@ -24,8 +26,7 @@ class FormIdentificacion extends StatelessWidget {
                     height: 96,
                     child: const Image(
                       image: AssetImage("assets/icons/identificacion.png"),
-                    )
-                    ),
+                    )),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .05),
                 Text(
@@ -40,23 +41,15 @@ class FormIdentificacion extends StatelessWidget {
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
                       color: Colors.black38, fontWeight: FontWeight.w400),
                 ),
-                /* SizedBox(
-                    height: Responsive.getScreenSize(context).height * .05),*/
+                SizedBox(
+                    height: Responsive.getScreenSize(context).height * .05),
                 InputText(
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.phone,
                   iconPrefix: Icons.credit_card,
-                  iconColor: AppTheme.light,
-                  border: InputBorder.none,
-                  validator: null,
                   labelText: "Cédula o NIC",
-                  filled: false,
-                  enabledBorderColor: Colors.black26,
-                  focusedBorderColor: AppTheme.blueBackground,
-                  fontSize: 14.0,
-                  fontColor: Colors.black45,
                 ),
                 SizedBox(
-                    height: Responsive.getScreenSize(context).height * .03),
+                    height: Responsive.getScreenSize(context).height * .05),
                 PrimaryButton(
                   texto: "Siguiente",
                   onPressed: _.cargarPerfil,

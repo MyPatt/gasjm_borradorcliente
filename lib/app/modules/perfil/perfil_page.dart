@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/global_widgets/header/header_global.dart';
+import 'package:flutter/material.dart'; 
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/modules/perfil/perfil_controller.dart';
 import 'package:gasjm/app/modules/perfil/widgets/content.dart';
 import 'package:get/get.dart';
 
 class PerfilPage extends StatelessWidget {
+  const PerfilPage({key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PerfilController>(
@@ -15,7 +16,7 @@ class PerfilPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
-          leading: BackButton(
+          leading: const BackButton(
             color: AppTheme.blueDark,
           ),
         ),

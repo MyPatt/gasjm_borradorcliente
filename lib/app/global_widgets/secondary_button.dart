@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
 class SecondaryButton extends StatelessWidget {
-  SecondaryButton({@required this.texto, @required this.onPressed});
+  SecondaryButton(
+      {required this.texto, required this.onPressed,  this.minWidth});
 
   final void Function() onPressed;
   final String texto;
+  final double? minWidth;
   @override
   Widget build(BuildContext context) {
     return Container(

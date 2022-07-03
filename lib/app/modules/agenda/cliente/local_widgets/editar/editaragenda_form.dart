@@ -7,7 +7,7 @@ import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_con
 import 'package:get/get.dart';
 
 class EditarAgendaForm extends StatelessWidget {
-  const EditarAgendaForm({Key key}) : super(key: key);
+  const EditarAgendaForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +41,9 @@ class EditarAgendaForm extends StatelessWidget {
                         iconPrefix: Icons.maps_home_work_outlined,
                         iconColor: AppTheme.light,
                         border: InputBorder.none,
-                        validator: null,
+                    
                         labelText: "Barrio / Sector",
                         filled: false,
-                        enabledBorderColor: Colors.black26,
-                        focusedBorderColor: AppTheme.blueBackground,
-                        fontSize: 14.0,
-                        fontColor: Colors.black45,
                       ),
                       SizedBox(
                           height:
@@ -56,14 +52,9 @@ class EditarAgendaForm extends StatelessWidget {
                         keyboardType: TextInputType.streetAddress,
                         iconPrefix: Icons.room_outlined,
                         iconColor: AppTheme.light,
-                        border: InputBorder.none,
-                        validator: null,
+                        border: InputBorder.none, 
                         labelText: "Calle principal",
                         filled: false,
-                        enabledBorderColor: Colors.black26,
-                        focusedBorderColor: AppTheme.blueBackground,
-                        fontSize: 14.0,
-                        fontColor: Colors.black45,
                       ),
                       SizedBox(
                           height:
@@ -72,14 +63,9 @@ class EditarAgendaForm extends StatelessWidget {
                         keyboardType: TextInputType.streetAddress,
                         iconPrefix: Icons.map_outlined,
                         iconColor: AppTheme.light,
-                        border: InputBorder.none,
-                        validator: null,
+                        border: InputBorder.none, 
                         labelText: "Calle secundaria",
                         filled: false,
-                        enabledBorderColor: Colors.black26,
-                        focusedBorderColor: AppTheme.blueBackground,
-                        fontSize: 14.0,
-                        fontColor: Colors.black45,
                       ),
                       SizedBox(
                           height:
@@ -88,14 +74,9 @@ class EditarAgendaForm extends StatelessWidget {
                         keyboardType: TextInputType.streetAddress,
                         iconPrefix: Icons.home_outlined,
                         iconColor: AppTheme.light,
-                        border: InputBorder.none,
-                        validator: null,
+                        border: InputBorder.none, 
                         labelText: "Referencia",
                         filled: false,
-                        enabledBorderColor: Colors.black26,
-                        focusedBorderColor: AppTheme.blueBackground,
-                        fontSize: 14.0,
-                        fontColor: Colors.black45,
                       ),
                       SizedBox(
                           height:
@@ -112,10 +93,6 @@ class EditarAgendaForm extends StatelessWidget {
                           controller: _.myController.value,
                           labelText: "Fecha",
                           filled: false,
-                          enabledBorderColor: Colors.black26,
-                          focusedBorderColor: AppTheme.blueBackground,
-                          fontSize: 14.0,
-                          fontColor: Colors.black45,
                           onTap: () {
                             _.selectDate(context);
                           },
@@ -137,10 +114,6 @@ class EditarAgendaForm extends StatelessWidget {
                         //validator: null,
                         labelText: "Hora",
                         filled: false,
-                        enabledBorderColor: Colors.black26,
-                        focusedBorderColor: AppTheme.blueBackground,
-                        fontSize: 14.0,
-                        fontColor: Colors.black45,
 
                         //  onChanged: _.onChangedContrasenaUsuario, pim mapa room
                       ),
@@ -156,10 +129,7 @@ class EditarAgendaForm extends StatelessWidget {
                         labelText: "Cantidad",
                         initialValue: "1",
                         filled: false,
-                        enabledBorderColor: Colors.black26,
-                        focusedBorderColor: AppTheme.blueBackground,
-                        fontSize: 14.0,
-                        fontColor: Colors.black45,
+
                         //   onChanged: _.onChangedNombreUsuario
                       ),
                       SizedBox(

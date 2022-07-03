@@ -1,18 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart';
 
 class InputText extends StatelessWidget {
-  const InputText(
-      {this.initialValue,
+   final String? initialValue;
+  final bool readOnly;
+  final TextEditingController? controller;
+  final IconData? iconPrefix;
+  final Color iconColor;
+  final String? labelText;
+  final bool filled;
+  final Color fontColor;
+  final double fontSize;
+  final Color enabledBorderColor;
+  final Color focusedBorderColor;
+  final String? Function(String?)? validator;
+  final TextInputType keyboardType;
+  final bool obscureText;
+  final Widget? suffixIcon;
+  final String? hintText;
+  final int? minLines;
+  final int? maxLines;
+  final InputBorder border;
+  final void Function(String)? onChanged;
+  final void Function()? onTap;
+  final void Function(String?)? onSaved;
+
+   InputText({
+    this.initialValue,
       this.readOnly = false,
-      this.controller,
-      this.iconPrefix,
-      this.iconColor,
+      this.controller, 
+      this.iconColor = AppTheme.light,
       this.labelText,
-      this.filled = true,
-      this.fontColor,
-      this.fontSize,
-      this.enabledBorderColor,
-      this.focusedBorderColor,
+      this.filled = false,
+      this.fontColor = Colors.black54,
+      this.fontSize = 14.0,
+      this.enabledBorderColor = Colors.black26,
+      this.focusedBorderColor = AppTheme.blueBackground,
       this.validator,
       this.keyboardType = TextInputType.text,
       this.obscureText = false,
@@ -20,34 +43,35 @@ class InputText extends StatelessWidget {
       this.hintText,
       this.minLines = 1,
       this.maxLines,
-      this.border,
+      this.border = InputBorder.none,
       this.onChanged,
       this.onTap,
-      this.onSaved});
+      this.onSaved, this.iconPrefix
+   });
+   /*InputText( 
+      {this.initialValue,
+      this.readOnly = false,
+      this.controller, 
+      this.iconColor = AppTheme.light,
+      this.labelText,
+      this.filled = false,
+      this.fontColor = Colors.black54,
+      this.fontSize = 14.0,
+      this.enabledBorderColor = Colors.black26,
+      this.focusedBorderColor = AppTheme.blueBackground,
+      this.validator,
+      this.keyboardType = TextInputType.text,
+      this.obscureText = false,
+      this.suffixIcon,
+      this.hintText,
+      this.minLines = 1,
+      this.maxLines,
+      this.border = InputBorder.none,
+      this.onChanged,
+      this.onTap,
+      this.onSaved, this.iconPrefix});*/
 
-  final String initialValue;
-  final bool readOnly;
-  final TextEditingController controller;
-  final IconData iconPrefix;
-  final Color iconColor;
-  final String labelText;
-  final bool filled;
-  final Color fontColor;
-  final double fontSize;
-  final Color enabledBorderColor;
-  final Color focusedBorderColor;
-  final String Function(String) validator;
-  final TextInputType keyboardType;
-  final bool obscureText;
-  final Widget suffixIcon;
-  final String hintText;
-  final int minLines;
-  final int maxLines;
-  final InputBorder border;
-  final void Function(String) onChanged;
-  final void Function() onTap;
-  final void Function(String) onSaved;
-
+ 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -62,7 +86,7 @@ class InputText extends StatelessWidget {
           size: 20.0,
         ),
         labelText: labelText,
-        labelStyle: TextStyle(color: fontColor),
+        labelStyle: const TextStyle(color: Colors.black45),
         filled: filled,
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
@@ -77,6 +101,12 @@ class InputText extends StatelessWidget {
         ),
         suffixIcon: suffixIcon,
         hintText: hintText,
+        errorBorder: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(6.0),
+          borderSide: const BorderSide(
+            color: Colors.red,
+          ),
+        ),
       ),
       readOnly: readOnly,
       controller: controller,

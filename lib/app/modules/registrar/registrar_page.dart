@@ -5,6 +5,8 @@ import 'package:gasjm/app/modules/registrar/widgets/content.dart';
 import 'package:get/get.dart';
 
 class RegistrarPage extends StatelessWidget {
+  const RegistrarPage({key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegistrarController>(
@@ -13,7 +15,7 @@ class RegistrarPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
-          leading: BackButton(
+          leading: const BackButton(
             color: AppTheme.blueDark,
           ),
         ),

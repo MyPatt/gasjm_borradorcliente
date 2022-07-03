@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/global_widgets/header/header_global.dart';
+import 'package:flutter/material.dart'; 
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_controller.dart';
 import 'package:gasjm/app/modules/identificacion/widgets/content.dart';
@@ -13,7 +12,7 @@ class IdentificacionPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
-          leading: BackButton(
+          leading: const BackButton(
             color: AppTheme.blueDark,
           ),
         ),

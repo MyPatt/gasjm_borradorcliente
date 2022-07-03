@@ -12,12 +12,13 @@ import 'package:get/get.dart';
 class InicioPage extends StatelessWidget {
   const InicioPage({key}) : super(key: key);
 
+//
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InicioController>(
       builder: (_) => Scaffold(
         //Menú deslizable a la izquierda con opciones del  usuario
-        drawer: const MenuLateral(),
+        drawer:  const MenuLateral(),
         //Barra de herramientas de opciones para  agenda y  historial
         appBar: AppBar(
           backgroundColor: AppTheme.blueBackground,

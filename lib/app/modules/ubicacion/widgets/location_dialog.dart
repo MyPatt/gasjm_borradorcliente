@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:permission_handler/permission_handler.dart'; 
 
 class AppState extends StatefulWidget {
   @override
@@ -55,10 +53,10 @@ class AppPermission extends State<AppState> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.lightBlue,
-              padding: EdgeInsets.all(8),
-              textStyle: TextStyle(fontSize: 20),
+              padding:  const EdgeInsets.all(8),
+              textStyle:  const TextStyle(fontSize: 20),
             ),
-            child: Text('Request Runtime Camera Permission'),
+            child:  const Text('Request Runtime Camera Permission'),
             onPressed: requestCameraPermission,
           ),
         ),
@@ -67,10 +65,10 @@ class AppPermission extends State<AppState> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.lightBlue,
-              padding: EdgeInsets.all(8),
-              textStyle: TextStyle(fontSize: 20),
+              padding: const EdgeInsets.all(8),
+              textStyle: const TextStyle(fontSize: 20),
             ),
-            child: Text('Request Runtime Location Permission'),
+            child: const Text('Request Runtime Location Permission'),
             onPressed: requestLocationPermission,
           ),
         ),

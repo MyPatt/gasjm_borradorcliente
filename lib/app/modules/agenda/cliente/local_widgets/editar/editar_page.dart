@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class EditarAgendaPage extends StatelessWidget {
-  const EditarAgendaPage({Key key}) : super(key: key);
+  const EditarAgendaPage({Key? key}) : super(key: key);
   final initialCameraPosition =
       const CameraPosition(target: LatLng(0, 0), zoom: 15);
   @override

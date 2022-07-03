@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_controller.dart';
- import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AgendaClientePage extends StatelessWidget {
-  const AgendaClientePage({Key key}) : super(key: key);
+  const AgendaClientePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

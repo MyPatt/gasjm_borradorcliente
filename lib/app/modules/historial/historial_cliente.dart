@@ -5,9 +5,9 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:intl/intl.dart';
 
 class Transaction {
-  String name;
-  double point;
-  int createdMillis;
+  String? name;
+  double? point;
+  int? createdMillis;
 
   Transaction({this.name, this.point, this.createdMillis});
 }
@@ -29,10 +29,10 @@ List<Transaction> transactions = List.generate(2, (index) {
           ))
           .millisecondsSinceEpoch);
 })
-  ..sort((v1, v2) => v2.createdMillis - v1.createdMillis);
+  ..sort((v1, v2) => (v2.createdMillis!-v1.createdMillis!.toInt()));
 
 class TransactionPage extends StatefulWidget {
-  const TransactionPage({Key key}) : super(key: key);
+  const TransactionPage({Key? key}) : super(key: key);
 
   @override
   _TransactionPageState createState() => _TransactionPageState();
@@ -54,7 +54,7 @@ class _TransactionPageState extends State<TransactionPage> {
   }
 
   ListView buildListView() {
-    String prevDay;
+    String? prevDay;
     String today = DateFormat("d MMM, y").format(DateTime.now());
     String yesterday = DateFormat("d MMM, y")
         .format(DateTime.now().add(const Duration(days: -1)));
@@ -64,7 +64,7 @@ class _TransactionPageState extends State<TransactionPage> {
       itemBuilder: (context, index) {
         Transaction transaction = transactions[index];
         DateTime date =
-            DateTime.fromMillisecondsSinceEpoch(transaction.createdMillis);
+            DateTime.fromMillisecondsSinceEpoch(transaction.createdMillis!.toInt());
         String dateString = DateFormat("d MMM, y").format(date);
 
         if (today == dateString) {
@@ -84,7 +84,7 @@ class _TransactionPageState extends State<TransactionPage> {
                         horizontal: 16, vertical: 16),
                     child: Text(
                       dateString,
-                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             color: AppTheme.blueDark,
                             fontWeight: FontWeight.bold,
                           ),
@@ -112,7 +112,7 @@ class _TransactionPageState extends State<TransactionPage> {
             // color: Theme.of(context).accentColor,
             child: Text(
               DateFormat("hh:mm a").format(date),
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(
                     color: AppTheme.light,
                     fontWeight: FontWeight.bold,
                   ),
@@ -147,10 +147,10 @@ class _TransactionPageState extends State<TransactionPage> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                 child: Text(
-                  transaction.name,
+                  transaction.name!,
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle2
+                      .subtitle2!
                       .copyWith(color: AppTheme.blueDark),
                 ),
               ),
@@ -161,7 +161,7 @@ class _TransactionPageState extends State<TransactionPage> {
                 "Cantidad: 1",
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle2
+                    .subtitle2!
                     .copyWith(color: AppTheme.light),
               ),
             ),
@@ -172,7 +172,7 @@ class _TransactionPageState extends State<TransactionPage> {
                     NumberFormat.simpleCurrency().format(transaction.point),
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle2
+                    .subtitle2!
                     .copyWith(color: AppTheme.light),
               ),
             ),

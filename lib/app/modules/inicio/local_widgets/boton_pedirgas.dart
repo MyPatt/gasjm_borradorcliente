@@ -5,7 +5,7 @@ import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
 import 'package:get/get.dart';
 
 class BotonPedirGas extends StatelessWidget {
-  const BotonPedirGas({Key key}) : super(key: key);
+  const BotonPedirGas({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

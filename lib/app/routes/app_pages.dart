@@ -1,7 +1,6 @@
 import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_binding.dart';
 import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_page.dart';
-import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_binding.dart';
-import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_controller.dart';
+import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_binding.dart'; 
 import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_page.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_binding.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_page.dart';
@@ -43,14 +42,14 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.perfil,
-      page: () => PerfilPage(),
+      page: () => const PerfilPage(),
       binding: PerfilBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
       name: AppRoutes.registrar,
-      page: () => RegistrarPage(),
+      page: () => const RegistrarPage(),
       binding: RegistrarBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),

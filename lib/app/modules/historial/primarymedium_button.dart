@@ -3,8 +3,8 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 
 class PrimaryMediumButton extends StatelessWidget {
   PrimaryMediumButton({
-    @required this.texto,
-    @required this.onPressed,
+    required this.texto,
+    required this.onPressed,
   });
   final void Function() onPressed;
   final String texto;

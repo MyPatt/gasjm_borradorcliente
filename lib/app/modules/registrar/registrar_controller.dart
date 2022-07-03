@@ -1,94 +1,95 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
+import 'package:gasjm/app/data/models/usuario_model.dart';
+import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
+import 'package:gasjm/app/data/repository/usuario_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class RegistrarController extends GetxController {
-  /* final _authRepository = Get.find<AuthenticationRepository>();
-  final _authStorage = Get.find<AuthStorageRepository>();
+  //Variables para ocultar el texto de la contrasena
+  final RxBool _contrasenaOculta = true.obs;
+  RxBool get contrasenaOculta => _contrasenaOculta;
+//Clave del formulario de resgistro de usuario
+  final claveFormRegistrar = GlobalKey<FormState>();
 
-  RequestToken _oRequestToken = RequestToken();
-  RequestToken get oRequestToken => _oRequestToken;
-*/
-  RxBool _isOscure1 = true.obs;
-  RxBool get isOscure1 => _isOscure1;
-
-  RxBool _isOscure2 = true.obs;
-  RxBool get isOscure2 => _isOscure2;
-  /* String _email = "";
-  String _password = ""; */
-  String _email = "gqcrispin@gmail.com";
-  String _password = "123456";
-
+  //Variables para controladores de campos de texto del formulario
+  final nombreTextoController = TextEditingController();
+  final apellidoTextoController = TextEditingController();
+  final correoElectronicoTextoController = TextEditingController();
+  final contrasenaTextoController = TextEditingController();
+  //
+//  UsuarioModel usuario;
   @override
   void onInit() {
-    // TODO: implement onInit
+    /*  usuario = UsuarioModel(
+        nombreTextoController.text,
+        apellidoTextoController.text,
+        correoElectronicoTextoController.text,
+        contrasenaTextoController.text);
+        */
     super.onInit();
   }
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
   }
 
-  void onChangedEmail(String value) {
-    print(value);
-    _email = value;
-  }
-
-  void onChangedPassword(String value) {
-    print(value);
-    _password = value;
-  }
-
   void mostrarContrasena() {
-    _isOscure1.value = _isOscure1.value ? false : true;
+    _contrasenaOculta.value = _contrasenaOculta.value ? false : true;
   }
 
-  void mostrarConfirmacionContrasena() {
-    _isOscure2.value = _isOscure2.value ? false : true;
-  }
-
+//
   cargarLogin() async {
     try {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       Get.toNamed(AppRoutes.login);
     } catch (e) {
       print(e);
     }
   }
 
-  auth() async {
-    /*  try {
-      _oRequestToken = await _authRepository.authentication(
-        email: _email,
-        password: _password,
-      );
+  /** REGISTRO CON CORREO EN FIREBASE */
+  final _authRepository = Get.find<AutenticacionRepository>();
 
-      //Guardar datos en storage
-      _authStorage.setSession(requestToken: _oRequestToken);
-
-      if (_oRequestToken.success) {
-        Get.offNamed(AppRoutes.HOME, arguments: _oRequestToken.requestToken);
-      }
-    } on DioError catch (e) {
-      Get.snackbar(
-        'Message',
-        e.response.data["message"],
-        duration: Duration(seconds: 5),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppTheme.blueBackground,
-      );
-    }*/
+  final error = Rx<String?>(null);
+  //final isLoading = RxBool(false);
+//Validar datos
+  bool? esFormValido() {
+    if (claveFormRegistrar.currentState?.validate() == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  loadHome() {
-    // Get.toNamed(AppRoutes.HOME);
-    //
+  //Metodo para registrar
+
+  Future<void> crearUsuarioConCorreoYContrasena() async {
+    print("\\_\n");
+    try {
+   //gtrue loa
+      error.value = null;
+      UsuarioModel usuarioDatos = UsuarioModel(
+          nombreTextoController.text,
+          apellidoTextoController.text,
+          correoElectronicoTextoController.text,
+          contrasenaTextoController.text);
+           print("/\*/_\n");
+      await _authRepository.crearUsuario(usuarioDatos);
+      print("\/*\_\n");
+    } catch (e) {
+      error.value = e.toString();
+    }
+    //isLoading.value = false;
   }
+ 
 }

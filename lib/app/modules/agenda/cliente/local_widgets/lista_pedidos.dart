@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 //Muestra la lista de pedidos agendados
 class ListaPedidoAgendados extends StatelessWidget {
-  const ListaPedidoAgendados({ Key key }) : super(key: key);
+  const ListaPedidoAgendados({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

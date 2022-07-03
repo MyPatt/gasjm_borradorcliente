@@ -1,11 +1,16 @@
 import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:gasjm/app/global_widgets/dialogs/progress_dialog.dart';
+import 'package:gasjm/app/global_widgets/header_logo.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
+import 'package:gasjm/app/global_widgets/secondary_button.dart';
+import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/modules/login/login_controller.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
 import 'package:flutter/material.dart';
+import 'package:gasjm/validator.dart';
 import 'package:get/get.dart';
 
 class FormLogin extends StatelessWidget {
@@ -14,103 +19,156 @@ class FormLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
-      builder: (_) => LayoutBuilder(
-        builder: (context, constraint) {
-          return Padding(
+      builder: (_) => LayoutBuilder(builder: (context, constraint) {
+        return AbsorbPointer(
+          absorbing: _.cargandoParaSocialMedia.value,
+          child: Padding(
             padding: EdgeInsets.only(bottom: constraint.maxHeight * .1),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  "Iniciar sesión",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4?.copyWith(
-                      color: AppTheme.blue, fontWeight: FontWeight.w900),
-                ),
-                Text(
-                  "Ingrese su contraseña",
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                      color: Colors.black38, fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                    height: Responsive.getScreenSize(context).height * .05),
-                InputText(
-                    iconPrefix: Icons.person_outlined,
-                    iconColor: AppTheme.light,
-                    border: InputBorder.none,
-                    keyboardType: TextInputType.emailAddress,
-                    //validator: null,
-                    labelText: "Usuario",
-                    filled: false,
-                    enabledBorderColor: Colors.black26,
-                    focusedBorderColor: AppTheme.blueBackground,
-                    fontSize: 14.0,
-                    fontColor: Colors.black45,
-                    onChanged: _.onChangedNombreUsuario),
-                SizedBox(
-                    height: Responsive.getScreenSize(context).height * .02),
-                Obx(
-                  () => InputText(
-                    iconPrefix: Icons.lock_outlined,
-                    iconColor: AppTheme.light,
-                    border: InputBorder.none,
-                    keyboardType: TextInputType.text,
-                    obscureText: _.isOscure.value,
-                    maxLines: 1,
-                    //validator: null,
-                    labelText: "Contraseña",
-                    filled: false,
-                    enabledBorderColor: Colors.black26,
-                    focusedBorderColor: AppTheme.blueBackground,
-                    fontSize: 14.0,
-                    fontColor: Colors.black45,
-                    suffixIcon: GestureDetector(
-                      onTap: _.showPassword,
-                      child: Icon(
-                        _.isOscure.value
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                        color: AppTheme.light,
-                      ),
-                    ),
-                    onChanged: _.onChangedContrasenaUsuario,
+            child: Form(
+              key: _.formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  const HeaderLogo(),
+                  SizedBox(
+                      height: Responsive.getScreenSize(context).height * .05),
+                  //////
+                  Text(
+                    "Iniciar sesión",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline4?.copyWith(
+                        color: AppTheme.blue, fontWeight: FontWeight.w900),
                   ),
-                ),
-                SizedBox(
-                    height: Responsive.getScreenSize(context).height * .03),
-                PrimaryButton(
-                  texto: "Iniciar sesión",
-                  onPressed: _.cargarInicio,
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * .03),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      "Contraseña olvidada",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2
-                          ?.copyWith(color: Colors.black54),
-                    ),
-                    GestureDetector(
-                      onTap: () => Get.toNamed(AppRoutes.signup),
-                      child: Text(
-                        "Crear una cuenta nueva",
-                        style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                            color: AppTheme.blueDark,
-                            fontWeight: FontWeight.bold),
+                  const TextDescription(text: "Ingrese sus datos"),
+                  SizedBox(
+                      height: Responsive.getScreenSize(context).height * .05),
+                  InputText(
+                    controller: _.emailTextController,
+                    iconPrefix: Icons.email_outlined,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: Validator.validarCorreoElectronico,
+                    labelText: "Correo electrónico",
+                  ),
+                  SizedBox(
+                      height: Responsive.getScreenSize(context).height * .02),
+                  Obx(
+                    () => InputText(
+                      controller: _.passwordTextController,
+                      iconPrefix: Icons.lock_outlined,
+                      keyboardType: TextInputType.text,
+                      obscureText: _.contrasenaOculta.value,
+                      maxLines: 1,
+                      validator: Validator.validarContrasena,
+                      labelText: "Contraseña",
+                      filled: false,
+                      /* */
+                      suffixIcon: GestureDetector(
+                        onTap: _.mostrarContrasena,
+                        child: Icon(
+                          _.contrasenaOculta.value
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: AppTheme.light,
+                        ),
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+
+                  SizedBox(
+                      height: Responsive.getScreenSize(context).height * .02),
+                  Obx(
+                    () => Visibility(
+                      visible: _.errorParaCorreo.value?.isNotEmpty == true,
+                      child: Text(
+                        _.errorParaCorreo.value ?? '',
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                      height: Responsive.getScreenSize(context).height * .02),
+                  Obx(
+                    () => Visibility(
+                      visible: _.cargandoParaCorreo.value,
+                      child: const Center(child: CircularProgressIndicator()),
+                    ),
+                  ),
+
+                  SizedBox(
+                      height: Responsive.getScreenSize(context).height * .05),
+                  PrimaryButton(
+                    texto: "Iniciar sesión",
+                    onPressed: () {
+                      _.iniciarSesionConCorreoYContrasena();
+                    },
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * .05),
+
+                  //** Opciones de inicio de sesion de redes sociales
+                  const TextDescription(text: "o iniciar sesión con"),
+                  SizedBox(height: MediaQuery.of(context).size.height * .02),
+                  /*    Obx(
+                    () => Visibility(
+                        visible: _.cargandoParaSocialMedia.value,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        )),
+                  ),
+                  */
+                  Obx(() => Visibility(
+                      visible: _.errorParaSocialMedia.value?.isNotEmpty == true,
+                      child: TextDescription(
+                        text: _.errorParaSocialMedia.value ?? '',
+                        color: Colors.red,
+                      ))),
+                  GestureDetector(
+                    onTap: () => {
+                      ProgressDialog.show(context),
+                      _.iniciarSesionConGoogle()
+                    },
+                    child: const Image(
+                        image: AssetImage("assets/icons/logogoogle.png"),
+                        height: 24.0),
+                  ),
+                  // SizedBox(height: MediaQuery.of(context).size.height * .05),
+
+                  const Expanded(child: Divider()),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "Contraseña olvidada",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2
+                            ?.copyWith(color: Colors.black54),
+                      ),
+                      GestureDetector(
+                        onTap: () => {
+                          Navigator.pushReplacementNamed(
+                              context, AppRoutes.registrar)
+                        },
+                        child: Text(
+                          "Crear una cuenta nueva",
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              ?.copyWith(
+                                  color: AppTheme.blueDark,
+                                  fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      }),
     );
   }
 }

@@ -21,7 +21,7 @@ class HeaderGlobal extends StatelessWidget {
                   text: "J&M",
                   style: Theme.of(context)
                       .textTheme
-                      .headline4
+                      .headline4!
                       .copyWith(color: Colors.white),
                 ),
               ],

@@ -14,8 +14,8 @@ class InicioController extends ChangeNotifier {
   bool _loading = true;
   bool get loading => _loading;
 
-  bool _gpsEnabled;
-  bool get gpsEnabled => _gpsEnabled;
+  bool? _gpsEnabled;
+  bool? get gpsEnabled => _gpsEnabled;
 //
   final Map<MarkerId, Marker> _markers = {};
   Set<Marker> get markers => _markers.values.toSet();

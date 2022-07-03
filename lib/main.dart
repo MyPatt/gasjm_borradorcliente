@@ -1,20 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/utils/dependency_injection.dart';
-import 'package:gasjm/app/modules/splash/splash_binding.dart';
-import 'package:gasjm/app/modules/splash/splash_page.dart';
+import 'package:gasjm/app.dart';
+import 'package:gasjm/app/data/repository/implementations/usurio_repository.dart';
+import 'package:gasjm/app/data/repository/usuario_repository.dart';
+
 import 'package:gasjm/app/modules/ubicacion/blocs/gps/gps_bloc.dart';
-import 'package:gasjm/app/routes/app_pages.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
+import 'package:gasjm/app/data/repository/implementations/authenticacion_repository.dart';
 import 'package:get/get.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  DependencyInjection.init();
-  // runApp(MyApp());
-  //Comprobar proceso de instalacio de firebase
-  /* WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();*/
+  //Inicializar Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  //Inyectando implentacion del repositorio de autenticacion
+  Get.put<AutenticacionRepository>(AutenticacionRepositoryImpl());
+  //Get.put<MyUserRepository>(MyUserRepositoryImp());
+
   //Para obtener estado del GPS
   runApp(MultiBlocProvider(
     providers: [
@@ -24,24 +28,4 @@ void main() async {
     ],
     child: MyApp(),
   ));
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Gas J&M',
-      theme: ThemeData(
-        /*  primaryColor: kPrimaryColor,
-        scaffoldBackgroundColor: Colors.white,
-        */
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashPage(),
-      initialBinding: SplashBinding(),
-      getPages: AppPages.pages,
-    );
-  }
 }

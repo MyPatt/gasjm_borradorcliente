@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 class FormPedirGas extends StatelessWidget {
-  const FormPedirGas({Key key}) : super(key: key);
+  const FormPedirGas({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +40,8 @@ class FormPedirGas extends StatelessWidget {
                   iconPrefix: Icons.maps_home_work_outlined,
                   iconColor: AppTheme.light,
                   border: InputBorder.none,
-                  validator: null,
                   labelText: "Barrio / Sector",
                   filled: false,
-                  enabledBorderColor: Colors.black26,
-                  focusedBorderColor: AppTheme.blueBackground,
-                  fontSize: 14.0,
-                  fontColor: Colors.black45,
                 ),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .02),
@@ -55,13 +50,8 @@ class FormPedirGas extends StatelessWidget {
                   iconPrefix: Icons.streetview_sharp,
                   iconColor: AppTheme.light,
                   border: InputBorder.none,
-                  validator: null,
                   labelText: "Calle principal",
                   filled: false,
-                  enabledBorderColor: Colors.black26,
-                  focusedBorderColor: AppTheme.blueBackground,
-                  fontSize: 14.0,
-                  fontColor: Colors.black45,
                 ),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .02),
@@ -70,13 +60,8 @@ class FormPedirGas extends StatelessWidget {
                   iconPrefix: Icons.streetview_outlined,
                   iconColor: AppTheme.light,
                   border: InputBorder.none,
-                  validator: null,
                   labelText: "Calle secundaria",
                   filled: false,
-                  enabledBorderColor: Colors.black26,
-                  focusedBorderColor: AppTheme.blueBackground,
-                  fontSize: 14.0,
-                  fontColor: Colors.black45,
                 ),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .02),
@@ -85,13 +70,8 @@ class FormPedirGas extends StatelessWidget {
                   iconPrefix: Icons.home_outlined,
                   iconColor: AppTheme.light,
                   border: InputBorder.none,
-                  validator: null,
                   labelText: "Referencia",
                   filled: false,
-                  enabledBorderColor: Colors.black26,
-                  focusedBorderColor: AppTheme.blueBackground,
-                  fontSize: 14.0,
-                  fontColor: Colors.black45,
                 ),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .03),

@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 class EditarAgendaController extends GetxController {
   RxString fecha = DateFormat.yMMMMd().format(DateTime.now()).obs;
-  DateTime hora;
+  late DateTime hora;
   //
   final myController = TextEditingController().obs;
   @override
@@ -32,7 +32,7 @@ class EditarAgendaController extends GetxController {
   //Fecha
   Future<void> selectDate(BuildContext context) async {
     print(fecha.value);
-    final DateTime d = await showDatePicker(
+    final DateTime? d = await showDatePicker(
       //we wait for the dialog to return
       context: context,
       initialDate: DateTime.now(),

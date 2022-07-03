@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/modules/login/login_controller.dart';
 import 'package:gasjm/app/modules/login/widgets/content.dart';
-import 'package:gasjm/app/modules/login/widgets/header.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
@@ -12,19 +11,21 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
       builder: (_) => Scaffold(
-        backgroundColor: AppTheme.blueBackground,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          leading: const BackButton(
+            color: AppTheme.blueDark,
+          ),
+        ),
         body: SafeArea(
           bottom: false,
           child: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height -
                   MediaQuery.of(context).padding.top,
-              child: Column(
-                children: [
-                  Header(),
-                  Content(),
-                ],
-              ),
+              child: const Content(),
             ),
           ),
         ),

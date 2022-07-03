@@ -10,7 +10,6 @@ class UbicacionController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     //
     /* PermissionHandler()
@@ -20,13 +19,11 @@ class UbicacionController extends GetxController {
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
   }
 

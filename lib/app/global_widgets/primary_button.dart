@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
-class PrimaryButton extends StatelessWidget { 
+class PrimaryButton extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
-  PrimaryButton({@required this.texto, @required this.onPressed,});
+  PrimaryButton({
+    required this.texto,
+    required this.onPressed,
+  });
 
   final void Function() onPressed;
-  final String texto; 
+  final String texto;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +19,7 @@ class PrimaryButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: MaterialButton(
-        minWidth:  double.infinity,
+        minWidth: double.infinity,
         height: 60.0,
         //onPressed: () {},
         onPressed: onPressed,

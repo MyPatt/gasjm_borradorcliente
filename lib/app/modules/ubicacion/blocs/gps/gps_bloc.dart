@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart'; 
 import 'package:gasjm/app/modules/ubicacion/ubicacion_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,12 +10,12 @@ part 'gps_event.dart';
 part 'gps_state.dart';
 
 class GpsBloc extends Bloc<GpsEvent, GpsState> {
-  StreamSubscription gpsServiceSubscription;
+  StreamSubscription? gpsServiceSubscription;
   final _controller = UbicacionController();
 
-  GpsBloc()
-      : super(const GpsState(
-            isGpsEnabled: false, isGpsPermissionGranted: false)) {
+  GpsBloc() : 
+  super(const GpsState(   
+     isGpsEnabled: false, isGpsPermissionGranted: false)) {
     on<GpsAndPermissionEvent>((event, emit) => emit(state.copyWith(
         isGpsEnabled: event.isGpsEnabled,
         isGpsPermissionGranted: event.isGpsPermissionGranted)));
@@ -50,7 +49,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       //print('service status $event');
 
       final isEnabled = (event.index == 1) ? true : false;
-      print('service status $isEnabled');
+      print('>\n service status $isEnabled');
       add(GpsAndPermissionEvent(
           isGpsEnabled: isEnabled,
           isGpsPermissionGranted: state.isGpsPermissionGranted));
@@ -76,7 +75,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
         add(GpsAndPermissionEvent(
             isGpsEnabled: state.isGpsEnabled, isGpsPermissionGranted: false));
         // ignore: avoid_print
-        print('*******object******');
+        print('*******object******\n');
         final estado = openAppSettings();
 
         estado.then((value) {
@@ -90,7 +89,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
 
   @override
   Future<void> close() {
-    gpsServiceSubscription.cancel();
+    gpsServiceSubscription!.cancel();
     //todo: Limpiar el ServiceStatus Stream
     return super.close();
   }
