@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart'; 
 import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
 
 import 'package:gasjm/app/routes/app_routes.dart';
@@ -9,8 +8,7 @@ import 'package:get/get.dart';
 
 //Menú deslizable a la izquierda con opciones del  usuario
 class MenuLateral extends StatelessWidget {
-  const MenuLateral({key}) : super(key: key);
-
+  MenuLateral({key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +38,12 @@ class MenuLateral extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Text(
-                Get.find<AutenticacionController>()
+                _ .usuario.value?.perfil ?? 'Usuario',
+                /*  Get.find<AutenticacionController>()
                         .autenticacionUsuario
                         .value
                         ?.uid ??
-                    '',
+                    '',*/
                 style: const TextStyle(color: Colors.black38),
               ),
             ),

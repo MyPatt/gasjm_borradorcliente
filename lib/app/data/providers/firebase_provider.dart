@@ -17,32 +17,20 @@ class FirebaseProvider {
   //Instancia de firestore
   FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
-  //Instancia de storage
-  FirebaseStorage get storage => FirebaseStorage.instance;
+  //Instancia de firestore
+  final firestoreInstance = FirebaseFirestore.instance;
 
-  //Obtner usuario con future que puede ser nulo
+  //Obtner perfil del usuario actual
   Future<UsuarioModel?> getUsuario() async {
-    final snapshot = await firestore.doc('user/${usuarioActual.uid}').get();
-    //si se encuentra los datos del usuario se retornan dichos datos
-    if (snapshot.exists) return UsuarioModel.fromFirebaseMap(snapshot.data()!);
-    return null;
-  }
-
-  //Guardar datos del usuario en firestore
-  Future<void> guadarUsuario(UsuarioModel usuario, String cedula) async {
-      print("```````````````````````````````````````````\n");
-
-    final ref = firestore.doc('usuario/${usuarioActual.uid}');
-    //Guardar foto
-    if (cedula != null) {
-      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
-      await ref.set(
-          usuario.toFirebaseMap(cedula: cedula), SetOptions(merge: true));
+    final snapshot = await firestoreInstance
+        .collection('usuarios')
+        .doc(usuarioActual.uid)
+        .get();
+    if (snapshot.exists) {
+      return UsuarioModel.fromFirebaseMap(snapshot.data()!);
     } else {
-      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@n");
-
-      //En caso de que no hay foto guardarsolo el usuario
-      await ref.set(usuario.toFirebaseMap(), SetOptions(merge: true));
+      print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     }
+    return null;
   }
 }

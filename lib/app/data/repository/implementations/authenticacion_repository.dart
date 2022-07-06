@@ -35,28 +35,7 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
     //
     return _usuarioDeFirebase(resultadoAutenticacion.user);
   }
-  /*  Future<AutenticacionUsuario?> crearUsuarioConCorreoYContrasena(
-      String correo, String contrasena) async {
-    try {
-      //Registro de correo y contraena
-      final resultadoAutenticacion = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: correo, password: contrasena);
-      //Actualizar Nombre y apellido
 
-      //
-      return _usuarioDeFirebase(resultadoAutenticacion.user);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('La contraseña es demasiado débil');
-      } else if (e.code == 'email-already-in-use') {
-        print(' ');
-      }
-    } catch (e) {
-      print(e);
-    }
-    return null;
-  }
-  */
 
   @override
   Future<AutenticacionUsuario?> iniciarSesionConCorreoYContrasena(
@@ -147,29 +126,6 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
     });
     return _usuarioDeFirebase(resultadoAutenticacion.user);
   }
-  /*
-  Future<AutenticacionUsuario?> crearUsuario(UsuarioModel usuario) async {
-    try {
-      //Registro de correo y contraena
-      final resultadoAutenticacion = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: usuario.correo, password: usuario.contrasena);
-      //Actualizar Nombre y apellido del usuario creado
-      await resultadoAutenticacion.user!.updateDisplayName(
-        "${usuario.nombre} ${usuario.apellido}",
-      );
-      //
-      return _usuarioDeFirebase(resultadoAutenticacion.user);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('La contraseña es demasiado débil');
-      } else if (e.code == 'email-already-in-use') {
-        print('La cuenta ya existe para ese correo electrónico');
-      }
-    } catch (e) {
-      print(e);
-    }
-    return null;
-  }
- */
+  
+
 }

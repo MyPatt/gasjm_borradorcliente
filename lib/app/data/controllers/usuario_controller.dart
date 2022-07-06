@@ -10,35 +10,18 @@ import 'package:get/get.dart';
 class MyUserController extends GetxController {
   final _userRepository = Get.find<MyUserRepository>();
 
-  final nameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final ageController = TextEditingController();
-  final correoController = TextEditingController();
-  final contrasenaController = TextEditingController();
-
-  Rx<File?> pickedImage = Rx(null);
-  Rx<bool> isLoading = Rx(false);
-  Rx<bool> isSaving = Rx(false);
-  Rx<UsuarioModel?> user = Rx(null);
+   Rx<UsuarioModel?> usuario = Rx(null);
 
   @override
   void onInit() {
-   // getMyUser();
+   getMyUser();
     super.onInit();
   }
 
-   
-  void setImage(File? imageFile) async {
-    pickedImage.value = imageFile;
-  }
-
-  Future<void> getMyUser() async {
-    isLoading.value = true;
-    user.value = await _userRepository.getMyUser();
-    nameController.text = user.value?.nombre ?? '';
-    lastNameController.text = user.value?.apellido ?? '';
-    //ageController.text = user.value?.age.toString() ?? '';
-    isLoading.value = false;
+    Future<void> getMyUser() async {
+    
+    usuario.value = await _userRepository.getUsuario();
+  
   }
  
 }

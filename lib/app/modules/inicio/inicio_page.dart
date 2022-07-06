@@ -18,7 +18,7 @@ class InicioPage extends StatelessWidget {
     return GetBuilder<InicioController>(
       builder: (_) => Scaffold(
         //Menú deslizable a la izquierda con opciones del  usuario
-        drawer:  const MenuLateral(),
+        drawer:   MenuLateral(),
         //Barra de herramientas de opciones para  agenda y  historial
         appBar: AppBar(
           backgroundColor: AppTheme.blueBackground,

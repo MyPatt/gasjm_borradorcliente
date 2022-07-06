@@ -19,6 +19,7 @@ void main() async {
   Get.put<AutenticacionRepository>(AutenticacionRepositoryImpl());
   Get.put<MyUserRepository>(MyUserRepositoryImp());
 
+
   //Para obtener estado del GPS
   runApp(MultiBlocProvider(
     providers: [
