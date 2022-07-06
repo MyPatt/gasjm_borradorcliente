@@ -17,7 +17,7 @@ void main() async {
   await Firebase.initializeApp();
   //Inyectando implentacion del repositorio de autenticacion
   Get.put<AutenticacionRepository>(AutenticacionRepositoryImpl());
-  //Get.put<MyUserRepository>(MyUserRepositoryImp());
+  Get.put<MyUserRepository>(MyUserRepositoryImp());
 
   //Para obtener estado del GPS
   runApp(MultiBlocProvider(

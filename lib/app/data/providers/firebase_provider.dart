@@ -29,19 +29,18 @@ class FirebaseProvider {
   }
 
   //Guardar datos del usuario en firestore
-  Future<void> guadarUsuario(UsuarioModel usuario, File? foto) async {
-    final ref = firestore.doc('user/${usuarioActual.uid}');
+  Future<void> guadarUsuario(UsuarioModel usuario, String cedula) async {
+      print("```````````````````````````````````````````\n");
+
+    final ref = firestore.doc('usuario/${usuarioActual.uid}');
     //Guardar foto
-    if (foto != null) {
-      final fotoPath =
-          '${usuarioActual.uid}/profile/${path.basename(foto.path)}';
-      final storageRef = storage.ref(fotoPath);
-      await storageRef.putFile(foto);
-      final url = await storageRef.getDownloadURL();
-      await ref.set(usuario.toFirebaseMap(newFoto: url), SetOptions(merge: true));
-    } 
-    else
-    {
+    if (cedula != null) {
+      print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+      await ref.set(
+          usuario.toFirebaseMap(cedula: cedula), SetOptions(merge: true));
+    } else {
+      print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@n");
+
       //En caso de que no hay foto guardarsolo el usuario
       await ref.set(usuario.toFirebaseMap(), SetOptions(merge: true));
     }

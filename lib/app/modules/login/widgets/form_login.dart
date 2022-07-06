@@ -63,7 +63,7 @@ class FormLogin extends StatelessWidget {
                               Responsive.getScreenSize(context).height * .02),
                       Obx(
                         () => InputText(
-                          controller: _.contrasenaTextoController.value,
+                          controller: _.contrasenaTextoController,
                           iconPrefix: Icons.lock_outlined,
                           keyboardType: TextInputType.text,
                           obscureText: _.contrasenaOculta.value,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/global_widgets/secondary_button.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -37,12 +37,18 @@ class FormPerfil extends StatelessWidget {
                     height: Responsive.getScreenSize(context).height * .05),
                 PrimaryButton(
                   texto: "Cliente",
-                  onPressed: _.cargarRegistrar,
+                  onPressed: () {
+                    _.cargarLogin("Cliente");
+                  },
                 ),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .03),
                 SecondaryButton(
-                  texto: "Repartidor", onPressed: () {  },
+                  texto: "Repartidor",
+                  onPressed: () {
+                    _.cargarLogin("Repartidor");
+
+                  },
                 ),
               ],
             ),

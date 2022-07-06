@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 //Menú deslizable a la izquierda con opciones del  usuario
 class MenuLateral extends StatelessWidget {
   const MenuLateral({key}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InicioController>(

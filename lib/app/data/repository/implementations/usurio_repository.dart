@@ -11,6 +11,6 @@ class MyUserRepositoryImp extends MyUserRepository {
   Future<UsuarioModel?> getMyUser() => provider.getUsuario();
 
   @override
-  Future<void> saveMyUser(UsuarioModel user, File? image) =>
-      provider.guadarUsuario(user, image);
+  Future<void> saveMyUser(UsuarioModel user, String cedula) =>
+      provider.guadarUsuario(user, cedula);
 }

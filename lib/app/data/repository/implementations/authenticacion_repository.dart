@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 import 'package:gasjm/app/data/models/usuario_model.dart';
 import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AutenticacionRepositoryImpl extends AutenticacionRepository {
   final _firebaseAutenticacion = FirebaseAuth.instance;
+  final firestoreInstance = FirebaseFirestore.instance;
 
 //Modelo User de Firebase
   AutenticacionUsuario? _usuarioDeFirebase(User? usuario) => usuario == null
@@ -23,6 +27,16 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
   @override
   Future<AutenticacionUsuario?> crearUsuarioConCorreoYContrasena(
       String correo, String contrasena) async {
+    //Registro de correo y contraena
+    final resultadoAutenticacion = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: correo, password: contrasena);
+    //Actualizar Nombre y apellido
+
+    //
+    return _usuarioDeFirebase(resultadoAutenticacion.user);
+  }
+  /*  Future<AutenticacionUsuario?> crearUsuarioConCorreoYContrasena(
+      String correo, String contrasena) async {
     try {
       //Registro de correo y contraena
       final resultadoAutenticacion = await FirebaseAuth.instance
@@ -35,13 +49,14 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
       if (e.code == 'weak-password') {
         print('La contraseña es demasiado débil');
       } else if (e.code == 'email-already-in-use') {
-        print('La cuenta ya existe para ese correo electrónico');
+        print(' ');
       }
     } catch (e) {
       print(e);
     }
     return null;
   }
+  */
 
   @override
   Future<AutenticacionUsuario?> iniciarSesionConCorreoYContrasena(
@@ -60,11 +75,10 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
       accessToken: autenticacionGoogle?.accessToken,
       idToken: autenticacionGoogle?.idToken,
     );
-  
-      final resultadoAutenticacion =
-          await FirebaseAuth.instance.signInWithCredential(credencial);
-      return _usuarioDeFirebase(resultadoAutenticacion.user);
-   
+
+    final resultadoAutenticacion =
+        await FirebaseAuth.instance.signInWithCredential(credencial);
+    return _usuarioDeFirebase(resultadoAutenticacion.user);
   }
 
   @override
@@ -88,6 +102,52 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
   }
 
   @override
+  Future<AutenticacionUsuario?> registrarUsuario(UsuarioModel usuario) async {
+    //Registro de correo y contraena
+    final resultadoAutenticacion =
+        await _firebaseAutenticacion.createUserWithEmailAndPassword(
+            email: usuario.correo, password: usuario.contrasena);
+    //Actualizar Nombre y apellido del usuario creado
+    await resultadoAutenticacion.user!.updateDisplayName(
+      "${usuario.nombre} ${usuario.apellido}",
+    );
+    // //Ingresar datos de usuario
+    final uid =
+        Get.find<AutenticacionController>().autenticacionUsuario.value?.uid;
+    firestoreInstance.collection("usuarios").doc(uid).set({
+      "cedula": usuario.cedula,
+      "perfil": usuario.perfil,
+    }).then((value) {
+      print("success");
+    });
+    return _usuarioDeFirebase(resultadoAutenticacion.user);
+  }
+
+  @override
+  Future<AutenticacionUsuario?> registrarUsuarioConGoogle(
+      UsuarioModel usuario) async {
+    final usuarioGoogle = await GoogleSignIn().signIn();
+    final autenticacionGoogle = await usuarioGoogle?.authentication;
+
+    final credencial = GoogleAuthProvider.credential(
+      accessToken: autenticacionGoogle?.accessToken,
+      idToken: autenticacionGoogle?.idToken,
+    );
+
+    final resultadoAutenticacion =
+        await FirebaseAuth.instance.signInWithCredential(credencial);
+    // //Ingresar datos de usuario
+    final uid =
+        Get.find<AutenticacionController>().autenticacionUsuario.value?.uid;
+    firestoreInstance.collection("usuarios").doc(uid).set({
+      "cedula": usuario.cedula,
+      "perfil": usuario.perfil,
+    }).then((value) {
+      print("success");
+    });
+    return _usuarioDeFirebase(resultadoAutenticacion.user);
+  }
+  /*
   Future<AutenticacionUsuario?> crearUsuario(UsuarioModel usuario) async {
     try {
       //Registro de correo y contraena
@@ -111,4 +171,5 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
     }
     return null;
   }
+ */
 }

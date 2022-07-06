@@ -6,6 +6,7 @@ import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
 import 'package:get/get.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   ///
@@ -17,7 +18,7 @@ class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   final correoTextoController = TextEditingController();
-  final contrasenaTextoController = TextEditingController().obs;
+  final contrasenaTextoController = TextEditingController();
 
   bool isProcessing = false;
   //Toast para notificar el inicio de sesion
@@ -32,6 +33,7 @@ class LoginController extends GetxController {
       print(correoTextoController.text);
     });*/
     flutterToast = Fluttertoast();
+
     super.onInit();
   }
 
@@ -77,6 +79,7 @@ class LoginController extends GetxController {
       //
       _showToastBienvenido();
     } on FirebaseException catch (e) {
+      //:TODO OJO implementar error
       errorParaSocialMedia.value = e.code;
     } catch (e) {
       errorParaSocialMedia.value =
@@ -126,4 +129,6 @@ class LoginController extends GetxController {
         backgroundColor: Colors.white,
         textColor: AppTheme.blueBackground);
   }
+
+ 
 }

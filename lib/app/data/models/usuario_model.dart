@@ -2,43 +2,42 @@
 import 'package:equatable/equatable.dart';
 
 class UsuarioModel extends Equatable{
-  final String? id;
+  final String? uid;
 
   final String? cedula;
   final String nombre;
   final String apellido; 
     final String correo;
       final String contrasena;
-  final String? foto; 
+  final String? perfil; 
 
   const UsuarioModel(
 
       this.nombre,
-      this.apellido,    this.correo, this.contrasena,{      this.id,this.cedula,this.foto
+      this.apellido,this.correo, this.contrasena,     {    this.uid,this.cedula,this.perfil
       });
 
-  Map<String, Object?> toFirebaseMap({String? newFoto}) {
+  Map<String, Object?> toFirebaseMap({String? cedula}) {
     return <String, Object?>{
-      'id': id,
+      'id': uid,
       'nombre': nombre,
       'apellido': apellido,
       'cedula': cedula,
-      'foto': newFoto ?? foto,
     };
   }
   
   UsuarioModel.fromFirebaseMap(Map<String,Object?> data)
-  :  id= data['id'] as String,
+  :  uid= data['id'] as String,
    nombre= data['nombre'] as String,
      apellido= data['apellido'] as String,    
      correo= data['correo'] as String,
      contrasena= data['contrasena'] as String, 
      cedula= data['cedula'] as String, 
-     foto= data['foto'] as String;
+     perfil= data['perfil'] as String;
 
  
 
   @override
   
-  List<Object?> get props => [id,nombre,apellido,cedula,foto];
+  List<Object?> get props => [uid,nombre,apellido,cedula,perfil];
 }

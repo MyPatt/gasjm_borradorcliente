@@ -137,7 +137,7 @@ class FormRegistrar extends StatelessWidget {
                                       if (_.claveFormRegistrar.currentState
                                               ?.validate() ==
                                           true) {
-                                        _.crearUsuarioConCorreoYContrasena();
+                                        _.registrarUsuario();
                                       }
                                     }),
                                 if (isSaving) const CircularProgressIndicator(),
@@ -160,7 +160,8 @@ class FormRegistrar extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    _.iniciarSesionConGoogle();
+                                    // _.iniciarSesionConGoogle();
+                                    _.registrarConGoogle();
                                   },
                                   child: const Image(
                                       image: AssetImage(
