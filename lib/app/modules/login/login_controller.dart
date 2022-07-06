@@ -16,16 +16,21 @@ class LoginController extends GetxController {
   //Variables para el form
   final formKey = GlobalKey<FormState>();
 
-  final emailTextController = TextEditingController();
-  final passwordTextController = TextEditingController();
+  final correoTextoController = TextEditingController();
+  final contrasenaTextoController = TextEditingController().obs;
 
   bool isProcessing = false;
   //Toast para notificar el inicio de sesion
   Fluttertoast? flutterToast;
-
+//
   @override
   void onInit() {
     //
+    /*   correoTextoController.addListener(() {
+      print(correoTextoController.text);
+      formKey.currentState?.validate();
+      print(correoTextoController.text);
+    });*/
     flutterToast = Fluttertoast();
     super.onInit();
   }
@@ -37,6 +42,7 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
+    //
     super.onClose();
   }
 
@@ -66,11 +72,15 @@ class LoginController extends GetxController {
     try {
       cargandoParaSocialMedia.value = true;
       errorParaSocialMedia.value = null;
+
       await auxUsuario();
       //
       _showToastBienvenido();
+    } on FirebaseException catch (e) {
+      errorParaSocialMedia.value = e.code;
     } catch (e) {
-      errorParaSocialMedia.value = e.toString();
+      errorParaSocialMedia.value =
+          "Error de inicio de sesión. Inténtalo de nuevo.";
     }
     cargandoParaSocialMedia.value = false;
   }
@@ -83,59 +93,27 @@ class LoginController extends GetxController {
   final cargandoParaCorreo = RxBool(false);
 
   Future<void> iniciarSesionConCorreoYContrasena() async {
-    if (formKey.currentState?.validate() == true) {
-      try {
-        cargandoParaCorreo.value = true;
-        errorParaCorreo.value = null;
-        await _autenticacioRepository.iniciarSesionConCorreoYContrasena(
-          emailTextController.text,
-          passwordTextController.text,
-        );
-        //
-        _showToastBienvenido();
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
-          errorParaCorreo.value =
-              'Ningún usuario encontrado con ese correo electrónico';
-          print('No user found for that email.');
-        } else if (e.code == 'wrong-password') {
-          errorParaCorreo.value = 'Contraseña incorrecta';
+    try {
+      cargandoParaCorreo.value = true;
 
-          print('Wrong password provided for that user.');
-        }
-      } catch (e) {
-        errorParaCorreo.value = e.toString();
+      errorParaCorreo.value = null;
+      await _autenticacioRepository.iniciarSesionConCorreoYContrasena(
+        correoTextoController.text,
+        contrasenaTextoController.value.text,
+      );
+      //
+      _showToastBienvenido();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        errorParaCorreo.value =
+            'Ningún usuario encontrado con ese correo electrónico.';
+      } else if (e.code == 'wrong-password') {
+        errorParaCorreo.value = 'Contraseña incorrecta.';
       }
-      cargandoParaCorreo.value = false;
+    } catch (e) {
+      errorParaCorreo.value = 'Error de inicio de sesión. Inténtalo de nuevo.';
     }
-  }
-
-  //Sin usar
-  _showToast() {
-    // this will be our toast UI
-    Widget toast = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25.0),
-        color: Colors.greenAccent,
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          Icon(Icons.check),
-          SizedBox(
-            width: 12.0,
-          ),
-          Text("This is a Custom Toast"),
-        ],
-      ),
-    );
-
-    /* flutterToast.showToast(
-        child: toast,
-        gravity: ToastGravity.BOTTOM,
-        toastDuration: Duration(seconds: 2),
-    );*/
+    cargandoParaCorreo.value = false;
   }
 
 //Mensaje toast que muestra al iniciar sesion con exito

@@ -53,7 +53,7 @@ class MenuLateral extends StatelessWidget {
                 icon: Icons.person_outline,
                 text: 'Mi cuenta',
                 onTap: () => {
-                      Navigator.pushReplacementNamed(context, AppRoutes.inicio)
+                      Navigator.pushReplacementNamed(context, AppRoutes.agenda)
                     }),
             _buildDrawerItem(
                 icon: Icons.message_outlined,

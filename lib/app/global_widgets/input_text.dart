@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
 class InputText extends StatelessWidget {
-   final String? initialValue;
+  final String? initialValue;
+  final bool autofocus;
+  final TextInputAction textInputAction;
+  final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focusnode;
   final bool readOnly;
   final TextEditingController? controller;
   final IconData? iconPrefix;
@@ -25,30 +30,35 @@ class InputText extends StatelessWidget {
   final void Function()? onTap;
   final void Function(String?)? onSaved;
 
-   InputText({
+  InputText({
     this.initialValue,
-      this.readOnly = false,
-      this.controller, 
-      this.iconColor = AppTheme.light,
-      this.labelText,
-      this.filled = false,
-      this.fontColor = Colors.black54,
-      this.fontSize = 14.0,
-      this.enabledBorderColor = Colors.black26,
-      this.focusedBorderColor = AppTheme.blueBackground,
-      this.validator,
-      this.keyboardType = TextInputType.text,
-      this.obscureText = false,
-      this.suffixIcon,
-      this.hintText,
-      this.minLines = 1,
-      this.maxLines,
-      this.border = InputBorder.none,
-      this.onChanged,
-      this.onTap,
-      this.onSaved, this.iconPrefix
-   });
-   /*InputText( 
+    this.autofocus = false,
+    this.textInputAction = TextInputAction.next,
+    this.inputFormatters,
+    this.focusnode,
+    this.readOnly = false,
+    this.controller,
+    this.iconColor = AppTheme.light,
+    this.labelText,
+    this.filled = false,
+    this.fontColor = Colors.black54,
+    this.fontSize = 14.0,
+    this.enabledBorderColor = Colors.black26,
+    this.focusedBorderColor = AppTheme.blueBackground,
+    this.validator,
+    this.keyboardType = TextInputType.text,
+    this.obscureText = false,
+    this.suffixIcon,
+    this.hintText,
+    this.minLines = 1,
+    this.maxLines,
+    this.border = InputBorder.none,
+    this.onChanged,
+    this.onTap,
+    this.onSaved,
+    this.iconPrefix,
+  });
+  /*InputText( 
       {this.initialValue,
       this.readOnly = false,
       this.controller, 
@@ -71,43 +81,42 @@ class InputText extends StatelessWidget {
       this.onTap,
       this.onSaved, this.iconPrefix});*/
 
- 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      textInputAction: TextInputAction.done,
+      autofocus: autofocus,
       initialValue: initialValue,
       style: TextStyle(color: fontColor, fontSize: fontSize),
       decoration: InputDecoration(
-        border: border,
-        icon: Icon(
-          iconPrefix,
-          color: iconColor,
-          size: 20.0,
-        ),
-        labelText: labelText,
-        labelStyle: const TextStyle(color: Colors.black45),
-        filled: filled,
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            width: .5,
-            color: enabledBorderColor,
+          border: border,
+          icon: Icon(
+            iconPrefix,
+            color: iconColor,
+            size: 20.0,
           ),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: focusedBorderColor,
+          labelText: labelText,
+          labelStyle: const TextStyle(color: Colors.black45),
+          filled: filled,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              width: .5,
+              color: enabledBorderColor,
+            ),
           ),
-        ),
-        suffixIcon: suffixIcon,
-        hintText: hintText,
-        errorBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(6.0),
-          borderSide: const BorderSide(
-            color: Colors.red,
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: focusedBorderColor,
+            ),
           ),
-        ),
-      ),
+          suffixIcon: suffixIcon,
+          hintText: hintText,
+          errorBorder: UnderlineInputBorder(
+            borderRadius: BorderRadius.circular(6.0),
+            borderSide: const BorderSide(
+              color: Colors.red,
+            ),
+          ),
+          errorStyle: const TextStyle(color: Colors.red)),
       readOnly: readOnly,
       controller: controller,
       onSaved: onSaved,
@@ -118,6 +127,9 @@ class InputText extends StatelessWidget {
       maxLines: maxLines,
       minLines: minLines,
       validator: validator,
+      //
+      textInputAction: textInputAction,
+      inputFormatters:inputFormatters ,
     );
   }
 }

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class RegistrarPage extends StatelessWidget {
   const RegistrarPage({key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegistrarController>(
@@ -23,10 +23,9 @@ class RegistrarPage extends StatelessWidget {
           bottom: false,
           child: SingleChildScrollView(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).padding.top,
-              child: Content()
-            ),
+                height: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).padding.top,
+                child: Content()),
           ),
         ),
       ),

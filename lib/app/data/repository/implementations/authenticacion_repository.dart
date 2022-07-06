@@ -60,14 +60,11 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
       accessToken: autenticacionGoogle?.accessToken,
       idToken: autenticacionGoogle?.idToken,
     );
-    try {
+  
       final resultadoAutenticacion =
           await FirebaseAuth.instance.signInWithCredential(credencial);
       return _usuarioDeFirebase(resultadoAutenticacion.user);
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-    }
-    return null;
+   
   }
 
   @override
