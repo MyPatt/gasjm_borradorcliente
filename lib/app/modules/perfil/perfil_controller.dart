@@ -24,9 +24,9 @@ class PerfilController extends GetxController {
   cargarLogin(String perfil) async {
     try {
       await Future.delayed(const Duration(seconds: 1));
-      print("=====================#${perfil}\n");
+
       _guardarPerfil(perfil);
-      Get.offNamed(AppRoutes.login);
+      Get.offNamed(AppRoutes.registrar);
     } catch (e) {
       print(e);
     }

@@ -8,7 +8,7 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
-import 'package:gasjm/validator.dart';
+import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:get/get.dart';
 
 class FormRegistrar extends StatelessWidget {
@@ -63,7 +63,7 @@ class FormRegistrar extends StatelessWidget {
                             ],
                             labelText: "Nombre",
                             controller: _.nombreTextoController,
-                            validator: Validator.validarNombre,
+                            validator: Validacion.validarNombre,
                           ),
                           SizedBox(
                               height: Responsive.getScreenSize(context).height *
@@ -77,7 +77,7 @@ class FormRegistrar extends StatelessWidget {
                             ],
                             labelText: "Apellido",
                             controller: _.apellidoTextoController,
-                            validator: Validator.validarApellido,
+                            validator: Validacion.validarApellido,
                           ),
                           SizedBox(
                               height: Responsive.getScreenSize(context).height *
@@ -87,7 +87,7 @@ class FormRegistrar extends StatelessWidget {
                             keyboardType: TextInputType.emailAddress,
                             labelText: "Correo electrónico",
                             controller: _.correoElectronicoTextoController,
-                            validator: Validator.validarCorreoElectronico,
+                            validator: Validacion.validarCorreoElectronico,
                           ),
                           SizedBox(
                               height: Responsive.getScreenSize(context).height *
@@ -98,7 +98,7 @@ class FormRegistrar extends StatelessWidget {
                               keyboardType: TextInputType.text,
                               obscureText: _.contrasenaOculta.value,
                               controller: _.contrasenaTextoController,
-                              validator: Validator.validarContrasena,
+                              validator: Validacion.validarContrasena,
                               maxLines: 1,
                               labelText: "Contraseña",
                               suffixIcon: GestureDetector(

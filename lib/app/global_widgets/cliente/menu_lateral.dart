@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/data/controllers/autenticacion_controller.dart'; 
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
 
 import 'package:gasjm/app/routes/app_routes.dart';
@@ -30,7 +31,7 @@ class MenuLateral extends StatelessWidget {
                         .autenticacionUsuario
                         .value
                         ?.nombre ??
-                    'Usuario',
+                    "Usuario",
                 style: const TextStyle(
                     color: AppTheme.blueDark, fontWeight: FontWeight.w500),
               ),
@@ -38,12 +39,7 @@ class MenuLateral extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Text(
-                _ .usuario.value?.perfil ?? 'Usuario',
-                /*  Get.find<AutenticacionController>()
-                        .autenticacionUsuario
-                        .value
-                        ?.uid ??
-                    '',*/
+                _.usuario.value?.perfil ?? 'Usuario',
                 style: const TextStyle(color: Colors.black38),
               ),
             ),

@@ -36,7 +36,6 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
     return _usuarioDeFirebase(resultadoAutenticacion.user);
   }
 
-
   @override
   Future<AutenticacionUsuario?> iniciarSesionConCorreoYContrasena(
       String correo, String contrasena) async {
@@ -95,6 +94,9 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
         Get.find<AutenticacionController>().autenticacionUsuario.value?.uid;
     firestoreInstance.collection("usuarios").doc(uid).set({
       "cedula": usuario.cedula,
+      "correo": usuario.correo,
+      "nombre": usuario.nombre,
+      "apellido": usuario.apellido,
       "perfil": usuario.perfil,
     }).then((value) {
       print("success");
@@ -115,17 +117,19 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
 
     final resultadoAutenticacion =
         await FirebaseAuth.instance.signInWithCredential(credencial);
+    final auxUsuario = usuarioGoogle?.displayName?.split(' ') ?? [];
     // //Ingresar datos de usuario
     final uid =
         Get.find<AutenticacionController>().autenticacionUsuario.value?.uid;
     firestoreInstance.collection("usuarios").doc(uid).set({
       "cedula": usuario.cedula,
+      "nombre": auxUsuario[0],
+      "apellido": auxUsuario[1],
+      "correo": usuarioGoogle?.email ?? '',
       "perfil": usuario.perfil,
     }).then((value) {
       print("success");
     });
     return _usuarioDeFirebase(resultadoAutenticacion.user);
   }
-  
-
 }

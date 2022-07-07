@@ -10,7 +10,7 @@ import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
 import 'package:flutter/material.dart';
-import 'package:gasjm/validator.dart';
+import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:get/get.dart';
 
 class FormLogin extends StatelessWidget {
@@ -54,7 +54,7 @@ class FormLogin extends StatelessWidget {
                         controller: _.correoTextoController,
                         iconPrefix: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
-                        validator: Validator.validarCorreoElectronico,
+                        validator: Validacion.validarCorreoElectronico,
                         labelText: "Correo electrónico",
                       ),
 
@@ -68,7 +68,7 @@ class FormLogin extends StatelessWidget {
                           keyboardType: TextInputType.text,
                           obscureText: _.contrasenaOculta.value,
                           maxLines: 1,
-                          validator: Validator.validarContrasena,
+                          validator: Validacion.validarContrasena,
                           labelText: "Contraseña",
                           filled: false,
                           /* */
@@ -155,9 +155,9 @@ class FormLogin extends StatelessWidget {
                             text: _.errorParaSocialMedia.value ?? '',
                             color: Colors.red,
                           ))),
-SizedBox(
-                              height: Responsive.getScreenSize(context).height *
-                                  .05),
+                      SizedBox(
+                          height:
+                              Responsive.getScreenSize(context).height * .05),
                       const Expanded(
                           child: Divider(
                         color: Colors.white,
@@ -175,7 +175,7 @@ SizedBox(
                           GestureDetector(
                             onTap: () => {
                               Navigator.pushReplacementNamed(
-                                  context, AppRoutes.registrar)
+                                  context, AppRoutes.identificacion)
                             },
                             child: Text(
                               "Crear una cuenta nueva",

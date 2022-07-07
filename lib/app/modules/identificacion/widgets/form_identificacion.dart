@@ -7,7 +7,7 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_controller.dart';
-import 'package:gasjm/validator.dart';
+import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:get/get.dart';
 
 class FormIdentificacion extends StatelessWidget {
@@ -45,16 +45,15 @@ class FormIdentificacion extends StatelessWidget {
                           "Ingrese su número de identificación para iniciar sesión"),
                   SizedBox(
                       height: Responsive.getScreenSize(context).height * .05),
-                   
                   InputText(
                     controller: _.cedulaTextoController,
                     autofocus: true,
                     iconPrefix: Icons.credit_card,
-                    keyboardType: TextInputType.phone, 
+                    keyboardType: TextInputType.phone,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly
                     ],
-                    validator: Validator.validarCedula,
+                    validator: Validacion.validarCedula,
                     labelText: "Cédula",
                   ),
                   SizedBox(

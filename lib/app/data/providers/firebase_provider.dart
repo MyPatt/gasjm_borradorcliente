@@ -21,7 +21,7 @@ class FirebaseProvider {
   final firestoreInstance = FirebaseFirestore.instance;
 
   //Obtner perfil del usuario actual
-  Future<UsuarioModel?> getUsuario() async {
+  Future<UsuarioModel?> getUsuarioActual() async {
     final snapshot = await firestoreInstance
         .collection('usuarios')
         .doc(usuarioActual.uid)
@@ -32,5 +32,18 @@ class FirebaseProvider {
       print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     }
     return null;
+  }
+
+  //
+  Future<UsuarioModel?> getUsuarioPorCedula(String cedula) async {
+    var result = await firestoreInstance
+        .collection("usuarios")
+        .where("cedula", isEqualTo: cedula)
+        .get();
+    if (result.docs.isNotEmpty) {
+      return UsuarioModel.fromFirebaseMap(result.docs.first.data());
+    } else {
+      return null;
+    }
   }
 }

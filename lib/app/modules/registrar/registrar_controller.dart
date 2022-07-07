@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
+import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/usuario_model.dart';
 import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
@@ -65,7 +66,6 @@ class RegistrarController extends GetxController {
   /* REGISTRO CON CORREO EN FIREBASE */
   final _authRepository = Get.find<AutenticacionRepository>();
 
-  Rx<UsuarioModel?> user = Rx(null);
   //Metodo para registrar
 
   Future<void> registrarUsuario() async {
@@ -88,7 +88,7 @@ class RegistrarController extends GetxController {
 //Remover datos locales
       _removerCedulaYPerfil();
       //Mensaje de ingreso
-      _showToastBienvenido();
+      Mensajes.showToastBienvenido("Bienvenido...");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         errorParaCorreo.value = 'La contraseña es demasiado débil';
@@ -130,7 +130,7 @@ class RegistrarController extends GetxController {
       errorParaSocialMedia.value = null;
       await _autenticacioRepository.registrarUsuarioConGoogle(usuarioDatos);
       //
-      _showToastBienvenido();
+      Mensajes.showToastBienvenido("Bienvenido...");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         errorParaSocialMedia.value =
@@ -162,7 +162,7 @@ class RegistrarController extends GetxController {
       errorParaSocialMedia.value = null;
       await auxUsuario();
       //Mensaje de ingreso
-      _showToastBienvenido();
+      Mensajes.showToastBienvenido("Bienvenido...");
     } on FirebaseException catch (e) {
       errorParaSocialMedia.value = e.code;
     } catch (e) {
@@ -177,16 +177,6 @@ class RegistrarController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove("cedula_usuario");
     await prefs.remove("perfil_usuario");
-  }
-
-  void _showToastBienvenido() {
-    Fluttertoast.showToast(
-        msg: 'Bienvenido...',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.white,
-        textColor: AppTheme.blueBackground);
   }
 
   //Existe algun error si o no

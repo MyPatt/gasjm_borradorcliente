@@ -1,37 +1,37 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 import 'package:gasjm/app/data/models/usuario_model.dart';
-import 'package:gasjm/app/data/repository/usuario_repository.dart'; 
+import 'package:gasjm/app/data/repository/usuario_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 
 class InicioController extends GetxController {
   final _userRepository = Get.find<MyUserRepository>();
-
+  //
+  Rx<UsuarioModel?> usuario = Rx(null);
   //Formulario Pedir el Gas visible
   RxBool visibleFormPedirGas = false.obs;
-  //
-   Rx<UsuarioModel?> usuario = Rx(null);
-
+  //Obtener nombre del usuario
  
+
   @override
-  void onInit() { 
-  getMyUser();
+  void onInit() {
+    getUsuarioActual();
     super.onInit();
   }
 
-    Future<void> getMyUser() async {
-    
+  Future<void> getUsuarioActual() async {
     usuario.value = await _userRepository.getUsuario();
-  
+    
   }
 
   @override
-  void onReady() { 
+  void onReady() {
     super.onReady();
   }
 
   @override
-  void onClose() { 
+  void onClose() {
     super.onClose();
   }
 

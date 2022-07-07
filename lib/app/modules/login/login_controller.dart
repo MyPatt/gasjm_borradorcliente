@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
+import 'package:flutter/material.dart'; 
+import 'package:gasjm/app/core/utils/mensajes.dart'; 
 import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
 
 import 'package:get/get.dart';
@@ -33,6 +33,7 @@ class LoginController extends GetxController {
       print(correoTextoController.text);
     });*/
     flutterToast = Fluttertoast();
+    _obtenerCorreo();
 
     super.onInit();
   }
@@ -45,6 +46,7 @@ class LoginController extends GetxController {
   @override
   void onClose() {
     //
+    _removerCorreo();
     super.onClose();
   }
 
@@ -77,7 +79,7 @@ class LoginController extends GetxController {
 
       await auxUsuario();
       //
-      _showToastBienvenido();
+      Mensajes.showToastBienvenido("Bienvenido...");
     } on FirebaseException catch (e) {
       //:TODO OJO implementar error
       errorParaSocialMedia.value = e.code;
@@ -105,7 +107,7 @@ class LoginController extends GetxController {
         contrasenaTextoController.value.text,
       );
       //
-      _showToastBienvenido();
+      Mensajes.showToastBienvenido("Bienvenido...");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         errorParaCorreo.value =
@@ -119,16 +121,17 @@ class LoginController extends GetxController {
     cargandoParaCorreo.value = false;
   }
 
-//Mensaje toast que muestra al iniciar sesion con exito
-  void _showToastBienvenido() {
-    Fluttertoast.showToast(
-        msg: 'Bienvenido',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.white,
-        textColor: AppTheme.blueBackground);
+  //Obtener correo de forma local
+  _obtenerCorreo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final s = await prefs.getString("correo_usuario");
+    correoTextoController.text = s ?? '';
   }
 
- 
+  //Remover correo de forma local
+  _removerCorreo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("correo_usuario");
+  }
 }

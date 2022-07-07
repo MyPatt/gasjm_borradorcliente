@@ -8,8 +8,8 @@ class MyUserRepositoryImp extends MyUserRepository {
   final provider = FirebaseProvider();
 
   @override
-  Future<UsuarioModel?> getUsuario() => provider.getUsuario();
+  Future<UsuarioModel?> getUsuario() => provider.getUsuarioActual();
   
-
- 
+  @override
+  Future<UsuarioModel?> getUsuarioPorCedula(String cedula)  => provider.getUsuarioPorCedula( cedula);
 }

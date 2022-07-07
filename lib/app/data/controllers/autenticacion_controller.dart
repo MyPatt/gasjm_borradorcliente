@@ -25,18 +25,18 @@ class AutenticacionController extends GetxController {
     _autenticacionSuscripcion = _autenticacionRepository
         .enEstadDeAutenticacionCambiado
         .listen(_estadoAutenticacionCambiado);
-    print('====o==O====\n');
+
     super.onInit();
   }
 
   void _estadoAutenticacionCambiado(AutenticacionUsuario? usuario) {
     if (usuario == null) {
       autenticacionEstado.value = AutenticacionEstado.sesionNoIniciada;
-      print('====*******=====\n');
+      
       Get.offAllNamed(AppRoutes.ubicacion);
     } else {
       autenticacionEstado.value = AutenticacionEstado.sesionIniciada;
-      print('====++++++++=====\n');
+     
       Get.offAllNamed(AppRoutes.inicio); 
     }
     autenticacionUsuario.value = usuario;

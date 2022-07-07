@@ -1,5 +1,5 @@
 //Clase con metodo de validaciones de campos
-class Validator {
+class Validacion {
   //Metodo para validar cedula que no sea nulo y vacio
 
   static String? validarCedula(String? value) {
@@ -11,7 +11,7 @@ class Validator {
       return 'Ingrese un número de cédula';
     } else if (value.length < 10 || value.length > 10) {
       return 'El número de cédula debe tener 10 caracteres';
-    } 
+    }
     /*else if (esCedulaValida(value) == false) {
       return 'Ingrese un número de cédula válido';
     }*/
@@ -78,7 +78,7 @@ class Validator {
     return null;
   }
 
-  static bool esCedulaValida(String cedula) {   
+  static bool esCedulaValida(String cedula) {
     try {
       //LongitudCedula
       if (cedula.length == 10) {

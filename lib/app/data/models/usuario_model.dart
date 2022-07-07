@@ -27,7 +27,7 @@ class UsuarioModel extends Equatable {
       : uid = '',
         nombre = '',
         apellido = '',
-        correo = '',
+        correo = data['correo'] as String,
         contrasena = '',
         cedula = data['cedula'] as String,
         perfil = data['perfil'] as String;
