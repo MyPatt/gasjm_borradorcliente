@@ -1,9 +1,7 @@
-import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/global_widgets/dialogs/progress_dialog.dart';
+import 'package:gasjm/app/core/utils/responsive.dart'; 
 import 'package:gasjm/app/global_widgets/header_logo.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
-import 'package:gasjm/app/global_widgets/primary_button.dart';
-import 'package:gasjm/app/global_widgets/secondary_button.dart';
+import 'package:gasjm/app/global_widgets/primary_button.dart'; 
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/modules/login/login_controller.dart';
 import 'package:gasjm/app/routes/app_routes.dart';

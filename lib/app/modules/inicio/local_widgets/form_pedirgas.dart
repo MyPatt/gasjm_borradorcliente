@@ -21,7 +21,7 @@ class FormPedirGas extends StatelessWidget {
           Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: Responsive.getScreenSize(context).height * .60,
+          height: Responsive.getScreenSize(context).height * .50,
           decoration: const BoxDecoration(color: Colors.white
               /* borderRadius: BorderRadius.only(
               topLeft: Radius.circular(35.0),
@@ -36,31 +36,12 @@ class FormPedirGas extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 InputText(
+                  controller: _.direccionTextoController,
                   keyboardType: TextInputType.streetAddress,
-                  iconPrefix: Icons.maps_home_work_outlined,
+                  iconPrefix: Icons.room_outlined,
                   iconColor: AppTheme.light,
                   border: InputBorder.none,
-                  labelText: "Barrio / Sector",
-                  filled: false,
-                ),
-                SizedBox(
-                    height: Responsive.getScreenSize(context).height * .02),
-                InputText(
-                  keyboardType: TextInputType.streetAddress,
-                  iconPrefix: Icons.streetview_sharp,
-                  iconColor: AppTheme.light,
-                  border: InputBorder.none,
-                  labelText: "Calle principal",
-                  filled: false,
-                ),
-                SizedBox(
-                    height: Responsive.getScreenSize(context).height * .02),
-                InputText(
-                  keyboardType: TextInputType.streetAddress,
-                  iconPrefix: Icons.streetview_outlined,
-                  iconColor: AppTheme.light,
-                  border: InputBorder.none,
-                  labelText: "Calle secundaria",
+                  labelText: "Dirección",
                   filled: false,
                 ),
                 SizedBox(
@@ -72,6 +53,7 @@ class FormPedirGas extends StatelessWidget {
                   border: InputBorder.none,
                   labelText: "Referencia",
                   filled: false,
+                  hintText: _.latitud.value,
                 ),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .03),

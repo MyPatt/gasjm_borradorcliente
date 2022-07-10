@@ -37,7 +37,12 @@ dependencies:
   #maps gps
   geolocator: ^7.1.0
   google_maps_flutter: ^2.0.6
-  intl: null 
+  #
+  geocoding: ^2.0.1
+  location: ^4.3.0
+  
+  #formatos
+  intl: null
   #permisos
   permission_handler: ^8.1.6
   pod: ^0.14.0

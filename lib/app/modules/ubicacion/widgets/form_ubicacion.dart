@@ -44,12 +44,12 @@ class FormUbicacion extends StatelessWidget {
                     height: Responsive.getScreenSize(context).height * .05),
                 PrimaryButton(
                   texto: "Permitir",
-                  onPressed: _.cargarIdentificacion
-                  /*     () {
+                  onPressed: 
+                   () {
                     final gpsBloc = BlocProvider.of<GpsBloc>(context);
                    gpsBloc.askGpsAccess();
-                    
-                  }*/
+                    //_.cargarIdentificacion
+                  }
                   ,
                 ),
               ],

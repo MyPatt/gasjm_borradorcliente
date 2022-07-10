@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-const _mapStyle = [
+const _estiloMapa = [
   {
     "featureType": "all",
     "elementType": "all",
@@ -40,4 +40,4 @@ const _mapStyle = [
   }
 ];
 
-final mapStyle = jsonEncode(_mapStyle);
+final estiloMapa = jsonEncode(_estiloMapa);

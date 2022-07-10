@@ -26,7 +26,7 @@ class InicioController extends ChangeNotifier {
 /* MAPA */
 
   onMapaCreated(GoogleMapController controller) {
-    controller.setMapStyle(mapStyle);
+    controller.setMapStyle(estiloMapa);
   }
 
   void onTap(LatLng position) {

@@ -5,6 +5,7 @@ import 'package:gasjm/app/global_widgets/cliente/menu_lateral.dart';
 import 'package:gasjm/app/global_widgets/cliente/menu_appbar.dart';
 import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
 import 'package:gasjm/app/modules/inicio/local_widgets/boton_pedirgas.dart';
+import 'package:gasjm/app/modules/inicio/local_widgets/content_map.dart';
 import 'package:gasjm/app/modules/inicio/local_widgets/form_pedirgas.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,7 @@ class InicioPage extends StatelessWidget {
     return GetBuilder<InicioController>(
       builder: (_) => Scaffold(
         //Menú deslizable a la izquierda con opciones del  usuario
-        drawer:   MenuLateral(),
+        drawer: MenuLateral(),
         //Barra de herramientas de opciones para  agenda y  historial
         appBar: AppBar(
           backgroundColor: AppTheme.blueBackground,
@@ -26,17 +27,19 @@ class InicioPage extends StatelessWidget {
           actions: const [MenuAppBar()],
         ),
         //Body
-        backgroundColor: AppTheme.background,
-        body: Stack(
+ 
+        body: 
+        Stack(
           children: [
             //Widget Mapa
             Positioned.fill(
               // ignore: sized_box_for_whitespace
               child: Container(
-                height: Responsive.getScreenSize(context).height * .40,
-                // child: const ContentMap()
-              ),
+                  height: Responsive.getScreenSize(context).height * .50,
+                  child: const ContentMap()),
             ),
+            //
+
             //Widget Boton para pedir el gas
             const BotonPedirGas(),
             //Widget Formulario para pedir el gas
