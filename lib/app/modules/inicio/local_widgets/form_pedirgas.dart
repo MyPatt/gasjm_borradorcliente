@@ -53,7 +53,7 @@ class FormPedirGas extends StatelessWidget {
                   border: InputBorder.none,
                   labelText: "Referencia",
                   filled: false,
-                  hintText: _.latitud.value,
+                   
                 ),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .03),

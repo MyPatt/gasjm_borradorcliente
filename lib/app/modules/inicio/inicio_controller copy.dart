@@ -11,8 +11,7 @@ class InicioController extends ChangeNotifier {
   final initialCameraPosition =
       const CameraPosition(target: LatLng(0, 0), zoom: 15);
 //
-  bool _loading = true;
-  bool get loading => _loading;
+ 
 
   bool? _gpsEnabled;
   bool? get gpsEnabled => _gpsEnabled;

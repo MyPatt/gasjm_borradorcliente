@@ -14,8 +14,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class InicioController extends GetxController {
   @override
   void onInit() {
-    //Obtener ubicacion actual del usuario
-    getLocation();
     //Obtiene datos del usuario que inicio sesion
     getUsuarioActual();
 
@@ -85,97 +83,49 @@ class InicioController extends GetxController {
   }
 
   /* GOOGLE MAPS */
-  //final initialCameraPosition =  CameraPosition(target: center.value??LatLng(0, 0), zoom: 15);
+  //Variables
   final Map<MarkerId, Marker> _markers = {};
   Set<Marker> get markers => _markers.values.toSet();
 
+  //
   final _markersController = StreamController<String>.broadcast();
   Stream<String> get onMarkerTap => _markersController.stream;
-  onMapaCreated(GoogleMapController _controller) {
-    _controller.setMapStyle(estiloMapa);
+
+  //
+  final posicionInicial = LatLng(-0.2053476, -79.4894387).obs;
+  //final initialCameraPosition =    const CameraPosition(target: LatLng(-0.2053476, -79.4894387), zoom: 15);
+
+  //Cambiar el estilo de mapa
+  onMapaCreated(GoogleMapController controller) {
+    controller.setMapStyle(estiloMapa);
   }
 
-/*
+  //
   void onTap(LatLng position) {
-    position = currentLatLng?.value ?? const LatLng(0, 0);
-    final id = _markers.length.toString();
+    posicionInicial.value = position;
+    // final id = _markers.length.toString(); para generar muchos markers
+//Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
+    final id = usuario.value?.cedula??'MakerIdCliente';
+
     final markerId = MarkerId(id);
+    print("!!!!!!!!!!!!!!!!!!${posicionInicial.value}\n");
+
     final marker = Marker(
         markerId: markerId,
-        position: position,
+        position: posicionInicial.value,
         draggable: true,
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
         onTap: () {
           _markersController.sink.add(id);
+          print("*******new position ${posicionInicial.value}");
         },
-        onDragEnd: (newPosition) {
-          currentLatLng?.value = newPosition;
+        onDrag: (newPosition) {
           // ignore: avoid_print
-          print("*******new position ${currentLatLng?.value}");
+          posicionInicial.value = newPosition;
+          print("*******new position $newPosition");
         });
 
     _markers[markerId] = marker;
-    //notifyListeners();
-  }
-
-*/
-  //Variables
-  var latitud = 'Getting latitude..'.obs;
-  var longitud = 'Getting longitude..'.obs;
-  var direccion = 'Getting addres..'.obs;
-  late StreamSubscription<Position> streamSubscription;
-
-  GoogleMapController? controller;
-//Posicion inicial
-  Rx<LatLng> center = const LatLng(-30.034399, -51.212597).obs;
-
-//Obtener ubicacion
-  getLocation() async {
-    bool servicioHbilitado;
-
-    LocationPermission permiso;
-
-    //Esta habilitado el servicio?
-    servicioHbilitado = await Geolocator.isLocationServiceEnabled();
-    if (!servicioHbilitado) {
-      //si la ubicacion esta deshabilitado tieneactivarse
-      await Geolocator.openLocationSettings();
-      return Future.error('Servicio de ubicación deshabilitada.');
-    }
-    permiso = await Geolocator.checkPermission();
-    if (permiso == LocationPermission.denied) {
-      permiso = await Geolocator.requestPermission();
-      if (permiso == LocationPermission.denied) {
-        //Si la ubicacion sigue dehabilitado mostrar sms
-        return Future.error('Permiso de ubicación denegado.');
-      }
-    }
-    if (permiso == LocationPermission.deniedForever) {
-      //Permiso denegado por siempre
-      return Future.error('Permiso de ubicación denegado de forma permanente.');
-    }
-
-    //Al obtener el permiso de ubicacion se accede a las coordenadas de la posicion
-    streamSubscription =
-        Geolocator.getPositionStream().listen((Position posicion) {
-      latitud.value = 'Latitud: ${posicion.latitude}';
-      longitud.value = 'Longitud: ${posicion.longitude}';
-          //
-    center.value = LatLng(posicion.latitude, posicion.longitude);
-      getDireccionDesdeLatLang(posicion);
-    });
-  }
-
-//Obtener direccion a partir de latitud y longitud
-  Future<void> getDireccionDesdeLatLang(Position posicion) async {
-    List<Placemark> placemark =
-        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
-
-    Placemark lugar = placemark[0];
-    direccion.value = ' ${lugar.street}, ${lugar.locality} ';
-
-
-    //
-    direccionTextoController.text = direccion.value;
+    //  notifyListeners();
   }
 }

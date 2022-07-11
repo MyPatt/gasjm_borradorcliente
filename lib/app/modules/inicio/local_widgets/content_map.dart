@@ -9,18 +9,18 @@ class ContentMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InicioController>(
-      builder: (_) => 
+        builder: (_) =>
 
-      //_.currentLatLng == null ? Center(child:CircularProgressIndicator()) :
-         GoogleMap(
-            markers: _.markers,
-              onMapCreated: _.onMapaCreated,
-              initialCameraPosition:   CameraPosition(target: _.center.value, zoom: 15),
-              myLocationButtonEnabled: false,
-              compassEnabled: false,
-            //  onTap: _.onTap,
-
-      ),
-    );
+            //_.currentLatLng == null ? Center(child:CircularProgressIndicator()) :
+            Obx(
+              () => GoogleMap(
+                markers: _.markers,
+                onMapCreated: _.onMapaCreated,
+                initialCameraPosition: CameraPosition(target:  _.posicionInicial.value, zoom: 15),
+                myLocationButtonEnabled: false,
+                compassEnabled: false,
+                onTap: _.onTap,
+              ),
+            ));
   }
 }
