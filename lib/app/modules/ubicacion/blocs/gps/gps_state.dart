@@ -1,6 +1,7 @@
 part of 'gps_bloc.dart';
 
 class GpsState extends Equatable {
+  //Estados del GPS 
   final bool isGpsEnabled;
   final bool isGpsPermissionGranted;
 
@@ -9,6 +10,8 @@ class GpsState extends Equatable {
   const GpsState(
       {required this.isGpsEnabled, required this.isGpsPermissionGranted});
 
+
+//Copiar los estados
   GpsState copyWith({
     bool? isGpsEnabled,
     bool? isGpsPermissionGranted,
@@ -23,7 +26,7 @@ class GpsState extends Equatable {
 
   @override
   String toString() =>
-      '{isGpsEnabled: $isGpsEnabled, isGpsPermissionGranted: $isGpsPermissionGranted}';
+      '\n{isGpsEnabled: $isGpsEnabled, isGpsPermissionGranted: $isGpsPermissionGranted}\n';
 }
 
 //class GpsInitial extends GpsState {}

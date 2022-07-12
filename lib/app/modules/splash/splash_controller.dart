@@ -20,7 +20,7 @@ class SplashController extends GetxController {
 //
   @override
   void onInit() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+ /*   WidgetsBinding.instance.addPostFrameCallback((_) {
       checkPermission();
     });
     addListener(() {
@@ -28,7 +28,7 @@ class SplashController extends GetxController {
         //  Navigator.pushReplacementNamed(context, routeName);
         print("<<<ROUTE NAME>>>\n");
       }
-    });
+    });*/
     super.onInit();
   }
 
