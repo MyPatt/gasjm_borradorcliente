@@ -8,6 +8,12 @@ class ContentMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = InicioController();
+    //Evento en el marcker clic
+    controller.onMarkerTap.listen((id) {
+      print("solo por probar $id");
+    });
+    //
     return GetBuilder<InicioController>(
         builder: (_) =>
 
@@ -16,7 +22,8 @@ class ContentMap extends StatelessWidget {
               () => GoogleMap(
                 markers: _.markers,
                 onMapCreated: _.onMapaCreated,
-                initialCameraPosition: CameraPosition(target:  _.posicionInicial.value, zoom: 15),
+                initialCameraPosition:
+                    CameraPosition(target: _.posicionInicial.value, zoom: 15),
                 myLocationButtonEnabled: false,
                 compassEnabled: false,
                 onTap: _.onTap,

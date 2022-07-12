@@ -27,7 +27,7 @@ class InicioController extends GetxController {
 
   @override
   void onClose() {
-    // streamSubscription.cancel();
+    _markersController.close();
     super.onClose();
   }
 
@@ -105,7 +105,7 @@ class InicioController extends GetxController {
     posicionInicial.value = position;
     // final id = _markers.length.toString(); para generar muchos markers
 //Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
-    final id = usuario.value?.cedula??'MakerIdCliente';
+    final id = usuario.value?.cedula ?? 'MakerIdCliente';
 
     final markerId = MarkerId(id);
     print("!!!!!!!!!!!!!!!!!!${posicionInicial.value}\n");
@@ -114,7 +114,8 @@ class InicioController extends GetxController {
         markerId: markerId,
         position: posicionInicial.value,
         draggable: true,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        //212.2
+        icon: BitmapDescriptor.defaultMarkerWithHue(208),
         onTap: () {
           _markersController.sink.add(id);
           print("*******new position ${posicionInicial.value}");
