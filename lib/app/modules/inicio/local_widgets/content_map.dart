@@ -23,13 +23,15 @@ class ContentMap extends StatelessWidget {
             _.posicionInicial.value == LatLng(-0.2053476, -79.4894387) ? Center(child:CircularProgressIndicator()) :
               
               GoogleMap(
-                markers: _.markers,
+                //markers: _.markers,
+               markers: Set.of(_.markers),
                 onMapCreated: _.onMapaCreated,
                 initialCameraPosition:
                     CameraPosition(target: _.posicionInicial.value, zoom: 15),
                 myLocationButtonEnabled: false,
                 compassEnabled: false,
-                onTap: _.onTap,
+                //onTap: _.onTap ,
+                onTap: _.onTap ,
               ),
             ));
   }

@@ -18,6 +18,8 @@ class InicioController extends GetxController {
     getUsuarioActual();
 //Obtiene ubicacion actual del dispositivo
     getLocation();
+    //CargarMarcadores
+    //cargarMarcadores();
     super.onInit();
   }
 
@@ -29,6 +31,7 @@ class InicioController extends GetxController {
   @override
   void onClose() {
     _markersController.close();
+    streamSubscription.cancel();
     super.onClose();
   }
 
@@ -85,7 +88,7 @@ class InicioController extends GetxController {
 
   /* GOOGLE MAPS */
   //Variables
- 
+
   final Map<MarkerId, Marker> _markers = {};
 
   Set<Marker> get markers => _markers.values.toSet();
@@ -97,22 +100,25 @@ class InicioController extends GetxController {
   //
   //final posicionInicial = LatLng(-0.2053476, -79.4894387).obs;
   final posicionInicial = const LatLng(-0.2053476, -79.4894387).obs;
+  final posicionMarcadorCliente = const LatLng(-0.2053476, -79.4894387).obs;
 
   //final initialCameraPosition =    const CameraPosition(target: LatLng(-0.2053476, -79.4894387), zoom: 15);
 
   //Cambiar el estilo de mapa
   onMapaCreated(GoogleMapController controller) {
     controller.setMapStyle(estiloMapa);
+    print("<<<<<<<<<<<<>>>>>>>>>>>>${posicionInicial.value}\n");
+    //Cargar marcadores
+    cargarMarcadores();
   }
-//
 
-  //
+//
   void onTap(LatLng position) {
     posicionInicial.value = position;
     // final id = _markers.length.toString(); para generar muchos markers
 //Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
     final id = usuario.value?.cedula ?? 'MakerIdCliente';
-//
+
     final markerId = MarkerId(id);
     print("!!!!!!!!!!!!!!!!!!${posicionInicial.value}\n");
 
@@ -120,24 +126,27 @@ class InicioController extends GetxController {
         markerId: markerId,
         position: posicionInicial.value,
         draggable: true,
-        //212.2
-        icon: BitmapDescriptor.defaultMarkerWithHue(208),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
         onTap: () {
           _markersController.sink.add(id);
           print("*******new position ${posicionInicial.value}");
         },
         onDrag: (newPosition) {
           // ignore: avoid_print
+
           posicionInicial.value = newPosition;
           print("*******new position $newPosition");
         });
+//
+    print('~~~~~~~~~~~~${_markers.length}\n');
 
+    _markers.clear();
+//
     _markers[markerId] = marker;
-    print("????????????? $_markers");
-
-    //  notifyListeners();
+    print('~~~~~~~~~~~~${_markers.length}\n');
+    //notifyListeners();
   }
-
+ 
   // UBICACION ACTUAL
 
   //Variables
@@ -194,5 +203,37 @@ class InicioController extends GetxController {
     //
     posicionInicial.value = LatLng(posicion.latitude, posicion.longitude);
     direccionTextoController.text = direccion.value;
+  }
+
+  Set<Marker> marcadores = {};
+
+  void cargarMarcadores() {
+    //Marcador cliente
+    posicionMarcadorCliente.value = posicionInicial.value;
+    print(
+        "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL${posicionMarcadorCliente.value}\n");
+
+    // final id = _markers.length.toString(); para generar muchos markers
+//Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
+    final id = usuario.value?.cedula ?? 'MakerIdCliente';
+//
+    final markerId = MarkerId(id);
+    // marcadores.add(Marker(
+    final marker = Marker(
+        markerId: markerId,
+        position: posicionMarcadorCliente.value,
+        draggable: true,
+        //212.2
+        icon: BitmapDescriptor.defaultMarkerWithHue(208),
+        onTap: () {
+          _markersController.sink.add(id);
+          print("^^^^^^^^ ${id}");
+        },
+        onDrag: (newPosition) {
+          // ignore: avoid_print
+          posicionMarcadorCliente.value = newPosition;
+          print("*******new position $newPosition");
+        });
+    _markers[markerId] = marker;
   }
 }
