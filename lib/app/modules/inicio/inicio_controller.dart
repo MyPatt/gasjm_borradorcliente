@@ -16,7 +16,8 @@ class InicioController extends GetxController {
   void onInit() {
     //Obtiene datos del usuario que inicio sesion
     getUsuarioActual();
-
+//Obtiene ubicacion actual del dispositivo
+    getLocation();
     super.onInit();
   }
 
@@ -84,7 +85,9 @@ class InicioController extends GetxController {
 
   /* GOOGLE MAPS */
   //Variables
+ 
   final Map<MarkerId, Marker> _markers = {};
+
   Set<Marker> get markers => _markers.values.toSet();
 
   //
@@ -92,13 +95,16 @@ class InicioController extends GetxController {
   Stream<String> get onMarkerTap => _markersController.stream;
 
   //
-  final posicionInicial = LatLng(-0.2053476, -79.4894387).obs;
+  //final posicionInicial = LatLng(-0.2053476, -79.4894387).obs;
+  final posicionInicial = const LatLng(-0.2053476, -79.4894387).obs;
+
   //final initialCameraPosition =    const CameraPosition(target: LatLng(-0.2053476, -79.4894387), zoom: 15);
 
   //Cambiar el estilo de mapa
   onMapaCreated(GoogleMapController controller) {
     controller.setMapStyle(estiloMapa);
   }
+//
 
   //
   void onTap(LatLng position) {
@@ -106,7 +112,7 @@ class InicioController extends GetxController {
     // final id = _markers.length.toString(); para generar muchos markers
 //Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
     final id = usuario.value?.cedula ?? 'MakerIdCliente';
-
+//
     final markerId = MarkerId(id);
     print("!!!!!!!!!!!!!!!!!!${posicionInicial.value}\n");
 
@@ -127,6 +133,66 @@ class InicioController extends GetxController {
         });
 
     _markers[markerId] = marker;
+    print("????????????? $_markers");
+
     //  notifyListeners();
+  }
+
+  // UBICACION ACTUAL
+
+  //Variables
+  var latitud = 'Getting latitude..'.obs;
+  var longitud = 'Getting longitude..'.obs;
+  var direccion = 'Getting addres..'.obs;
+  late StreamSubscription<Position> streamSubscription;
+
+  //Obtener ubicacion
+  getLocation() async {
+    bool servicioHbilitado;
+
+    LocationPermission permiso;
+
+    //Esta habilitado el servicio?
+    servicioHbilitado = await Geolocator.isLocationServiceEnabled();
+    if (!servicioHbilitado) {
+      //si la ubicacion esta deshabilitado tieneactivarse
+      await Geolocator.openLocationSettings();
+      return Future.error('Servicio de ubicación deshabilitada.');
+    }
+    permiso = await Geolocator.checkPermission();
+    if (permiso == LocationPermission.denied) {
+      permiso = await Geolocator.requestPermission();
+      if (permiso == LocationPermission.denied) {
+        //Si la ubicacion sigue dehabilitado mostrar sms
+        return Future.error('Permiso de ubicación denegado.');
+      }
+    }
+    if (permiso == LocationPermission.deniedForever) {
+      //Permiso denegado por siempre
+      return Future.error('Permiso de ubicación denegado de forma permanente.');
+    }
+
+    //Al obtener el permiso de ubicacion se accede a las coordenadas de la posicion
+    streamSubscription =
+        Geolocator.getPositionStream().listen((Position posicion) {
+      latitud.value = 'Latitud: ${posicion.latitude}';
+      longitud.value = 'Longitud: ${posicion.longitude}';
+      //
+
+      _getDireccionDesdeLatLang(posicion);
+    });
+  }
+
+//Obtener direccion a partir de latitud y longitud
+  Future<void> _getDireccionDesdeLatLang(Position posicion) async {
+    List<Placemark> placemark =
+        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
+
+    Placemark lugar = placemark[0];
+    direccion.value = ' ${lugar.street}, ${lugar.locality} ';
+
+    //
+    posicionInicial.value = LatLng(posicion.latitude, posicion.longitude);
+    direccionTextoController.text = direccion.value;
   }
 }

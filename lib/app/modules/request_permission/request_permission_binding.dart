@@ -6,4 +6,6 @@ class RequestPermissionBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => RequestPermissionController());
   }
+  /** */
+  
 }

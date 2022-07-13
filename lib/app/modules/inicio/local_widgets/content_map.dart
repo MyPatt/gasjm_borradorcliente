@@ -15,11 +15,14 @@ class ContentMap extends StatelessWidget {
     });
     //
     return GetBuilder<InicioController>(
+      
         builder: (_) =>
-
-            //_.currentLatLng == null ? Center(child:CircularProgressIndicator()) :
             Obx(
-              () => GoogleMap(
+              () => 
+              
+            _.posicionInicial.value == LatLng(-0.2053476, -79.4894387) ? Center(child:CircularProgressIndicator()) :
+              
+              GoogleMap(
                 markers: _.markers,
                 onMapCreated: _.onMapaCreated,
                 initialCameraPosition:
