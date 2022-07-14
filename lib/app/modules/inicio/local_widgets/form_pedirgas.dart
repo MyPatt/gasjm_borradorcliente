@@ -55,6 +55,21 @@ class FormPedirGas extends StatelessWidget {
                   filled: false,
                    
                 ),
+                 SizedBox(
+                          height:
+                              Responsive.getScreenSize(context).height * .02),
+                      InputText(
+                        iconPrefix: Icons.pin_outlined,
+                        iconColor: AppTheme.light,
+                        border: InputBorder.none,
+                        keyboardType: TextInputType.number,
+                        //validator: null,
+                        labelText: "Cantidad",
+                        initialValue: "1",
+                        filled: false,
+
+                        //   onChanged: _.onChangedNombreUsuario
+                      ), 
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .03),
                 PrimaryButton(

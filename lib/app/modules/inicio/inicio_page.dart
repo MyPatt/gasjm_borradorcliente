@@ -3,6 +3,7 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/cliente/menu_lateral.dart';
 import 'package:gasjm/app/global_widgets/cliente/menu_appbar.dart';
+import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
 import 'package:gasjm/app/modules/inicio/local_widgets/boton_pedirgas.dart';
 import 'package:gasjm/app/modules/inicio/local_widgets/content_map.dart';
@@ -23,7 +24,7 @@ class InicioPage extends StatelessWidget {
         //Barra de herramientas de opciones para  agenda y  historial
         appBar: AppBar(
           backgroundColor: AppTheme.blueBackground,
-          elevation: 0.0,
+        
           actions: const [MenuAppBar()],
         ),
         //Body
@@ -31,6 +32,7 @@ class InicioPage extends StatelessWidget {
         body: 
         Stack(
           children: [
+        
             //Widget Mapa
             Positioned.fill(
               // ignore: sized_box_for_whitespace
