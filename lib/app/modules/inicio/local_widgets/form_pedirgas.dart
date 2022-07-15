@@ -52,6 +52,23 @@ class FormPedirGas extends StatelessWidget {
                       SizedBox(
                           height:
                               Responsive.getScreenSize(context).height * .02),
+                      Obx(() => InputText(
+                            iconPrefix: Icons.calendar_today_outlined,
+                            iconColor: AppTheme.light,
+                            border: InputBorder.none,
+                            keyboardType: TextInputType.none,
+                            controller: _.fechaHoraDeEntregaGasController.value,
+                            labelText: "Fecha",
+                            //readOnly: true,
+                            filled: false,
+
+                            onTap: () {
+                              _.mostrarFechaParaPedir(context);
+                            },
+                          )),
+                      SizedBox(
+                          height:
+                              Responsive.getScreenSize(context).height * .02),
                       InputText(
                         iconPrefix: Icons.pin_outlined,
                         iconColor: AppTheme.light,
@@ -100,3 +117,4 @@ class FormPedirGas extends StatelessWidget {
             ));
   }
 }
+//TODO: Scroll cuando el teclado se visualiza

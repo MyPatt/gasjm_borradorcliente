@@ -38,6 +38,7 @@ class EditarAgendaController extends GetxController {
       initialDate: DateTime.now(),
       firstDate: DateTime(2015),
       lastDate: DateTime(2023),
+      initialEntryMode: DatePickerEntryMode.calendarOnly
     );
     if (d != null) //if the user has selected a date
     {
