@@ -24,15 +24,12 @@ class InicioPage extends StatelessWidget {
         //Barra de herramientas de opciones para  agenda y  historial
         appBar: AppBar(
           backgroundColor: AppTheme.blueBackground,
-        
           actions: const [MenuAppBar()],
+          title: const Text('GasJ&M'),
         ),
         //Body
- 
-        body: 
-        Stack(
+        body: Stack(
           children: [
-        
             //Widget Mapa
             Positioned.fill(
               // ignore: sized_box_for_whitespace
@@ -44,13 +41,6 @@ class InicioPage extends StatelessWidget {
 
             //Widget Boton para pedir el gas
             const BotonPedirGas(),
-            //Widget Formulario para pedir el gas
-            Obx(() {
-              return Visibility(
-                visible: _.visibleFormPedirGas.value,
-                child: const FormPedirGas(),
-              );
-            })
           ],
         ),
       ),

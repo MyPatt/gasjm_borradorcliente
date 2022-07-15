@@ -16,16 +16,16 @@ class InicioController extends GetxController {
   void onInit() {
     //Obtiene datos del usuario que inicio sesion
     getUsuarioActual();
-//Obtiene ubicacion actual del dispositivo
+    //Obtiene ubicacion actual del dispositivo
     getLocation();
-    //CargarMarcadores
-    //cargarMarcadores();
+    
     super.onInit();
   }
 
   @override
   void onReady() {
     super.onReady();
+    
   }
 
   @override
@@ -51,13 +51,7 @@ class InicioController extends GetxController {
 
   final direccionTextoController = TextEditingController();
 
-  //Variable para la visibilidad del formulario
-  RxBool visibleFormPedirGas = false.obs;
 
-  // Metodo para cambiar la visibilidad del formulario
-  verFormPedirGas() {
-    visibleFormPedirGas.value = true;
-  }
 
 /* MANEJO DE RUTAS DEL MENU */
   //Ir a la pantalla de agenda
@@ -107,52 +101,44 @@ class InicioController extends GetxController {
   //Cambiar el estilo de mapa
   onMapaCreated(GoogleMapController controller) {
     controller.setMapStyle(estiloMapa);
-    print("<<<<<<<<<<<<>>>>>>>>>>>>${posicionInicial.value}\n");
+
     //Cargar marcadores
-    cargarMarcadores();
+     cargarMarcadores();
   }
 
 //
   void onTap(LatLng position) {
+    print('<<<<<<<<<<< ${posicionInicial.value}\n');
+
     posicionInicial.value = position;
+    posicionMarcadorCliente.value = position;
     // final id = _markers.length.toString(); para generar muchos markers
 //Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
     final id = usuario.value?.cedula ?? 'MakerIdCliente';
 
     final markerId = MarkerId(id);
-    print("!!!!!!!!!!!!!!!!!!${posicionInicial.value}\n");
 
     final marker = Marker(
         markerId: markerId,
         position: posicionInicial.value,
         draggable: true,
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-        onTap: () {
-          _markersController.sink.add(id);
-          print("*******new position ${posicionInicial.value}");
-        },
-        onDrag: (newPosition) {
-          // ignore: avoid_print
-
+        onDragEnd: (newPosition) {
           posicionInicial.value = newPosition;
-          print("*******new position $newPosition");
         });
 //
-    print('~~~~~~~~~~~~${_markers.length}\n');
 
     _markers.clear();
 //
     _markers[markerId] = marker;
-    print('~~~~~~~~~~~~${_markers.length}\n');
-    //notifyListeners();
+    _getDireccionXLatLng(posicionMarcadorCliente.value);
   }
- 
+
   // UBICACION ACTUAL
 
   //Variables
-  var latitud = 'Getting latitude..'.obs;
-  var longitud = 'Getting longitude..'.obs;
-  var direccion = 'Getting addres..'.obs;
+  var direccion = 'Buscando dirección...'.obs;
+
   late StreamSubscription<Position> streamSubscription;
 
   //Obtener ubicacion
@@ -184,24 +170,40 @@ class InicioController extends GetxController {
     //Al obtener el permiso de ubicacion se accede a las coordenadas de la posicion
     streamSubscription =
         Geolocator.getPositionStream().listen((Position posicion) {
-      latitud.value = 'Latitud: ${posicion.latitude}';
-      longitud.value = 'Longitud: ${posicion.longitude}';
-      //
-
-      _getDireccionDesdeLatLang(posicion);
+      posicionInicial.value = LatLng(posicion.latitude, posicion.longitude);
     });
   }
 
 //Obtener direccion a partir de latitud y longitud
-  Future<void> _getDireccionDesdeLatLang(Position posicion) async {
+  Future<void> _getDireccionXPosition(Position posicion) async {
     List<Placemark> placemark =
         await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
 
     Placemark lugar = placemark[0];
-    direccion.value = ' ${lugar.street}, ${lugar.locality} ';
-
     //
     posicionInicial.value = LatLng(posicion.latitude, posicion.longitude);
+    //
+    direccion.value = _getDireccion(lugar);
+    direccionTextoController.text = direccion.value;
+  }
+
+  String _getDireccion(Placemark lugar) {
+    //
+    if (lugar.subLocality?.isEmpty == true) {
+      return lugar.street.toString();
+    } else {
+      return '${lugar.street}, ${lugar.subLocality}';
+    }
+  }
+
+  Future<void> _getDireccionXLatLng(LatLng posicion) async {
+    List<Placemark> placemark =
+        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
+    Placemark lugar = placemark[0];
+    //
+    print('>>>>>>>>>>>>>>>$posicion\n');
+//
+    direccion.value = _getDireccion(lugar);
     direccionTextoController.text = direccion.value;
   }
 
@@ -210,10 +212,7 @@ class InicioController extends GetxController {
   void cargarMarcadores() {
     //Marcador cliente
     posicionMarcadorCliente.value = posicionInicial.value;
-    print(
-        "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL${posicionMarcadorCliente.value}\n");
 
-    // final id = _markers.length.toString(); para generar muchos markers
 //Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
     final id = usuario.value?.cedula ?? 'MakerIdCliente';
 //
@@ -225,15 +224,12 @@ class InicioController extends GetxController {
         draggable: true,
         //212.2
         icon: BitmapDescriptor.defaultMarkerWithHue(208),
-        onTap: () {
-          _markersController.sink.add(id);
-          print("^^^^^^^^ ${id}");
-        },
-        onDrag: (newPosition) {
+        onDragEnd: (newPosition) {
           // ignore: avoid_print
           posicionMarcadorCliente.value = newPosition;
-          print("*******new position $newPosition");
         });
     _markers[markerId] = marker;
+    //
+    _getDireccionXLatLng(posicionMarcadorCliente.value);
   }
 }

@@ -23,9 +23,5 @@ class AppTheme {
       backgroundColor: Colors.white,
       primaryColor: blueDark,
       brightness: Brightness.dark);
-  //Estilos de  textos
-  static const TextStyle headingStyle =
-      TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: blueDark);
-  static const TextStyle subHeadingStyle =
-      TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: light);
+ 
 }

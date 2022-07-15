@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
- import 'package:gasjm/app/modules/historial/historial_cliente.dart';
+import 'package:gasjm/app/modules/historial/historial_cliente.dart';
 import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
 import 'package:get/get.dart';
- 
+
 //Barra de herramientas de opciones para la agenda y el historial
 class MenuAppBar extends StatelessWidget {
   const MenuAppBar({key}) : super(key: key);
@@ -19,7 +19,7 @@ class MenuAppBar extends StatelessWidget {
                     onPressed: _.cargarAgenda,
                     icon: const Icon(Icons.calendar_today_outlined)),
                 const SizedBox(
-                  width: 10,
+                  width: 8,
                 ),
                 //Opcion historial
 

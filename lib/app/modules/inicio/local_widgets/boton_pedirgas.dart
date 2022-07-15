@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
+import 'package:gasjm/app/modules/inicio/local_widgets/form_pedirgas.dart';
 import 'package:get/get.dart';
 
 class BotonPedirGas extends StatelessWidget {
@@ -22,7 +24,13 @@ class BotonPedirGas extends StatelessWidget {
                 ),
                 child: PrimaryButton(
                   texto: "Pedir el gas",
-                  onPressed: _.verFormPedirGas,
+                  //  onPressed: _.verFormPedirGas,
+                  onPressed: () {
+                    showModalBottomSheet(
+                      
+                        context: context,
+                        builder: (context) => (const FormPedirGas()));
+                  },
                 ),
               ),
             ));
