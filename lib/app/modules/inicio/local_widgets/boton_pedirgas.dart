@@ -15,24 +15,26 @@ class BotonPedirGas extends StatelessWidget {
         builder: (_) => Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                height: kBottomNavigationBarHeight * 1.1,
-                margin: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 30.0),
-                decoration: BoxDecoration(
-                  color: AppTheme.blueBackground,
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                child: PrimaryButton(
-                  texto: "Pedir el gas",
-                  //  onPressed: _.verFormPedirGas,
-                  onPressed: () {
-                    showModalBottomSheet(
-                      
-                        context: context,
-                        builder: (context) => (const FormPedirGas()));
-                  },
-                ),
-              ),
+                  height: kBottomNavigationBarHeight * 1.1,
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 30.0),
+                  decoration: BoxDecoration(
+                    color: AppTheme.blueBackground,
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  child: Obx(
+                    () => _.direccion.value == 'Buscando dirección...'
+                        ? const Text('')
+                        : PrimaryButton(
+                            texto: "Pedir el gas",
+                            //  onPressed: _.verFormPedirGas,
+                            onPressed: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => (const FormPedirGas()));
+                            },
+                          ),
+                  )),
             ));
   }
 }

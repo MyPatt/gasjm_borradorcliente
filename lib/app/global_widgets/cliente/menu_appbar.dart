@@ -18,9 +18,7 @@ class MenuAppBar extends StatelessWidget {
                     // onPressed: showRatingDialog,calificarservicio
                     onPressed: _.cargarAgenda,
                     icon: const Icon(Icons.calendar_today_outlined)),
-                const SizedBox(
-                  width: 8,
-                ),
+            
                 //Opcion historial
 
                 IconButton(

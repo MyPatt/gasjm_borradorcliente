@@ -112,4 +112,26 @@ class Validacion {
       return false;
     }
   }
+  /* FORM PEDIR GAS */
+//Metodo para validar que el nombre nu sea nulo y vacio
+
+  static String? validarCantidadGas(String? value) {
+    if (value == null) {
+      return null;
+    }
+    if (value.isEmpty) {
+      return 'Ingrese una cantidad';
+    }  
+    return null;
+  }
+  //Validar que la direccion sea valida
+    static String? validarDireccion(String? value) {
+    if (value == null) {
+      return null;
+    }
+    if (value.isEmpty || value=='Buscando dirección...') {
+      return 'Seleccione en el mapa una dirección';
+    }  
+    return null;
+  }
 }

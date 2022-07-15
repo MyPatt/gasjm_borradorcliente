@@ -18,20 +18,20 @@ class InicioController extends GetxController {
     getUsuarioActual();
     //Obtiene ubicacion actual del dispositivo
     getLocation();
-    
+ 
     super.onInit();
   }
 
   @override
   void onReady() {
     super.onReady();
-    
   }
 
   @override
   void onClose() {
     _markersController.close();
     streamSubscription.cancel();
+ 
     super.onClose();
   }
 
@@ -51,7 +51,7 @@ class InicioController extends GetxController {
 
   final direccionTextoController = TextEditingController();
 
-
+ 
 
 /* MANEJO DE RUTAS DEL MENU */
   //Ir a la pantalla de agenda
@@ -103,12 +103,12 @@ class InicioController extends GetxController {
     controller.setMapStyle(estiloMapa);
 
     //Cargar marcadores
-     cargarMarcadores();
+    cargarMarcadores();
   }
 
 //
   void onTap(LatLng position) {
-    print('<<<<<<<<<<< ${posicionInicial.value}\n');
+ 
 
     posicionInicial.value = position;
     posicionMarcadorCliente.value = position;
@@ -125,6 +125,8 @@ class InicioController extends GetxController {
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
         onDragEnd: (newPosition) {
           posicionInicial.value = newPosition;
+    _getDireccionXLatLng(newPosition);
+
         });
 //
 
@@ -185,6 +187,7 @@ class InicioController extends GetxController {
     //
     direccion.value = _getDireccion(lugar);
     direccionTextoController.text = direccion.value;
+ 
   }
 
   String _getDireccion(Placemark lugar) {
@@ -227,9 +230,12 @@ class InicioController extends GetxController {
         onDragEnd: (newPosition) {
           // ignore: avoid_print
           posicionMarcadorCliente.value = newPosition;
+    _getDireccionXLatLng(posicionMarcadorCliente.value);
+
         });
     _markers[markerId] = marker;
     //
     _getDireccionXLatLng(posicionMarcadorCliente.value);
+   
   }
 }
