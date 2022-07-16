@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/usuario_model.dart';
+import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/usuario_repository.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/global_widgets/secondary_button.dart';
@@ -55,8 +58,41 @@ class InicioController extends GetxController {
   /* FORMULARIO PARA PEDIR EL GAS */
   //Variables para el form
   final formKey = GlobalKey<FormState>();
-
   final direccionTextoController = TextEditingController();
+  //Repositorio de pedidos
+  final _pedidoRepository = Get.find<PedidoRepository>();
+  //Metodos para insertar un nuevo pedido
+  insertarPedido() async {
+    try {
+      String result = "";
+      PedidoModel oPedido = PedidoModel(
+          idProducto: 'idProducto',
+          idCliente: 'idCliente',
+          idRepartidor: 'idRepartidor',
+          idEstadoPedido: 'idEstadoPedido',
+          fechaPedido: DateTime.now(),
+          horaPedido: DateTime.now(),
+          totalPedido: 1000);
+
+      result = await _pedidoRepository.insertPedido(pedidoModel: oPedido);
+      Get.back();
+      Get.snackbar(
+        'Message',
+        result,
+        duration: Duration(seconds: 5),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppTheme.cyan,
+      );
+    } on FirebaseException catch (e) {
+      Get.snackbar(
+        'Message',
+        e.message ?? 'SIN ERROR',
+        duration: Duration(seconds: 5),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: AppTheme.cyan,
+      );
+    }
+  }
 
 /* MANEJO DE RUTAS DEL MENU */
   //Ir a la pantalla de agenda
@@ -314,10 +350,9 @@ class InicioController extends GetxController {
     //
     if (fecha.value == DateFormat.yMd().format(DateTime.now())) {
       horaInicial?.value = (DateTime.now());
-      print('[[[[[[[[[[[[[$horaInicial\n'); 
-
+      print('[[[[[[[[[[[[[$horaInicial\n');
     } else {
-      horaInicial?.value = (DateFormat('hh:mm').parse('00:00'))  ;
+      horaInicial?.value = (DateFormat('hh:mm').parse('00:00'));
     }
     showModalBottomSheet(
         context: ctx,

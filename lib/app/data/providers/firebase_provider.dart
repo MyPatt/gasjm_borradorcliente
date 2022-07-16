@@ -1,10 +1,9 @@
-import 'dart:io';
+ 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart'; 
 import 'package:gasjm/app/data/models/usuario_model.dart';
-import 'package:path/path.dart' as path;
+ 
 
 class FirebaseProvider {
   //Par devolver el usuario actual conectado
@@ -15,7 +14,7 @@ class FirebaseProvider {
   }
 
   //Instancia de firestore
-  FirebaseFirestore get firestore => FirebaseFirestore.instance;
+  //FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
   //Instancia de firestore
   final firestoreInstance = FirebaseFirestore.instance;
