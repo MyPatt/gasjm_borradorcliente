@@ -40,7 +40,7 @@ class PersonaProvider {
   Future<PersonaModel?> getPersonaPorCedula({required String cedula}) async {
     final snapshot = await _firestoreInstance
         .collection("persona")
-        .where("cedula", isEqualTo: cedula)
+        .where("cedulaPersona", isEqualTo: cedula)
         .get();
     if (snapshot.docs.first.exists) {
       return PersonaModel.fromMap(snapshot.docs.first.data());

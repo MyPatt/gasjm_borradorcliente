@@ -16,7 +16,7 @@ class PersonaModel {
   final String? fotoPersona;
   final String? direccionPersona;
   final String? celularPersona;
-  final String fechaNaciPersona;
+  final DateTime fechaNaciPersona;
   final String idPerfil;
 
   factory PersonaModel.fromMap(Map<String, dynamic> json) => PersonaModel(

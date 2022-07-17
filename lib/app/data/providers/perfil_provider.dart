@@ -40,7 +40,7 @@ class PerfilProvider {
   Future<PerfilModel?> getPerfilPorId({required String id}) async {
     final snapshot = await _firestoreInstance
         .collection("perfil")
-        .where("id", isEqualTo: id)
+        .where("idPerfil", isEqualTo: id)
         .get();
     if (snapshot.docs.first.exists) {
       return PerfilModel.fromMap(snapshot.docs.first.data());
