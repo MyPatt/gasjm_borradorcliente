@@ -17,8 +17,8 @@ class FirebaseProvider {
   //FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
   //Instancia de firestore
-  final firestoreInstance = FirebaseFirestore.instance;
-
+  final  firestoreInstance = FirebaseFirestore.instance;
+ 
   //Obtner perfil del usuario actual
   Future<UsuarioModel?> getUsuarioActual() async {
     final snapshot = await firestoreInstance
@@ -27,9 +27,7 @@ class FirebaseProvider {
         .get();
     if (snapshot.exists) {
       return UsuarioModel.fromFirebaseMap(snapshot.data()!);
-    } else {
-      print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-    }
+    }  
     return null;
   }
 
