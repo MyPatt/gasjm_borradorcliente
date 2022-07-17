@@ -40,8 +40,8 @@ class ProductoProvider {
   //
   Future<Producto?> getProductoPorId({required String id}) async {
     final snapshot = await _firestoreInstance
-        .collection("usuarios")
-        .where("cedula", isEqualTo: id)
+        .collection("producto")
+        .where("idProducto", isEqualTo: id)
         .get();
     if (snapshot.docs.first.exists) {
       return Producto.fromMap(snapshot.docs.first.data());

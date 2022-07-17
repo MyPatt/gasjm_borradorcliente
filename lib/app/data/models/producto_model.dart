@@ -5,9 +5,9 @@ import 'package:equatable/equatable.dart';
 class Producto extends Equatable {
    final String? idProducto;
     final String nombreProducto;
-    final String precioProducto;
+    final double precioProducto;
     final String descripcionProducto;
-    Producto({  this.idProducto,
+   const Producto({  this.idProducto,
         required this.nombreProducto,
         required this.precioProducto,
         required this.descripcionProducto,

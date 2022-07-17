@@ -39,6 +39,7 @@ class PedidoProvider {
     }
     return null;
   }
+  
     Future<List<PedidoModel>?> getPedidoPorField({required String field,required String dato}) async {
     final resultado =
         await _firestoreInstance. collection("pedido")
