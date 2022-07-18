@@ -64,17 +64,29 @@ class InicioController extends GetxController {
   //Metodos para insertar un nuevo pedido
   insertarPedido() async {
     try {
-     
-      PedidoModel oPedido = PedidoModel(
+      PedidoModel pedidoModel = PedidoModel(
+          idProducto: 'idProducto',
+          idCliente: 'idCliente',
+          idRepartidor: 'idRepartidor',
+          direccion: Direccion(latitud: 00000, longitud: 00000),
+          idEstadoPedido: 'idEstadoPedido',
+          fechaPedido: DateTime.now(),
+          fechaEntregaPedido: DateTime.now(),
+          horaEntregaPedido: DateTime.now(),
+          notaPedido: 'notaPedido',
+          totalPedido: 555555);
+
+      /*PedidoModel oPedido = PedidoModel(
           idProducto: 'idProducto',
           idCliente: 'idCliente',
           idRepartidor: 'idRepartidor',
           idEstadoPedido: 'idEstadoPedido',
           fechaPedido: DateTime.now(),
           horaPedido: DateTime.now(),
-          totalPedido: 1000);
+          totalPedido: 1000);*/
 
-     final result = await _pedidoRepository.insertPedido(pedidoModel: oPedido);
+      final result =
+          await _pedidoRepository.insertPedido(pedidoModel: pedidoModel);
       Get.back();
       Get.snackbar(
         'Message',

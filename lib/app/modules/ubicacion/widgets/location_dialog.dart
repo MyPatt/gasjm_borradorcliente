@@ -11,7 +11,7 @@ class AppPermission extends State<AppState> {
   Future<void> requestCameraPermission() async {
     final serviceStatus = await Permission.camera.isGranted;
 
-    bool isCameraOn = serviceStatus == ServiceStatus.enabled;
+   // bool isCameraOn = serviceStatus == ServiceStatus.enabled;
 
     final status = await Permission.camera.request();
 
