@@ -40,7 +40,7 @@ dependencies:
   #
   geocoding: ^2.0.1
   location: ^4.3.0
-  
+
   #formatos
   intl: null
   #permisos
@@ -50,6 +50,10 @@ dependencies:
   rating_dialog: ^2.0.1
   #calendario
   syncfusion_flutter_calendar: ^19.1.54
+  #idioma para fecha
+   
+  #fechas
+  #flutter_material_pickers: ^3.1.0
 
 dev_dependencies:
   flutter_lints: ^1.0.3

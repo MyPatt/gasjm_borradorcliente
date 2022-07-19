@@ -1,13 +1,18 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
+import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/usuario_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/usuario_repository.dart';
+import 'package:gasjm/app/global_widgets/primary_button.dart';
+import 'package:gasjm/app/global_widgets/secondary_button.dart';
+import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -22,9 +27,8 @@ class InicioController extends GetxController {
     getUsuarioActual();
     //Obtiene ubicacion actual del dispositivo
     getLocation();
-    //
-    _cargarFechaInicial();
-
+//
+    cargarFechaInicial();
     super.onInit();
   }
 
@@ -87,10 +91,9 @@ class InicioController extends GetxController {
       Get.snackbar(
         'Message',
         'result',
-        duration: const Duration(seconds: 4),
+        duration: Duration(seconds: 5),
         snackPosition: SnackPosition.TOP,
-        backgroundColor: AppTheme.blueDark,
-        colorText: Colors.white,
+        backgroundColor: AppTheme.cyan,
       );
     } on FirebaseException catch (e) {
       Get.snackbar(
@@ -285,68 +288,147 @@ class InicioController extends GetxController {
 
   /*  FECHA PARA AGENDAR EN FORM PEDIR GAS */
   final fechaHoraDeEntregaGasController = TextEditingController().obs;
-  final itemSeleccionadoDia = 0.obs;
-  //
-  void _cargarFechaInicial() {
-    fechaHoraDeEntregaGasController.value.text = "Ahora";
+  RxString fecha = DateFormat.yMd().format(DateTime.now()).obs;
+  void cargarFechaInicial() {
+    fechaHoraDeEntregaGasController.value = TextEditingController(text: 'Hoy');
   }
 
-  String cambiarFormatoFecha(DateTime fecha) {
-//return DateFormat("EEEEE, dd MMMM").format(fecha);
-    return DateFormat("dd MMMM").format(fecha);
+  // Modal para seleccionar la fecha de entrega del pedido
+  void mostrarFechaParaPedir(ctx) {
+    //
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) => Container(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    const TextDescription(text: 'Elije una fecha'),
+                    SizedBox(
+                        height: Responsive.getScreenSize(ctx).height * .03),
+                    SizedBox(
+                      height: Responsive.getScreenSize(ctx).height * .1,
+                      child: CupertinoDatePicker(
+                          mode: CupertinoDatePickerMode.date,
+                          minimumDate: DateTime.now(),
+                          initialDateTime: DateTime.now(),
+                          //
+                          dateOrder: DatePickerDateOrder.dmy,
+                          onDateTimeChanged: (val) {
+                            if (val != null) //if the user has selected a date
+                            {
+                              // Asignar fecha a la variable
+                              fecha.value =
+                                  DateFormat.yMMMMd("en_US").format(val);
+                            }
+                          }),
+                    ),
+                    SizedBox(
+                        height: Responsive.getScreenSize(ctx).height * .03),
+                    PrimaryButton(
+                        texto: 'Siguiente',
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          _mostrarHoraParaPedir(ctx);
+                        }),
+                    SizedBox(
+                        height: Responsive.getScreenSize(ctx).height * .02),
+                    SecondaryButton(
+                        texto: 'Cerrar',
+                        onPressed: () {
+                          if (DateFormat.yMd().format(DateTime.now()) ==
+                              fecha.value) {
+                            fecha.value = 'Hoy';
+                          }
+                          fechaHoraDeEntregaGasController.value =
+                              TextEditingController(text: fecha.value);
+                          Navigator.of(ctx).pop();
+                        }),
+                  ],
+                ),
+              ),
+            ));
   }
 
   /*  HORA PARA AGENDAR EN FORM PEDIR GAS */
-  final horaActual = DateTime.now();
-  final horaSeleccionada = DateTime.now().obs;
-  String cambiarFormatoHora(DateTime hora) {
-    return DateFormat("HH:mm").format(hora);
-  }
 
-  //Mostrar resultado
-  String fechaHoraPedido() {
-    
-    if (itemSeleccionadoDia.value == 0 &&
-        cambiarFormatoHora(horaSeleccionada.value) != '00:00') {
-      return "Ahora, ${cambiarFormatoHora(horaSeleccionada.value)}";
-    } else if (itemSeleccionadoDia.value == 1 &&
-        cambiarFormatoHora(horaSeleccionada.value) == '00:00') {
-      return "Mañana";
-    } else if (itemSeleccionadoDia.value == 1 &&
-        cambiarFormatoHora(horaSeleccionada.value) != '00:00') {
-      return "Mañana, ${cambiarFormatoHora(horaSeleccionada.value)}";
-    }
-    return "Ahora";
-  }
-
-  //
+  RxString hora = DateFormat('hh:mm').format(DateTime.now()).obs;
   Rx<DateTime>? horaInicial;
-  Rx<DateTime>? horaMinima;
-  Rx<DateTime>? horaMaxima;
-  //
-  seleccionarHoraInicial() {
-    if (itemSeleccionadoDia.value == 0) {
-      horaMinima?.value = DateTime(DateTime.now().year, DateTime.now().month,
-          DateTime.now().day, DateTime.now().hour, DateTime.now().minute + 10);
-      horaInicial?.value = DateTime(DateTime.now().year, DateTime.now().month,
-          DateTime.now().day, DateTime.now().hour, DateTime.now().minute + 30);
-
-      horaMaxima?.value = DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 19, 0);
+  // Modal para seleccionar la hora de entrega del pedido
+  void _mostrarHoraParaPedir(ctx) {
+    print(fecha.value);
+    print(DateFormat.yMd().format(DateTime.now()));
+    //
+    if (fecha.value == DateFormat.yMd().format(DateTime.now())) {
+      horaInicial?.value = (DateTime.now());
+      print('[[[[[[[[[[[[[$horaInicial\n');
     } else {
-      horaMinima?.value = DateTime(DateTime.now().year, DateTime.now().month,
-          DateTime.now().day + 1, 6, 0);
-      horaInicial?.value = DateTime(DateTime.now().year, DateTime.now().month,
-          DateTime.now().day + 1, 6, 0);
-      horaMaxima?.value = DateTime(DateTime.now().year, DateTime.now().month,
-          DateTime.now().day + 1, 19, 0);
+      horaInicial?.value = (DateFormat('hh:mm').parse('00:00'));
     }
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) => Container(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    const TextDescription(text: 'Elije una hora'),
+                    SizedBox(
+                        height: Responsive.getScreenSize(ctx).height * .03),
+                    SizedBox(
+                      height: Responsive.getScreenSize(ctx).height * .1,
+                      child: CupertinoDatePicker(
+                          mode: CupertinoDatePickerMode.time,
+                          minimumDate: DateTime.now(),
+                          initialDateTime: horaInicial?.value,
+                          //
+                          onDateTimeChanged: (val) {
+                            if (val != null) //if the user has selected a date
+                            {
+                              // Asignar fecha a la variable
+                              hora.value = DateFormat('hh:mm').format(val);
+                            }
+                          }),
+                    ),
+                    SizedBox(
+                        height: Responsive.getScreenSize(ctx).height * .03),
+                    PrimaryButton(
+                        texto: 'Hecho',
+                        onPressed: () {
+                          if (DateFormat.yMd().format(DateTime.now()) ==
+                              fecha.value) {
+                            fecha.value = 'Hoy';
+                          }
+                          fechaHoraDeEntregaGasController.value =
+                              TextEditingController(
+                                  text: '${fecha.value}, ${hora.value}');
+                          Navigator.of(ctx).pop();
+                        }),
+                    SizedBox(
+                        height: Responsive.getScreenSize(ctx).height * .02),
+                    SecondaryButton(
+                        texto: 'Omitir',
+                        onPressed: () {
+                          if (DateFormat.yMd().format(DateTime.now()) ==
+                              fecha.value) {
+                            fecha.value = 'Hoy';
+                          }
+                          fechaHoraDeEntregaGasController.value =
+                              TextEditingController(text: fecha.value);
+                          Navigator.of(ctx).pop();
+                        }),
+                  ],
+                ),
+              ),
+            ));
   }
 }
-//TODO: Obtener el horario desde la BD
-//TODO: Ajustar horario
+//TODO: Separa interfaz y controller de seleccion de fecha y hora
+//TODO: Hora de inicio arreglar
 
- 
+//TODO: Mejorar interfaz de seleccion de fecha y hora
 //TODO: Optimizar variables para fecha y hora
 //TODO: Horarios de atencion
 //TODO: FechaHoraActual para comparar que no sea local sino de red

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/core/theme/text_theme.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
+import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
+import 'package:gasjm/app/modules/inicio/local_widgets/fecha_picker.dart';
 import 'package:get/get.dart';
 
 class FormPedirGas extends StatelessWidget {
@@ -24,14 +25,12 @@ class FormPedirGas extends StatelessWidget {
                   key: _.formKey,
                   child: ListView(
                     shrinkWrap: true,
-                    /*    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,*/
                     children: [
-                      const Text(
-                        "Nuevo Pedido",
-                        style: TextoTheme.subtitleStyle1,
-                        textAlign: TextAlign.center,
+                      SizedBox(
+                          height:
+                              Responsive.getScreenSize(context).height * .02),
+                      const TextSubtitle(
+                        text: "Nuevo Pedido",
                       ),
                       const TextDescription(
                           text: "Ingrese los datos para realizar su pedido"),
@@ -58,12 +57,15 @@ class FormPedirGas extends StatelessWidget {
                             border: InputBorder.none,
                             keyboardType: TextInputType.none,
                             controller: _.fechaHoraDeEntregaGasController.value,
+
                             labelText: "Fecha",
                             //readOnly: true,
                             filled: false,
 
                             onTap: () {
-                              _.mostrarFechaParaPedir(context);
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (_) => const FechaPicker());
                             },
                           )),
                       SizedBox(
@@ -105,11 +107,15 @@ class FormPedirGas extends StatelessWidget {
                         texto: "Pedir el gas",
                         onPressed: () {
                           if (_.formKey.currentState?.validate() == true) {
+                            _.insertarPedido();
                             Navigator.pop(context);
                             Mensajes.showToastBienvenido("Pedido con éxito.");
                           }
                         },
                       ),
+                      SizedBox(
+                          height:
+                              Responsive.getScreenSize(context).height * .02),
                     ],
                   ),
                 ),
