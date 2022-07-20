@@ -32,7 +32,9 @@ class HoraPicker extends StatelessWidget {
                       use24hFormat: true,
                       initialDateTime: _.horaInicial?.value,
                       minimumDate: _.horaMinima?.value,
-                      maximumDate: _.horaMaxima?.value,
+                      //  maximumDate: _.horaMaxima?.value,
+                      maximumDate: DateTime(DateTime.now().year,
+                          DateTime.now().month, DateTime.now().day, 19, 0),
                       onDateTimeChanged: (value) {
                         _.horaSeleccionada.value = value;
                       }),
@@ -64,3 +66,4 @@ class HoraPicker extends StatelessWidget {
     );
   }
 }
+//TODO:Flata optimizar la fecha inicial que ya este seleccionada y el onchande mientra no se cambie, HORA las horas de hor manana e intervalos

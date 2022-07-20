@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -23,7 +24,7 @@ class InicioController extends GetxController {
     //Obtiene ubicacion actual del dispositivo
     getLocation();
     //
-    _cargarFechaInicial();
+    _cargarFechaCantidadInicial();
 
     super.onInit();
   }
@@ -37,6 +38,11 @@ class InicioController extends GetxController {
   void onClose() {
     _markersController.close();
     streamSubscription.cancel();
+    direccionTextoController.dispose();
+    fechaHoraDeEntregaGasController.value.dispose();
+    cantidadTextoController.dispose();
+
+    notaTextoController.dispose();
 
     super.onClose();
   }
@@ -55,42 +61,80 @@ class InicioController extends GetxController {
   //Variables para el form
   final formKey = GlobalKey<FormState>();
   final direccionTextoController = TextEditingController();
+  final notaTextoController = TextEditingController();
+  var cantidadTextoController = TextEditingController();
   //Repositorio de pedidos
   final _pedidoRepository = Get.find<PedidoRepository>();
   //Metodos para insertar un nuevo pedido
+  // //Mientras se inserta el pedido mostrar circuleprobres se carga si o no
+  final procensandoElNuevoPedido = RxBool(false);
   insertarPedido() async {
     try {
+      procensandoElNuevoPedido.value = true;
+      const idProducto = "GLP";
+      final idCliente = usuario.value?.cedula ?? '';
+      const idRepartidor = "SinAsignar";
+      final direccion = Direccion(
+          latitud: posicionPedido.value.latitude,
+          longitud: posicionPedido.value.longitude);
+
+      const idEstadoPedido = 'estado1';
+      final fechaEntregaPedido;
+
+      if (itemSeleccionadoDia.value == 0 &&
+          cambiarFormatoHora(horaSeleccionada.value) != '00:00') {
+        fechaEntregaPedido = DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+            horaSeleccionada.value.hour,
+            horaSeleccionada.value.minute);
+      } else if (itemSeleccionadoDia.value == 1 &&
+          cambiarFormatoHora(horaSeleccionada.value) == '00:00') {
+        fechaEntregaPedido = DateTime(DateTime.now().year, DateTime.now().month,
+            DateTime.now().day + 1, 0, 0);
+      } else if (itemSeleccionadoDia.value == 1 &&
+          cambiarFormatoHora(horaSeleccionada.value) != '00:00') {
+        fechaEntregaPedido = DateTime(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day + 1,
+            horaSeleccionada.value.hour,
+            horaSeleccionada.value.minute);
+      } else {
+        fechaEntregaPedido = DateTime(DateTime.now().year, DateTime.now().month,
+            DateTime.now().day, 0, 0);
+      }
+
+      final notaPedido = notaTextoController.text;
+      final cantidadPedido = int.parse(cantidadTextoController.text);
+      //
       PedidoModel pedidoModel = PedidoModel(
-          idProducto: 'idProducto',
-          idCliente: 'idCliente',
-          idRepartidor: 'idRepartidor',
-          direccion: Direccion(latitud: 00000, longitud: 00000),
-          idEstadoPedido: 'idEstadoPedido',
+          idProducto: idProducto,
+          idCliente: idCliente,
+          idRepartidor: idRepartidor,
+          direccion: direccion,
+          idEstadoPedido: idEstadoPedido,
           fechaPedido: DateTime.now(),
-          fechaEntregaPedido: DateTime.now(),
-          horaEntregaPedido: DateTime.now(),
-          notaPedido: 'notaPedido',
-          totalPedido: 555555);
+          fechaHoraEntregaPedido: fechaEntregaPedido,
+          notaPedido: notaPedido,
+          totalPedido: 555555,
+          cantidadPedido: cantidadPedido);
 
-      /*PedidoModel oPedido = PedidoModel(
-          idProducto: 'idProducto',
-          idCliente: 'idCliente',
-          idRepartidor: 'idRepartidor',
-          idEstadoPedido: 'idEstadoPedido',
-          fechaPedido: DateTime.now(),
-          horaPedido: DateTime.now(),
-          totalPedido: 1000);*/
-
-      final result =
-          await _pedidoRepository.insertPedido(pedidoModel: pedidoModel);
-      Get.back();
+      await _pedidoRepository.insertPedido(pedidoModel: pedidoModel);
+      _inicializarDatos();
+      //Get.back();
       Get.snackbar(
-        'Message',
-        'result',
+        'Nuevo pedido',
+        'Su pedido se registro con éxito',
         duration: const Duration(seconds: 4),
-        snackPosition: SnackPosition.TOP,
         backgroundColor: AppTheme.blueDark,
         colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        icon: const Icon(
+          Icons.check_outlined,
+          color: Colors.white,
+        ),
       );
     } on FirebaseException catch (e) {
       Get.snackbar(
@@ -101,6 +145,7 @@ class InicioController extends GetxController {
         backgroundColor: AppTheme.cyan,
       );
     }
+    procensandoElNuevoPedido.value = false;
   }
 
 /* MANEJO DE RUTAS DEL MENU */
@@ -145,6 +190,7 @@ class InicioController extends GetxController {
   //final posicionInicial = LatLng(-0.2053476, -79.4894387).obs;
   final posicionInicial = const LatLng(-0.2053476, -79.4894387).obs;
   final posicionMarcadorCliente = const LatLng(-0.2053476, -79.4894387).obs;
+  final posicionPedido = const LatLng(-0.2053476, -79.4894387).obs;
 
   //final initialCameraPosition =    const CameraPosition(target: LatLng(-0.2053476, -79.4894387), zoom: 15);
 
@@ -223,19 +269,6 @@ class InicioController extends GetxController {
     });
   }
 
-//Obtener direccion a partir de latitud y longitud
-  Future<void> _getDireccionXPosition(Position posicion) async {
-    List<Placemark> placemark =
-        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
-
-    Placemark lugar = placemark[0];
-    //
-    posicionInicial.value = LatLng(posicion.latitude, posicion.longitude);
-    //
-    direccion.value = _getDireccion(lugar);
-    direccionTextoController.text = direccion.value;
-  }
-
   String _getDireccion(Placemark lugar) {
     //
     if (lugar.subLocality?.isEmpty == true) {
@@ -249,11 +282,11 @@ class InicioController extends GetxController {
     List<Placemark> placemark =
         await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
     Placemark lugar = placemark[0];
-    //
-    print('>>>>>>>>>>>>>>>$posicion\n');
+
 //
     direccion.value = _getDireccion(lugar);
     direccionTextoController.text = direccion.value;
+    posicionPedido.value = posicion;
   }
 
   Set<Marker> marcadores = {};
@@ -287,8 +320,9 @@ class InicioController extends GetxController {
   final fechaHoraDeEntregaGasController = TextEditingController().obs;
   final itemSeleccionadoDia = 0.obs;
   //
-  void _cargarFechaInicial() {
+  void _cargarFechaCantidadInicial() {
     fechaHoraDeEntregaGasController.value.text = "Ahora";
+    cantidadTextoController.text = "1";
   }
 
   String cambiarFormatoFecha(DateTime fecha) {
@@ -305,7 +339,6 @@ class InicioController extends GetxController {
 
   //Mostrar resultado
   String fechaHoraPedido() {
-    
     if (itemSeleccionadoDia.value == 0 &&
         cambiarFormatoHora(horaSeleccionada.value) != '00:00') {
       return "Ahora, ${cambiarFormatoHora(horaSeleccionada.value)}";
@@ -342,6 +375,10 @@ class InicioController extends GetxController {
           DateTime.now().day + 1, 19, 0);
     }
   }
+}
+
+void _inicializarDatos() {
+  //TODO: creo que no
 }
 //TODO: Obtener el horario desde la BD
 //TODO: Ajustar horario

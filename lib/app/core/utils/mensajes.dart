@@ -7,7 +7,7 @@ abstract class Mensajes {
     Fluttertoast.showToast(
         msg: sms,
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
+        gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
         backgroundColor:AppTheme.blueDark,
         textColor: Colors.white);

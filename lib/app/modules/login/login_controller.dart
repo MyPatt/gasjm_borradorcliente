@@ -26,12 +26,7 @@ class LoginController extends GetxController {
 //
   @override
   void onInit() {
-    //
-    /*   correoTextoController.addListener(() {
-      print(correoTextoController.text);
-      formKey.currentState?.validate();
-      print(correoTextoController.text);
-    });*/
+ 
     flutterToast = Fluttertoast();
     _obtenerCorreo();
 
@@ -94,7 +89,7 @@ class LoginController extends GetxController {
 
   //Existe algun error si o no
   final errorParaCorreo = Rx<String?>(null);
-  //Se cago si o no
+  //Se cargo si o no
   final cargandoParaCorreo = RxBool(false);
 
   Future<void> iniciarSesionConCorreoYContrasena() async {
@@ -125,7 +120,7 @@ class LoginController extends GetxController {
   _obtenerCorreo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final s = await prefs.getString("correo_usuario");
+    final s = prefs.getString("correo_usuario");
     correoTextoController.text = s ?? '';
   }
 

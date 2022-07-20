@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 
 class PedidoProvider {
   //Instancia de firestore
   final _firestoreInstance = FirebaseFirestore.instance;
+  final _databaseReference = FirebaseDatabase.instance.reference();
+
   //
   Future<void> insertPedido({required PedidoModel pedidoModel}) async {
     await _firestoreInstance.collection('pedido').add(pedidoModel.toJson());
@@ -39,16 +42,17 @@ class PedidoProvider {
     }
     return null;
   }
-  
-    Future<List<PedidoModel>?> getPedidoPorField({required String field,required String dato}) async {
-    final resultado =
-        await _firestoreInstance. collection("pedido")
+
+  Future<List<PedidoModel>?> getPedidoPorField(
+      {required String field, required String dato}) async {
+    final resultado = await _firestoreInstance
+        .collection("pedido")
         .where(field, isEqualTo: dato)
         .get();
     if ((resultado.docs.isNotEmpty)) {
-      return  (resultado.docs)
-        .map((item) => PedidoModel.fromJson(item.data()))
-        .toList();
+      return (resultado.docs)
+          .map((item) => PedidoModel.fromJson(item.data()))
+          .toList();
     }
     return null;
   }

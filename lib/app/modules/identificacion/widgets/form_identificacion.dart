@@ -27,9 +27,9 @@ class FormIdentificacion extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
+                  const SizedBox(
                       height: 96,
-                      child: const Image(
+                      child: Image(
                         image: AssetImage("assets/icons/identificacion.png"),
                       )),
                   SizedBox(

@@ -1,6 +1,4 @@
-
-
-import 'package:gasjm/app/data/models/pedido_model.dart';
+ 
 import 'package:gasjm/app/data/providers/estadopedido_provider.dart';
 import 'package:gasjm/app/data/providers/pedido_provider.dart';
 import 'package:gasjm/app/data/providers/perfil_provider.dart';

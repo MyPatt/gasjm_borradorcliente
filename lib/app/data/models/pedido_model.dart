@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class PedidoModel {
   final String? idPedido;
   final String idProducto;
@@ -6,12 +8,13 @@ class PedidoModel {
   final Direccion direccion;
   final String idEstadoPedido;
   final DateTime fechaPedido;
-  final DateTime? fechaEntregaPedido;
-  final DateTime? horaEntregaPedido;
+  final DateTime? fechaHoraEntregaPedido;
+
+  final int cantidadPedido;
   final String? notaPedido;
   final double totalPedido;
 
-  PedidoModel( 
+  PedidoModel(
       {this.idPedido,
       required this.idProducto,
       required this.idCliente,
@@ -19,8 +22,8 @@ class PedidoModel {
       required this.direccion,
       required this.idEstadoPedido,
       required this.fechaPedido,
-      required this.fechaEntregaPedido,
-      required this.horaEntregaPedido, 
+      required this.fechaHoraEntregaPedido, 
+      required this.cantidadPedido,
       required this.notaPedido,
       required this.totalPedido});
 
@@ -29,14 +32,13 @@ class PedidoModel {
         idProducto: json["idProducto"],
         idCliente: json["idCliente"],
         idRepartidor: json["idRepartidor"],
-      
         idEstadoPedido: json["idEstadoPedido"],
         fechaPedido: json["fechaPedido"],
         notaPedido: json["horaPedido"],
-        totalPedido: json["totalPedido"], 
-        fechaEntregaPedido: json["fechaEntregaPedido"],
-         horaEntregaPedido: json["horaEntregaPedido"],
-          direccion: Direccion.fromMap(json["direccion"]),
+        totalPedido: json["totalPedido"],
+        fechaHoraEntregaPedido: json["fechaEntregaPedido"], 
+        direccion: Direccion.fromMap(json["direccion"]),
+        cantidadPedido: json["cantidadPedido"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,27 +50,28 @@ class PedidoModel {
         "fechaPedido": fechaPedido,
         "horaPedido": notaPedido,
         "totalPedido": totalPedido,
-          "fechaEntregaPedido": fechaEntregaPedido ,
-         "horaEntregaPedido":  horaEntregaPedido ,
-          "direccionn": direccion.toMap(),
+        "fechaEntregaPedido": fechaHoraEntregaPedido, 
+        "direccion": direccion.toMap(),
+        "cantidadPedido": cantidadPedido,
       };
 }
+
 class Direccion {
-    Direccion({
-        required this.latitud,
-        required this.longitud,
-    });
+  Direccion({
+    required this.latitud,
+    required this.longitud,
+  });
 
-    final double latitud;
-    final double longitud;
+  final double latitud;
+  final double longitud;
 
-    factory Direccion.fromMap(Map<String, dynamic> json) => Direccion(
+  factory Direccion.fromMap(Map<String, dynamic> json) => Direccion(
         latitud: json["latitud"],
         longitud: json["longitud"],
-    );
+      );
 
-    Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() => {
         "latitud": latitud,
         "longitud": longitud,
-    };
+      };
 }

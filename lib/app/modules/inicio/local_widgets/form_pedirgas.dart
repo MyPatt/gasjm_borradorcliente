@@ -20,6 +20,7 @@ class FormPedirGas extends StatelessWidget {
     return GetBuilder<InicioController>(
         builder: (_) => Container(
               padding: const EdgeInsets.all(8.0),
+              height: Responsive.getScreenSize(context).height * .7,
               child: Center(
                 child: Form(
                   key: _.formKey,
@@ -30,7 +31,7 @@ class FormPedirGas extends StatelessWidget {
                           height:
                               Responsive.getScreenSize(context).height * .02),
                       const TextSubtitle(
-                        text: "Nuevo Pedido",
+                        text: "Nuevo pedido",
                       ),
                       const TextDescription(
                           text: "Ingrese los datos para realizar su pedido"),
@@ -72,13 +73,14 @@ class FormPedirGas extends StatelessWidget {
                           height:
                               Responsive.getScreenSize(context).height * .02),
                       InputText(
+                        controller: _.cantidadTextoController,
                         iconPrefix: Icons.pin_outlined,
                         iconColor: AppTheme.light,
                         border: InputBorder.none,
                         keyboardType: TextInputType.phone,
                         //validator: null,
                         labelText: "Cantidad",
-                        initialValue: "1",
+
                         inputFormatters: <TextInputFormatter>[
                           //FilteringTextInputFormatter.digitsOnly,
                           FilteringTextInputFormatter.allow(RegExp(r'\d{1,2}')),
@@ -90,6 +92,7 @@ class FormPedirGas extends StatelessWidget {
                           height:
                               Responsive.getScreenSize(context).height * .02),
                       InputText(
+                        controller: _.notaTextoController,
                         keyboardType: TextInputType.streetAddress,
                         iconPrefix: Icons.note_outlined,
                         iconColor: AppTheme.light,
@@ -103,16 +106,25 @@ class FormPedirGas extends StatelessWidget {
                       SizedBox(
                           height:
                               Responsive.getScreenSize(context).height * .05),
-                      PrimaryButton(
-                        texto: "Pedir el gas",
-                        onPressed: () {
-                          if (_.formKey.currentState?.validate() == true) {
-                            _.insertarPedido();
-                            Navigator.pop(context);
-                            Mensajes.showToastBienvenido("Pedido con éxito.");
-                          }
-                        },
-                      ),
+                      Obx(() {
+                        final isSaving = _.procensandoElNuevoPedido.value;
+                        return Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            PrimaryButton(
+                              texto: "Pedir el gas",
+                              onPressed: () {
+                                if (_.formKey.currentState?.validate() ==
+                                    true) {
+                                  _.insertarPedido();
+                                 
+                                }
+                              },
+                            ),
+                            if (isSaving) const CircularProgressIndicator(backgroundColor: Colors.white,),
+                          ],
+                        );
+                      }),
                       SizedBox(
                           height:
                               Responsive.getScreenSize(context).height * .02),

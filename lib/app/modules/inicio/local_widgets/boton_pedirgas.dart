@@ -30,6 +30,7 @@ class BotonPedirGas extends StatelessWidget {
                             //  onPressed: _.verFormPedirGas,
                             onPressed: () {
                               showModalBottomSheet(
+                                  isScrollControlled: true,
                                   context: context,
                                   builder: (context) => (const FormPedirGas()));
                             },
