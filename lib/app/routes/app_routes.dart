@@ -10,4 +10,5 @@ class AppRoutes {
   static const editaragenda = "/ediitaragenda";
   static const signup = "/signup";
   static const permission = "/permission";
+    static const procesopedido = "/procesopedido";
 }

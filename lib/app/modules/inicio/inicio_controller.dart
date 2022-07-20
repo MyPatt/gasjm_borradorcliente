@@ -124,6 +124,7 @@ class InicioController extends GetxController {
       await _pedidoRepository.insertPedido(pedidoModel: pedidoModel);
       _inicializarDatos();
       //Get.back();
+      _cargarProcesoPedido();
       Get.snackbar(
         'Nuevo pedido',
         'Su pedido se registro con éxito',
@@ -374,6 +375,17 @@ class InicioController extends GetxController {
       horaMaxima?.value = DateTime(DateTime.now().year, DateTime.now().month,
           DateTime.now().day + 1, 19, 0);
     }
+  }
+}
+
+//Cuando el pedido se crea
+_cargarProcesoPedido() async {
+  try {
+    await Future.delayed(const Duration(seconds: 1));
+    Get.offNamed(AppRoutes.procesopedido);
+  } catch (e) {
+    // ignore: avoid_print
+    print(e);
   }
 }
 
