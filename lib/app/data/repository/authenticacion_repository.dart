@@ -6,11 +6,12 @@ import 'package:gasjm/app/data/models/usuario_model.dart';
 class AutenticacionUsuario extends Equatable {
   final String uid;
   final String? nombre;
+  final String? perfil;
 
-  const AutenticacionUsuario(this.uid, this.nombre);
+  const AutenticacionUsuario(this.uid, this.nombre, this.perfil);
 
   @override
-  List<Object?> get props => [uid, nombre];
+  List<Object?> get props => [uid, nombre,perfil];
 }
 
 /*Original
@@ -44,9 +45,7 @@ abstract class AutenticacionRepository {
 
 //Iniciar sesion con google
   Future<AutenticacionUsuario?> iniciarSesionConGoogle();
-
-//Iniciar sesion con facebook
-  Future<AutenticacionUsuario?> inicarSesionConFacebook();
+ 
 
 //Cerrar sesion
   Future<void> cerrarSesion();

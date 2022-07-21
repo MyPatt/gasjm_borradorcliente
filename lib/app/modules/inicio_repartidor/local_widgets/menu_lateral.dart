@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
-import 'package:gasjm/app/global_widgets/dialogs/progress_dialog.dart';
-import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
+import 'package:gasjm/app/global_widgets/dialogs/progress_dialog.dart'; 
+import 'package:gasjm/app/modules/inicio_repartidor/inicio_repartidor_controller.dart';
+ 
 
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ class MenuLateral extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<InicioController>(
+    return GetBuilder<InicioRepartidorController>(
       builder: (_) => Drawer(
           child: Container(
         color: Colors.white,

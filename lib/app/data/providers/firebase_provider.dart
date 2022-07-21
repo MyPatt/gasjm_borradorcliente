@@ -1,9 +1,6 @@
- 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gasjm/app/data/models/usuario_model.dart';
- 
 
 class FirebaseProvider {
   //Par devolver el usuario actual conectado
@@ -17,8 +14,8 @@ class FirebaseProvider {
   //FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
   //Instancia de firestore
-  final  firestoreInstance = FirebaseFirestore.instance;
- 
+  final firestoreInstance = FirebaseFirestore.instance;
+
   //Obtner perfil del usuario actual
   Future<UsuarioModel?> getUsuarioActual() async {
     final snapshot = await firestoreInstance
@@ -27,7 +24,7 @@ class FirebaseProvider {
         .get();
     if (snapshot.exists) {
       return UsuarioModel.fromFirebaseMap(snapshot.data()!);
-    }  
+    }
     return null;
   }
 
@@ -42,5 +39,17 @@ class FirebaseProvider {
     } else {
       return null;
     }
+  }
+
+//
+  Future<UsuarioModel?> getPerfilDeUsuario({required String uid}) async {
+    final resultado =
+        await firestoreInstance.collection("usuarios").doc(uid).get();
+
+    if ((resultado.exists)) {
+    
+      return UsuarioModel.fromFirebaseMap(resultado.data()!);
+    }
+    return null;
   }
 }

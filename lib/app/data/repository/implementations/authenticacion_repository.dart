@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart'; 
 import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 import 'package:gasjm/app/data/models/usuario_model.dart';
 import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
@@ -14,7 +13,7 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
 //Modelo User de Firebase
   AutenticacionUsuario? _usuarioDeFirebase(User? usuario) => usuario == null
       ? null
-      : AutenticacionUsuario(usuario.uid, usuario.displayName);
+      : AutenticacionUsuario(usuario.uid, usuario.displayName,usuario.tenantId);
 
   @override
   AutenticacionUsuario? get autenticacionUsuario =>
@@ -59,22 +58,11 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
     return _usuarioDeFirebase(resultadoAutenticacion.user);
   }
 
-  @override
-  Future<AutenticacionUsuario?> inicarSesionConFacebook() async {
-    final resultado = await FacebookAuth.instance.login();
-    print("****\n");
-    final fbAutenticacionCredencial =
-        FacebookAuthProvider.credential(resultado.accessToken!.token);
-
-    final autenticacionResultado = await FirebaseAuth.instance
-        .signInWithCredential(fbAutenticacionCredencial);
-
-    return _usuarioDeFirebase((autenticacionResultado.user));
-  }
-
+ 
   @override
   Future<void> cerrarSesion() async {
     final googleSignIn = GoogleSignIn();
+    await Future.delayed(const Duration(seconds: 3));
     await googleSignIn.signOut();
     await _firebaseAutenticacion.signOut();
   }

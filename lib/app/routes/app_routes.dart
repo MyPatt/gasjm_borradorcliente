@@ -6,6 +6,7 @@ class AppRoutes {
   static const registrar = "/registrar";
   static const perfil = "/perfil";
   static const inicio = "/inicio";
+  static const iniciorepartidor = "/iniciorepartidor";
   static const agenda = "/agenda";
   static const editaragenda = "/ediitaragenda";
   static const signup = "/signup";

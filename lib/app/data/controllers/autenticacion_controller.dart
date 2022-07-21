@@ -1,7 +1,9 @@
 //Estados de sutenticacion
 import 'dart:async';
 
+import 'package:gasjm/app/data/models/usuario_model.dart';
 import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
+import 'package:gasjm/app/data/repository/usuario_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -32,16 +34,39 @@ class AutenticacionController extends GetxController {
   void _estadoAutenticacionCambiado(AutenticacionUsuario? usuario) {
     if (usuario == null) {
       autenticacionEstado.value = AutenticacionEstado.sesionNoIniciada;
-      
+
       Get.offAllNamed(AppRoutes.ubicacion);
     } else {
       autenticacionEstado.value = AutenticacionEstado.sesionIniciada;
-     
-      Get.offAllNamed(AppRoutes.inicio); 
+      //Buscar perfil de usuario
+
+      _getUsuarioActual();
+      final perfil = _usuario?.perfil;
+      print("----->-${_autenticacionRepository.autenticacionUsuario?.perfil} ");
+      ;
+      print("------${perfil} ");
+
+      if (perfil == "Cliente") {
+        Get.offAllNamed(AppRoutes.inicio);
+      } else {
+        Get.offAllNamed(AppRoutes.iniciorepartidor);
+      }
     }
     autenticacionUsuario.value = usuario;
   }
-    
+
+//
+
+  //
+  UsuarioModel? _usuario;
+  Future<void> _getUsuarioActual() async {
+    //Repositorio de usuario
+    final _userRepository = Get.find<MyUserRepository>();
+    final uid = _autenticacionRepository.autenticacionUsuario?.uid ?? '';
+    _usuario = await _userRepository.getPerfilUsuarioPorUid(uid: uid);
+  }
+
+//
   Future<void> cerrarSesion() async {
     await _autenticacionRepository.cerrarSesion();
   }

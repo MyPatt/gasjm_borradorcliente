@@ -8,6 +8,8 @@ import 'package:gasjm/app/modules/inicio/inicio_binding.dart';
 import 'package:gasjm/app/modules/inicio/inicio_page.dart';
 import 'package:gasjm/app/modules/inicio/proceso_pedido/proceso_pedido_binding.dart';
 import 'package:gasjm/app/modules/inicio/proceso_pedido/proceso_pedido_page.dart';
+import 'package:gasjm/app/modules/inicio_repartidor/inicio_repartidor_binding.dart';
+import 'package:gasjm/app/modules/inicio_repartidor/inicio_repartidor_page.dart';
 import 'package:gasjm/app/modules/login/login_binding.dart';
 import 'package:gasjm/app/modules/login/login_page.dart';
 import 'package:gasjm/app/modules/perfil/perfil_binding.dart';
@@ -83,6 +85,13 @@ class AppPages {
       name: AppRoutes.agenda,
       page: () => const AgendaClientePage(),
       binding: AgendaClienteBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+        GetPage(
+      name: AppRoutes.iniciorepartidor,
+      page: () => const InicioRepartidorPage(),
+      binding: InicioRepartidorBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

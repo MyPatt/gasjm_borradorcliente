@@ -61,9 +61,7 @@ class LoginController extends GetxController {
   Future<void> iniciarSesionConGoogle() =>
       _iniciarSesion(_autenticacioRepository.iniciarSesionConGoogle);
 
-//Iniciar sesion con  Facebook
-  Future<void> iniciarSesionConFacebook() =>
-      _iniciarSesion(_autenticacioRepository.inicarSesionConFacebook);
+ 
 
   //Metodo que rige para iniciar sesion con el progress
   Future<void> _iniciarSesion(
