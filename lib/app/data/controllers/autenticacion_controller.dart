@@ -45,12 +45,12 @@ class AutenticacionController extends GetxController {
       print("----->-${_autenticacionRepository.autenticacionUsuario?.perfil} ");
       ;
       print("------${perfil} ");
-
-      if (perfil == "Cliente") {
+      Get.offAllNamed(AppRoutes.iniciorepartidor);
+      /* if (perfil == "Cliente") {
         Get.offAllNamed(AppRoutes.inicio);
       } else {
         Get.offAllNamed(AppRoutes.iniciorepartidor);
-      }
+      }*/
     }
     autenticacionUsuario.value = usuario;
   }

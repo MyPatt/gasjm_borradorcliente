@@ -115,7 +115,7 @@ class InicioController extends GetxController {
           idRepartidor: idRepartidor,
           direccion: direccion,
           idEstadoPedido: idEstadoPedido,
-          fechaPedido: DateTime.now(),
+          fechaPedido: Timestamp.now(),
           fechaHoraEntregaPedido: fechaEntregaPedido,
           notaPedido: notaPedido,
           totalPedido: 555555,

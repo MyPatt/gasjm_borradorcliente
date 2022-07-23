@@ -4,8 +4,7 @@ import 'package:gasjm/app/data/models/pedido_model.dart';
 
 class PedidoProvider {
   //Instancia de firestore
-  final _firestoreInstance = FirebaseFirestore.instance;
-  final _databaseReference = FirebaseDatabase.instance.reference();
+  final _firestoreInstance = FirebaseFirestore.instance; 
 
   //
   Future<void> insertPedido({required PedidoModel pedidoModel}) async {

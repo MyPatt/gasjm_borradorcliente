@@ -7,7 +7,7 @@ class PedidoModel {
   final String idRepartidor;
   final Direccion direccion;
   final String idEstadoPedido;
-  final DateTime fechaPedido;
+  final Timestamp fechaPedido;
   final DateTime? fechaHoraEntregaPedido;
 
   final int cantidadPedido;
@@ -22,7 +22,7 @@ class PedidoModel {
       required this.direccion,
       required this.idEstadoPedido,
       required this.fechaPedido,
-      required this.fechaHoraEntregaPedido, 
+      required this.fechaHoraEntregaPedido,
       required this.cantidadPedido,
       required this.notaPedido,
       required this.totalPedido});
@@ -36,7 +36,7 @@ class PedidoModel {
         fechaPedido: json["fechaPedido"],
         notaPedido: json["horaPedido"],
         totalPedido: json["totalPedido"],
-        fechaHoraEntregaPedido: json["fechaEntregaPedido"], 
+        fechaHoraEntregaPedido: json["fechaEntregaPedido"],
         direccion: Direccion.fromMap(json["direccion"]),
         cantidadPedido: json["cantidadPedido"],
       );
@@ -50,7 +50,7 @@ class PedidoModel {
         "fechaPedido": fechaPedido,
         "horaPedido": notaPedido,
         "totalPedido": totalPedido,
-        "fechaEntregaPedido": fechaHoraEntregaPedido, 
+        "fechaEntregaPedido": fechaHoraEntregaPedido,
         "direccion": direccion.toMap(),
         "cantidadPedido": cantidadPedido,
       };

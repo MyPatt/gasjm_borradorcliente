@@ -1,25 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/global_widgets/text_description.dart';
-import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
 import 'package:gasjm/app/modules/inicio_repartidor/inicio_repartidor_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class RepartidorMapa extends StatelessWidget {
   const RepartidorMapa({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
- 
     return GetBuilder<InicioRepartidorController>(
-        builder: (_) => const Expanded(
-                child: GoogleMap(
-              initialCameraPosition:
-                  CameraPosition(target: LatLng(-1.24, 0.74), zoom: 15),
-              myLocationButtonEnabled: false,
-              compassEnabled: false,
-            )));
+        builder: (_) => FutureBuilder<LocationData?>(
+            future: _.currentLocation(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapchat) {
+              print(snapchat.hasData);
+              if (snapchat.hasData) {
+                final LocationData currentLocation = snapchat.data;
+                _.cargarMarcadorRepartidor(LatLng(
+                    currentLocation.latitude!, currentLocation.longitude!));
+                _.cargarMarcadoresPedidos();
+                return GoogleMap(
+                  onMapCreated: _.onMapaCreated,
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(currentLocation.latitude!,
+                          currentLocation.longitude!),
+                      zoom: 15),
+                  markers: _.markers,
+                  myLocationButtonEnabled: false,
+                  compassEnabled: false,
+                  zoomControlsEnabled: false,
+                  zoomGesturesEnabled: true,
+                  mapToolbarEnabled: false,
+                  trafficEnabled: false,
+                  tiltGesturesEnabled: false,
+                  scrollGesturesEnabled: true,
+                  rotateGesturesEnabled: false,
+                  myLocationEnabled: true,
+                  liteModeEnabled: false,
+                  indoorViewEnabled: false,
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            }));
   }
 }
-//TODO: Boton para regresar a la ubicacion inicial

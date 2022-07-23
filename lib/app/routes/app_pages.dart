@@ -88,9 +88,9 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-        GetPage(
+    GetPage(
       name: AppRoutes.iniciorepartidor,
-      page: () => const InicioRepartidorPage(),
+      page: () => InicioRepartidorPage(),
       binding: InicioRepartidorBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
