@@ -120,14 +120,17 @@ class InicioRepartidorController extends GetxController {
   final _pedidoRepository = Get.find<PedidoRepository>();
 
   Future<void> cargarMarcadoresPedidos() async {
-    //Marcador cliente
-
+    //Marcador pedido
+    BitmapDescriptor _marcadorPedido = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(),
+      "assets/icons/marcadorpedido.png",
+    );
 //Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
 
     //
     final listaPedidos = await _pedidoRepository.getPedidos();
     print(listaPedidos?.length);
-    listaPedidos?.forEach((element) {   
+    listaPedidos?.forEach((element) {
       print(element.direccion.latitud);
 
       //final id = element.idCliente;
@@ -139,8 +142,8 @@ class InicioRepartidorController extends GetxController {
       final marker = Marker(
         markerId: markerId,
         position: posicion,
-        draggable: true,
-        icon: BitmapDescriptor.defaultMarker,
+        draggable: false,
+        icon: _marcadorPedido,
       );
       _markers[markerId] = marker;
     });
