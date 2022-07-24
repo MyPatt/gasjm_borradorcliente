@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/data/models/usuario_model.dart';
@@ -26,7 +27,6 @@ class InicioRepartidorController extends GetxController {
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
   }
 
@@ -99,30 +99,27 @@ class InicioRepartidorController extends GetxController {
     //Marcador cliente
 
 //Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
-    final id = usuario.value?.cedula ?? 'MakerIdCliente';
+    final id = usuario.value?.cedula ?? 'MakerIdRepartidor';
 //
     final markerId = MarkerId(id);
-
-    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
-        .buffer
-        .asUint8List();
+    
+    //Marcador repartidor personalizado
+    BitmapDescriptor _markerbitmap = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(),
+      "assets/icons/gpsrepartidor.png",
+    );
     final marker = Marker(
-        markerId: markerId,
-        position: posicion,
-        draggable: true,
-        icon: BitmapDescriptor.defaultMarker,
-
-        // icon: BitmapDescriptor.defaultMarkerWithHue(208),
-        //  icon: BitmapDescriptor.fromBytes(bytes),
-        onDragEnd: (newPosition) {
-          /*          posicionMarcadorCliente.value = newPosition;
-          _getDireccionXLatLng(posicionMarcadorCliente.value);*/
-        });
+      markerId: markerId,
+      position: posicion,
+      draggable: false,
+      icon: _markerbitmap,
+    );
     _markers[markerId] = marker;
   }
 
-//Marcador repartidor personalizado
-  String imgurl = "https://img.icons8.com/fluency/452/gps-device.png";
+
+  
+
   //Marcadores para visualizar los pedidos
   final _pedidoRepository = Get.find<PedidoRepository>();
 
