@@ -18,7 +18,8 @@ class RepartidorMapa extends StatelessWidget {
                 final LocationData currentLocation = snapchat.data;
                 _.cargarMarcadorRepartidor(LatLng(
                     currentLocation.latitude!, currentLocation.longitude!));
-              //  _.cargarMarcadoresPedidos();
+                    
+                _.cargarMarcadoresPedidos();
                 return GoogleMap(
                   onMapCreated: _.onMapaCreated,
                   initialCameraPosition: CameraPosition(

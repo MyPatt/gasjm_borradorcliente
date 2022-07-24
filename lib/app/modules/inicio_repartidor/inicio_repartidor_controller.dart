@@ -61,7 +61,6 @@ class InicioRepartidorController extends GetxController {
   //Cambiar el estilo de mapa
   onMapaCreated(GoogleMapController controller) {
     controller.setMapStyle(estiloMapa);
-    cargarMarcadoresPedidos();
   }
 
   //Ubicacion actual
@@ -69,7 +68,7 @@ class InicioRepartidorController extends GetxController {
     bool serviceEnabled;
     PermissionStatus permissionGranted;
 
-    Location location = new Location();
+    Location location = Location();
 
     serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
@@ -102,7 +101,7 @@ class InicioRepartidorController extends GetxController {
     final id = usuario.value?.cedula ?? 'MakerIdRepartidor';
 //
     final markerId = MarkerId(id);
-    
+
     //Marcador repartidor personalizado
     BitmapDescriptor _markerbitmap = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
@@ -117,9 +116,6 @@ class InicioRepartidorController extends GetxController {
     _markers[markerId] = marker;
   }
 
-
-  
-
   //Marcadores para visualizar los pedidos
   final _pedidoRepository = Get.find<PedidoRepository>();
 
@@ -130,26 +126,22 @@ class InicioRepartidorController extends GetxController {
 
     //
     final listaPedidos = await _pedidoRepository.getPedidos();
-    listaPedidos?.forEach((element) {
+    print(listaPedidos?.length);
+    listaPedidos?.forEach((element) {   
       print(element.direccion.latitud);
 
-      final id = element.idCliente;
-//
+      //final id = element.idCliente;
+      final id = _markers.length.toString();
+      print("- $id\n");
       final markerId = MarkerId(id);
       final posicion =
           LatLng(element.direccion.latitud, element.direccion.longitud);
       final marker = Marker(
-          markerId: markerId,
-          position: posicion,
-          draggable: true,
-          icon: BitmapDescriptor.defaultMarker,
-
-          // icon: BitmapDescriptor.defaultMarkerWithHue(208),
-          //  icon: BitmapDescriptor.fromBytes(bytes),
-          onDragEnd: (newPosition) {
-            /*          posicionMarcadorCliente.value = newPosition;
-          _getDireccionXLatLng(posicionMarcadorCliente.value);*/
-          });
+        markerId: markerId,
+        position: posicion,
+        draggable: true,
+        icon: BitmapDescriptor.defaultMarker,
+      );
       _markers[markerId] = marker;
     });
   }

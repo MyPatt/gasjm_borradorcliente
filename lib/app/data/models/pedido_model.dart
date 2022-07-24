@@ -8,7 +8,7 @@ class PedidoModel {
   final Direccion direccion;
   final String idEstadoPedido;
   final Timestamp fechaPedido;
-  final DateTime? fechaHoraEntregaPedido;
+  final Timestamp? fechaHoraEntregaPedido;
 
   final int cantidadPedido;
   final String? notaPedido;
