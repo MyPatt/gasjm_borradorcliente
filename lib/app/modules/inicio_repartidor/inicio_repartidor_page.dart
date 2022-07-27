@@ -35,6 +35,7 @@ class InicioRepartidorPage extends StatelessWidget {
               )
             ]),
             //Navegacion del repartidor
-            bottomNavigationBar:const BottomNavigationRepartidor()));
+            bottomNavigationBar: const BottomNavigationRepartidor()));
+
   }
 }

@@ -156,6 +156,7 @@ class InicioRepartidorController extends GetxController {
                   'Para ${element.fechaHoraEntregaPedido?.toDate().day}/${element.fechaHoraEntregaPedido?.toDate().month},  ${element.cantidadPedido} cilindro/s de gas.',
               onTap: () {
                 print(_markers.length);
+                //Marcadores para pedidos 2 (infoWindow onTap)
               }));
       _markers[markerId] = marker;
     });
