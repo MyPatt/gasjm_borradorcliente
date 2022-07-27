@@ -28,4 +28,8 @@ class PersonaRepositoryImpl extends PersonaRepository {
   @override
   Future<void> updatePersona({required PersonaModel persona}) =>
       _provider.updatePersona(persona: persona);
+
+  @override
+  Future<String?> getNombresPersonaPorCedula({required String cedula}) =>
+      _provider.getNombresPersonaPorCedula(cedula: cedula);
 }

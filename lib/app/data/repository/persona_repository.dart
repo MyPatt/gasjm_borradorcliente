@@ -5,6 +5,7 @@ abstract class PersonaRepository {
   Future<void> updatePersona({required PersonaModel persona});
   Future<void> deletePersona({required String persona});
   Future<PersonaModel?> getPersonaPorCedula({required String cedula});
+  Future<String?> getNombresPersonaPorCedula({required String cedula});
   Future<List<PersonaModel>?> getPersonaPorField(
       {required String field, required String dato});
 

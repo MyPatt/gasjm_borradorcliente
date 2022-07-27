@@ -2,15 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/modules/inicio_repartidor/inicio_repartidor_controller.dart';
 import 'package:gasjm/app/modules/inicio_repartidor/local_widgets/repartidor_mapa.dart';
-import 'package:get/get.dart';
+ 
 import 'package:location/location.dart';
 
-class ScreenA extends StatelessWidget {
-  const ScreenA({Key? key}) : super(key: key);
+class ExplorarRepartidorPage extends StatelessWidget {
+  const ExplorarRepartidorPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RepartidorMapa();
+    return const RepartidorMapa();
     /* return GetBuilder<InicioRepartidorController>(
         builder: (_) => FutureBuilder<LocationData?>(
               future: _currentLocation(),

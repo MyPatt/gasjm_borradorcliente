@@ -13,13 +13,13 @@ class RepartidorMapa extends StatelessWidget {
         builder: (_) => FutureBuilder<LocationData?>(
             future: _.currentLocation(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapchat) {
-              print(snapchat.hasData);
+           
               if (snapchat.hasData) {
                 final LocationData currentLocation = snapchat.data;
-                _.cargarMarcadorRepartidor(LatLng(
+                  _.cargarMarcadorRepartidor(LatLng(
                     currentLocation.latitude!, currentLocation.longitude!));
-                    
-                _.cargarMarcadoresPedidos();
+    
+                // _.cargarMarcadoresPedidos();
                 return GoogleMap(
                   onMapCreated: _.onMapaCreated,
                   initialCameraPosition: CameraPosition(

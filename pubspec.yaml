@@ -40,7 +40,9 @@ dependencies:
   google_maps_flutter: ^2.0.6
   #
   geocoding: ^2.0.1
+  #ubicacion actual
   location: ^4.3.0
+  
 
   #formatos
   intl: null

@@ -17,9 +17,9 @@ class ScreenB extends StatelessWidget {
               print(snapchat.hasData);
               if (snapchat.hasData) {
                 final LocationData currentLocation = snapchat.data;
-                _.cargarMarcadorRepartidor(LatLng(
+              /*  _.cargarMarcadorRepartidor(LatLng(
                     currentLocation.latitude!, currentLocation.longitude!));
-
+*/
                 return GoogleMap(
                   onMapCreated: _.onMapaCreated,
                   initialCameraPosition: CameraPosition(

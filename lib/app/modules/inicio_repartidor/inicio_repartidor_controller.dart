@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/data/models/usuario_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
+import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/data/repository/usuario_repository.dart';
 import 'package:gasjm/app/modules/inicio_repartidor/local_widgets/ir_content.dart';
 import 'package:gasjm/app/modules/inicio_repartidor/local_widgets/navegacion_content.dart';
@@ -47,8 +46,8 @@ class InicioRepartidorController extends GetxController {
   /* MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/
   RxInt indexPantallaSeleccionada = 0.obs;
   final List pantallasInicioRepartidor = [
-    {"screen": ScreenA(), "title": "Screen A Title"},
-    {"screen": ScreenB(), "title": "Screen B Title"}
+    {"screen": ExplorarRepartidorPage()},
+    {"screen": ScreenB()}
   ];
 
 //Metodo que escucha el onTap de las pantallas
@@ -61,6 +60,9 @@ class InicioRepartidorController extends GetxController {
   //Cambiar el estilo de mapa
   onMapaCreated(GoogleMapController controller) {
     controller.setMapStyle(estiloMapa);
+    //
+
+    _cargarMarcadoresPedidos();
   }
 
   //Ubicacion actual
@@ -95,11 +97,9 @@ class InicioRepartidorController extends GetxController {
 
   Set<Marker> get markers => _markers.values.toSet();
   Future<void> cargarMarcadorRepartidor(LatLng posicion) async {
-    //Marcador cliente
-
-//Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
+    //Actualizar las posiciones del mismo marker la cedula del usuario conectado como ID
     final id = usuario.value?.cedula ?? 'MakerIdRepartidor';
-//
+    //
     final markerId = MarkerId(id);
 
     //Marcador repartidor personalizado
@@ -114,12 +114,15 @@ class InicioRepartidorController extends GetxController {
       icon: _markerbitmap,
     );
     _markers[markerId] = marker;
+
+    print("REPARTIDOR\n");
   }
 
   //Marcadores para visualizar los pedidos
   final _pedidoRepository = Get.find<PedidoRepository>();
+  final _personaRepository = Get.find<PersonaRepository>();
 
-  Future<void> cargarMarcadoresPedidos() async {
+  Future<void> _cargarMarcadoresPedidos() async {
     //Marcador pedido
     BitmapDescriptor _marcadorPedido = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
@@ -130,22 +133,32 @@ class InicioRepartidorController extends GetxController {
     //
     final listaPedidos = await _pedidoRepository.getPedidos();
     print(listaPedidos?.length);
-    listaPedidos?.forEach((element) {
-      print(element.direccion.latitud);
 
+    listaPedidos?.forEach((element) async {
+      final nombreCliente = await _personaRepository.getNombresPersonaPorCedula(
+          cedula: element.idCliente);
+      print(nombreCliente);
       //final id = element.idCliente;
       final id = _markers.length.toString();
       print("- $id\n");
       final markerId = MarkerId(id);
       final posicion =
           LatLng(element.direccion.latitud, element.direccion.longitud);
+
       final marker = Marker(
-        markerId: markerId,
-        position: posicion,
-        draggable: false,
-        icon: _marcadorPedido,
-      );
+          markerId: markerId,
+          position: posicion,
+          draggable: false,
+          icon: _marcadorPedido,
+          infoWindow: InfoWindow(
+              title: nombreCliente,
+              snippet:
+                  'Para ${element.fechaHoraEntregaPedido?.toDate().day}/${element.fechaHoraEntregaPedido?.toDate().month},  ${element.cantidadPedido} cilindro/s de gas.',
+              onTap: () {
+                print(_markers.length);
+              }));
       _markers[markerId] = marker;
     });
+    print("PEDIDOS\n");
   }
 }

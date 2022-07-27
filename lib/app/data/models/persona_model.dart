@@ -20,24 +20,24 @@ class PersonaModel {
   final String idPerfil;
 
   factory PersonaModel.fromMap(Map<String, dynamic> json) => PersonaModel(
-        cedulaPersona: json["cedulaPersona"],
-        nombrePersona: json["nombrePersona"],
-        apellidoPersona: json["apellidoPersona"],
-        fotoPersona: json["fotoPersona"],
-        direccionPersona: json["direccionPersona"],
-        celularPersona: json["celularPersona"],
-        fechaNaciPersona: json["fechaNaciPersona"],
+        cedulaPersona: json["cedula"],
+        nombrePersona: json["nombre"],
+        apellidoPersona: json["apellido"],
+        fotoPersona: json["foto"],
+        direccionPersona: json["direccion"],
+        celularPersona: json["celular"],
+        fechaNaciPersona: json["fechaNacimiento"],
         idPerfil: json["idPerfil"],
       );
 
   Map<String, dynamic> toMap() => {
-        "cedulaPersona": cedulaPersona,
-        "nombrePersona": nombrePersona,
-        "apellidoPersona": apellidoPersona,
-        "fotoPersona": fotoPersona,
-        "direccionPersona": direccionPersona,
-        "celularPersona": celularPersona,
-        "fechaNaciPersona": fechaNaciPersona,
+        "cedula": cedulaPersona,
+        "nombre": nombrePersona,
+        "apellido": apellidoPersona,
+        "foto": fotoPersona,
+        "direccion": direccionPersona,
+        "celular": celularPersona,
+        "fechaNacimiento": fechaNaciPersona,
         "idPerfil": idPerfil,
       };
 }

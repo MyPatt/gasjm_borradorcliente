@@ -48,16 +48,30 @@ class PersonaProvider {
     return null;
   }
 
-  
-    Future<List<PersonaModel>?> getPersonaPorField({required String field,required String dato}) async {
-    final resultado =
-        await _firestoreInstance. collection("persona")
+  Future<List<PersonaModel>?> getPersonaPorField(
+      {required String field, required String dato}) async {
+    final resultado = await _firestoreInstance
+        .collection("persona")
         .where(field, isEqualTo: dato)
         .get();
     if ((resultado.docs.isNotEmpty)) {
-      return  (resultado.docs)
-        .map((item) => PersonaModel.fromMap(item.data()))
-        .toList();
+      return (resultado.docs)
+          .map((item) => PersonaModel.fromMap(item.data()))
+          .toList();
+    }
+    return null;
+  }
+
+  Future<String?> getNombresPersonaPorCedula({required String cedula}) async {
+    final resultado = await _firestoreInstance
+        .collection("persona")
+        .where("cedula", isEqualTo: cedula)
+        .get();
+
+    if (resultado.docs.isNotEmpty) {
+      final nombres =
+          '${resultado.docs.first.get("nombre")} ${resultado.docs.first.get("apellido")} ';
+      return nombres;
     }
     return null;
   }
