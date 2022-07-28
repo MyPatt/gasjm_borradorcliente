@@ -8,6 +8,8 @@ import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/data/repository/usuario_repository.dart';
 import 'package:gasjm/app/modules/inicio_repartidor/local_widgets/ir_content.dart';
 import 'package:gasjm/app/modules/inicio_repartidor/local_widgets/navegacion_content.dart';
+import 'package:gasjm/app/modules/inicio_repartidor/pedidos/pedidos_page.dart';
+import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:location/location.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -46,15 +48,35 @@ class InicioRepartidorController extends GetxController {
   /* MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/
   RxInt indexPantallaSeleccionada = 0.obs;
   final List pantallasInicioRepartidor = [
-    {"screen": ExplorarRepartidorPage()},
-    {"screen": ScreenB()}
+    {"screen": const ExplorarRepartidorPage()},
+    {"screen": const IniciarRecorridoRepartidor()},
+    //  {"screen": const PedidosPage()},
+    {"screen": const Center(child: CircularProgressIndicator())},
   ];
 
 //Metodo que escucha el onTap de las pantallas
-  pantallaSeleccionadaOnTap(int index) {
-    indexPantallaSeleccionada.value = index;
+  pantallaSeleccionadaOnTap(int index, BuildContext context) {
+    if (indexPantallaSeleccionada.value == 2 && index == 2) {
+    } else {
+      if (indexPantallaSeleccionada.value == 2) {
+        Navigator.pop(context);
+      }
+      indexPantallaSeleccionada.value = index;
+      if (index == 2) {
+        _cargarPedidosPage();
+        print(2);
+      }
+    }
   }
 
+  _cargarPedidosPage() async {
+    try {
+      await Future.delayed(const Duration(seconds: 1));
+      Get.toNamed(AppRoutes.pedidos);
+    } catch (e) {
+      print(e);
+    }
+  }
   /* MAPA PARA LA OPCION DE EXPLORACION*/
 
   //Cambiar el estilo de mapa

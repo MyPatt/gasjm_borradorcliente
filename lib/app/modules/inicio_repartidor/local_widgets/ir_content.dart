@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-class ScreenB extends StatelessWidget {
-  ScreenB({Key? key}) : super(key: key);
+class IniciarRecorridoRepartidor extends StatelessWidget {
+ const IniciarRecorridoRepartidor({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ScreenB extends StatelessWidget {
               print(snapchat.hasData);
               if (snapchat.hasData) {
                 final LocationData currentLocation = snapchat.data;
-              /*  _.cargarMarcadorRepartidor(LatLng(
+                /*  _.cargarMarcadorRepartidor(LatLng(
                     currentLocation.latitude!, currentLocation.longitude!));
 */
                 return GoogleMap(

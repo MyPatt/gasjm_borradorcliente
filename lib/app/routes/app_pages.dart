@@ -10,6 +10,8 @@ import 'package:gasjm/app/modules/inicio/proceso_pedido/proceso_pedido_binding.d
 import 'package:gasjm/app/modules/inicio/proceso_pedido/proceso_pedido_page.dart';
 import 'package:gasjm/app/modules/inicio_repartidor/inicio_repartidor_binding.dart';
 import 'package:gasjm/app/modules/inicio_repartidor/inicio_repartidor_page.dart';
+import 'package:gasjm/app/modules/inicio_repartidor/pedidos/pedidos_binding.dart';
+import 'package:gasjm/app/modules/inicio_repartidor/pedidos/pedidos_page.dart';
 import 'package:gasjm/app/modules/login/login_binding.dart';
 import 'package:gasjm/app/modules/login/login_page.dart';
 import 'package:gasjm/app/modules/perfil/perfil_binding.dart';
@@ -88,13 +90,7 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-    GetPage(
-      name: AppRoutes.iniciorepartidor,
-      page: () => InicioRepartidorPage(),
-      binding: InicioRepartidorBinding(),
-      transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 500),
-    ),
+
     GetPage(
       name: AppRoutes.editaragenda,
       page: () => const EditarAgendaPage(),
@@ -109,25 +105,20 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-    /* 
+
+    //REPARTIDOR
     GetPage(
-      name: AppRoutes.SIGNUP,
-      page: () => SignUpPage(),
-      binding: SignUpBinding(),
+      name: AppRoutes.iniciorepartidor,
+      page: () => InicioRepartidorPage(),
+      binding: InicioRepartidorBinding(),
       transition: Transition.fade,
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
-      name: AppRoutes.HOME,
-      page: () => HomePage(),
-      binding: HomeBinding(),
+      name: AppRoutes.pedidos,
+      page: () => const PedidosPage(),
+      binding: PedidosBinding(),
+      transition: Transition.noTransition
     ),
-    GetPage(
-      name: AppRoutes.DETAIL,
-      page: () => DetailPage(house: HouseModel()),
-      binding: DetailBinding(),
-      transition: Transition.fade,
-      transitionDuration: Duration(milliseconds: 500),
-    ),*/
   ];
 }

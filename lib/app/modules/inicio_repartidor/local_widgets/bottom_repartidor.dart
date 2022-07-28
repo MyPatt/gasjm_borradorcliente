@@ -15,8 +15,7 @@ class BottomNavigationRepartidor extends StatelessWidget {
             unselectedItemColor: Colors.black38,
             selectedLabelStyle: const TextStyle(color: Colors.black38),
             onTap: (index) {
-              _.pantallaSeleccionadaOnTap(index);
-             
+              _.pantallaSeleccionadaOnTap(index,context);
             },
             items: const [
               BottomNavigationBarItem(
@@ -25,8 +24,9 @@ class BottomNavigationRepartidor extends StatelessWidget {
                   ),
                   label: 'Explorar'),
               BottomNavigationBarItem(
-                
-                  icon: Icon(Icons.mode_of_travel_outlined), label: "Ir ",backgroundColor: AppTheme.blueBackground),
+                  icon: Icon(Icons.mode_of_travel_outlined),
+                  label: "Ir ",
+                  backgroundColor: AppTheme.blueBackground),
               BottomNavigationBarItem(
                   icon: Icon(Icons.list_outlined), label: "Pedidos ")
             ],
