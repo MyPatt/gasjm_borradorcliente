@@ -17,23 +17,9 @@ class PedidosPage extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: AppTheme.blueBackground,
             title: const Text('Pedidos'),
-            automaticallyImplyLeading: false,
-            /* leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_outlined),
-            tooltip: "Atras",
-            onPressed: () async {
-              {
-                try {
-                  await Future.delayed(const Duration(seconds: 1));
-                  Get.toNamed(AppRoutes.iniciorepartidor);
-                } catch (e) {
-                  print(e);
-                }
-              }
-            },
-            color: Colors.white,
-          ),*/
+            automaticallyImplyLeading: false, 
             bottom: const TabBar(
+              indicatorColor: Colors.white,
               tabs: [
                 Tab(text: 'En espera'),
                 Tab(
