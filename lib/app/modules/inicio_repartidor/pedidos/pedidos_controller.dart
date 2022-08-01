@@ -12,7 +12,8 @@ class PedidosController extends GetxController {
   void onInit() {
     super.onInit();
 
-    _cargarListaPedidos();
+    _cargarListaPedidosEnEspera();
+    _cargarListaPedidosAceptados();
   }
 
   @override
@@ -32,27 +33,51 @@ class PedidosController extends GetxController {
   final RxList<PedidoModel> _pedidosenespera = RxList<PedidoModel>([]);
   RxList<PedidoModel> get pedidosenespera => _pedidosenespera;
 
+  final RxList<PedidoModel> _pedidosAceptados = RxList<PedidoModel>([]);
+  RxList<PedidoModel> get pedidosAceptados => _pedidosAceptados;
+
   final RxList<String> _nombresClientes = RxList<String>([]);
   RxList<String> get nombresClientes => _nombresClientes;
 
-    final RxList<String> _direccionClientes = RxList<String>([]);
+  final RxList<String> _direccionClientes = RxList<String>([]);
   RxList<String> get direccionClientes => _direccionClientes;
 
-  Future<void> _cargarNombresCliente() async {
+
+    final RxList<String> _nombresClientesAceptados = RxList<String>([]);
+  RxList<String> get nombresClientesAceptados => _nombresClientesAceptados;
+
+  final RxList<String> _direccionClientesAceptados  = RxList<String>([]);
+  RxList<String> get direccionClientesAceptados  => _direccionClientesAceptados ;
+
+  Future<void> _cargarNombresClienteParaPedidosEspera() async {
     for (var item in _pedidosenespera) {
       final nombre = await _personaRepository.getNombresPersonaPorCedula(
           cedula: item.idCliente);
       _nombresClientes.add(nombre!);
 
-        final direccion = await getDireccionXLatLng(LatLng(item.direccion.latitud, item.direccion.longitud));
-        _direccionClientes.add(direccion);
+      final direccion = await getDireccionXLatLng(
+          LatLng(item.direccion.latitud, item.direccion.longitud));
+      _direccionClientes.add(direccion);
     }
   }
 
-  _cargarListaPedidos() async {
+  Future<void> _cargarNombresClienteParaPedidosAceptados() async {
+    for (var item in _pedidosenespera) {
+      final nombre = await _personaRepository.getNombresPersonaPorCedula(
+          cedula: item.idCliente);
+      _nombresClientesAceptados .add(nombre!);
+
+      final direccion = await getDireccionXLatLng(
+          LatLng(item.direccion.latitud, item.direccion.longitud));
+      _direccionClientesAceptados .add(direccion);
+    }
+  }
+
+  _cargarListaPedidosEnEspera() async {
     try {
-      _pedidosenespera.value = (await _pedidosRepository.getPedidoPorField(field: 'idEstadoPedido', dato: 'estado1'))!;
-      _cargarNombresCliente();
+      _pedidosenespera.value = (await _pedidosRepository.getPedidoPorField(
+          field: 'idEstadoPedido', dato: 'estado1'))!;
+      _cargarNombresClienteParaPedidosEspera();
     } on FirebaseException catch (e) {
       Get.snackbar(
         'Mensaje',
@@ -64,7 +89,23 @@ class PedidosController extends GetxController {
     }
   }
 
-      String _getDireccion(Placemark lugar) {
+  _cargarListaPedidosAceptados() async {
+    try {
+      _pedidosAceptados.value = (await _pedidosRepository.getPedidoPorField(
+          field: 'idEstadoPedido', dato: 'estado2'))!;
+      _cargarNombresClienteParaPedidosAceptados();
+    } on FirebaseException catch (e) {
+      Get.snackbar(
+        'Mensaje',
+        e.message ?? 'Se produjo un error inesperado.',
+        duration: const Duration(seconds: 5),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppTheme.blueDark,
+      );
+    }
+  }
+
+  String _getDireccion(Placemark lugar) {
     //
     if (lugar.subLocality?.isEmpty == true) {
       return lugar.street.toString();
@@ -72,15 +113,13 @@ class PedidosController extends GetxController {
       return '${lugar.street}, ${lugar.subLocality}';
     }
   }
-  
-    Future<String> getDireccionXLatLng(LatLng posicion) async {
-      List<Placemark> placemark =
-          await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
-      Placemark lugar = placemark[0];
+
+  Future<String> getDireccionXLatLng(LatLng posicion) async {
+    List<Placemark> placemark =
+        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
+    Placemark lugar = placemark[0];
 
 //
-     return   _getDireccion(lugar); 
-    }
-
-  
+    return _getDireccion(lugar);
   }
+}
