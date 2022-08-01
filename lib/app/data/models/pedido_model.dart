@@ -14,6 +14,9 @@ class PedidoModel {
   final String? notaPedido;
   final double totalPedido;
 
+  //
+  
+
   PedidoModel(
       {this.idPedido,
       required this.idProducto,
